@@ -1,0 +1,42 @@
+{
+  "name": "api",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Srvice Api",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "nodemon"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "amazon-cognito-auth-js": "^1.2.4",
+    "amazon-cognito-identity-js": "^2.0.6",
+    "aws-sdk": "^2.344.0",
+    "body-parser": "^1.18.3",
+    "bottlejs": "^1.7.1",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "google-auth-library": "^2.0.0",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.1",
+    "morgan": "^1.9.0",
+    "node-fetch": "^2.1.2",
+    "node-ses": "^2.1.0",
+    "nodemailer": "^4.6.8",
+    "nodemon": "^1.17.4",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.5",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "json-loader": "^0.5.7",
+    "webpack": "^2.7.0",
+    "webpack-cli": "^2.1.4"
+  }
+}

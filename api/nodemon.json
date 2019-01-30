@@ -1,0 +1,5 @@
+{
+  "env": {
+    "DOMAIN": "localhost:27017"
+  }
+}
