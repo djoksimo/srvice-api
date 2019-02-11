@@ -3,8 +3,8 @@ const AWS = require("aws-sdk");
 const route = "/send/";
 
 AWS.config.update({
-  accessKeyId: 'AKIAIBOWDAC5NWSUWRDQ',
-  secretAccessKey: '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',
+  accessKeyId: 'AKIAIE7SYRFTIRXOUW4A',
+  secretAccessKey: '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',
   region: 'us-east-1',
 });
 
