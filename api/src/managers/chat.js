@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
-
 const Chat = require("../models/chat");
-
 const route = "/chat/";
 
 class ChatManager {
@@ -21,11 +19,9 @@ class ChatManager {
     });
     try {
       const verificationBody = await this._authManager.verifyToken(token);
-
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
-
       const result = await this._chatService.create(newMessage);
       return {
         status: 201,
@@ -46,11 +42,9 @@ class ChatManager {
   async update(data) {
     try {
       const verificationBody = await this._authManager.verifyToken(data.token);
-
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
-      
       if (data.email !== verificationBody.json.json.result.email) {
         return {
           status: 403,
@@ -81,13 +75,10 @@ class ChatManager {
     const { token, byEmail, toEmail } = data;
     try {
       const verificationBody = await this._authManager.verifyToken(token);
-
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
-
       const result = await this._chatService.findPairChats(byEmail, toEmail);
-
       if (result.length === 0) {
         return {
           status: 200,
@@ -97,12 +88,10 @@ class ChatManager {
           }
         };
       }
-
       if (byEmail !== verificationBody.json.json.result.email &&
         toEmail !== verificationBody.json.json.result.email) {
         return { status: 403, json: verificationBody };
       }
-
       return {
         status: 200,
         json: {
@@ -124,13 +113,10 @@ class ChatManager {
     const { token, byEmail } = data;
     try {
       const verificationBody = await this._authManager.verifyToken(token);
-
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
-
       const result = await this._chatService.findByEmail(byEmail);
-
       if (result.length === 0) {
         return {
           status: 200,
@@ -142,13 +128,10 @@ class ChatManager {
           },
         };
       }
-
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
-
       if (byEmail !== verificationBody.json.json.result.email) return { status: 403, json: verificationBody };
-
       return {
         status: 200,
         json: {

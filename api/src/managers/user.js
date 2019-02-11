@@ -1,7 +1,5 @@
 const route = "/user/";
-
 const jwt = require("jsonwebtoken");
-
 const secretJwtKey = "8xStlNM+DbJTIQ0zOk+3X00gngEB9JOEKiVMYWAVWfc";
 
 class UserManager {
