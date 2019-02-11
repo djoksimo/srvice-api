@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
-
 const Service = require("../models/service");
-
 const route = "/service/";
 
 class ServiceManager {
@@ -19,7 +17,6 @@ class ServiceManager {
       latitude, longitude, radius,
       homeScreenGroups, schedule, products
     } = data;
-
 
     const newService = new Service({
       _id: new mongoose.Types.ObjectId(),
@@ -39,7 +36,6 @@ class ServiceManager {
     });
     try {
       const verificationBody = await this._authManager.verifyToken(token);
-
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
@@ -59,7 +55,6 @@ class ServiceManager {
       return { status: 500, json: error };
     }
   }
-
 
   async find(id) {
     try {
@@ -173,7 +168,6 @@ class ServiceManager {
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
-
       const result = await this._serviceService.remove(data.id);
       return {
         status: 200,

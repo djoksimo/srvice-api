@@ -1,7 +1,5 @@
 const express = require("express");
-
 const bottle = require("../bottle");
-
 const router = express.Router();
 const serviceManager = bottle.ServiceManager;
 
