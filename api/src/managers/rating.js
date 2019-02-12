@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
-
 const Rating = require("../models/rating");
-
 const route = "/rating/";
 
 class RatingManager {
