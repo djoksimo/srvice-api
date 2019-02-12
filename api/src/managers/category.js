@@ -1,6 +1,7 @@
 const route = "/category";
 
 class CategoryManager {
+
   constructor(
     categoryService,
     serviceService) {

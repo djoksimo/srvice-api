@@ -3,8 +3,8 @@ const AWS = require("aws-sdk");
 const route = "/send/";
 
 AWS.config.update({
-  accessKeyId: 'AKIAJ4KBAENBAOD2WFLQ',
-  secretAccessKey: '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',
+  accessKeyId: 'AKIAIE7SYRFTIRXOUW4A',
+  secretAccessKey: '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',
   region: 'us-east-1',
 });
 
@@ -15,7 +15,6 @@ class SendManager {
   }
 
   async sendMail(data) {
-
     const { // email variable is replyTo address
       fromEmail,
       toEmail,
@@ -91,76 +90,3 @@ class SendManager {
 }
 
 module.exports = SendManager;
-
-
-// const nodemailer = require('nodemailer');
-// const aws = require('aws-sdk');
-//
-// aws.config.update({ region: 'us-east-1' });
-//
-//
-// const route = "/send/";
-//
-// class SendManager {
-//   async sendMail(data) {
-//     const {
-//       fromEmail, toEmail, name, message, email,
-//     } = data;
-//
-//     const transporter = nodemailer.createTransport({
-//       SES: new aws.SES({
-//         apiVersion: '2010-12-01',
-//         accessKeyId: 'AKIAISNCEXVWN2ZKNR4Q',
-//         secretAccessKey: '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',
-//         region: 'us-east-1',
-//         rateLimit: 1,
-//       }),
-//     });
-//
-//     // const transporter = nodemailer.createTransport({
-//     //   host: 'mail.srvice.ca',
-//     //   port: 465,
-//     //   secure: true,
-//     //   auth: {
-//     //     user: 'contact@srvice.ca',
-//     //     pass: 'MadeMeThinkOfKik123!',
-//     //   },
-//     // });
-//
-//     const mailOptions = {
-//       from: fromEmail,
-//       to: toEmail,
-//       subject: name,
-//       text: message,
-//       replyTo: email,
-//     };
-//
-//     try {
-//       const result = await new Promise((resolve, reject) => {
-//         transporter.sendMail(mailOptions, (err, res) => {
-//           if (err) {
-//             reject(err);
-//           }
-//           console.log('Here is the mail response: ', res);
-//           resolve(res);
-//         });
-//       });
-//       return {
-//         status: 201,
-//         json: {
-//           message: "Mail sent successfully",
-//           request: {
-//             type: "POST",
-//             url: "http://" + "165.227.42.141:5000" + route,
-//           },
-//           result,
-//         },
-//       };
-//     } catch (err) {
-//       console.error("Error sending mail: ", err);
-//       return { status: 500, json: err };
-//     }
-// }
-// }
-//
-// module.exports = SendManager;

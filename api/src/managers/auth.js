@@ -15,8 +15,8 @@ const poolData = {
 
 AWS.config = new AWS.Config({
   region: 'us-east-1',
-  accessKeyId: 'AKIAJQH7NPMRLVJLYFYA',
-  secretAccessKey: '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',
+  accessKeyId: 'AKIAJX7UB3Q56ZXUKHRQ',
+  secretAccessKey: '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',
 });
 
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
@@ -26,6 +26,7 @@ const clientId = '107550134059-tttr1lbgnc499l32hhc9vt7pnkf5fij5.apps.googleuserc
 const client = new OAuth2Client(clientId);
 
 class AuthManager {
+
   constructor(UserManager, UserService) {
     this._userManager = UserManager;
     this._userService = UserService;
