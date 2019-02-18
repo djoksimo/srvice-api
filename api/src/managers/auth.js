@@ -300,7 +300,6 @@ class AuthManager {
       Pool: userPool
     };
     const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-
     try {
       const result = await new Promise((resolve, reject) => {
         cognitoUser.resendConfirmationCode((error, result) => {
@@ -313,8 +312,8 @@ class AuthManager {
       return {
         status: 200,
         json: {
-          result
-        }
+          result,
+        },
       };
     } catch (error) {
       return { status: 500, json: error };
