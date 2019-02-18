@@ -21,6 +21,12 @@ router.post("/confirm", async (req, res) => {
   res.status(status).json(json);
 });
 
+router.post("/resend-confirmation", async (req, res) => {
+  const result = await Bottle.AuthManager.resendConfirmation(req.body);
+  const { status, json } = result;
+  res.status(status).json(json);
+});
+
 router.post("/verify", async (req, res) => {
   const result = await Bottle.AuthManager.verifyToken(req.body.token);
   const { status, json } = result;
@@ -44,6 +50,5 @@ router.post("/login-google", async (req, res) => {
   const { status, json } = result;
   res.status(status).json(json);
 });
-
 
 module.exports = router;
