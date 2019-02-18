@@ -1,6 +1,6 @@
 const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
 const AWS = require('aws-sdk');
-const {OAuth2Client} = require('google-auth-library');
+const { OAuth2Client } = require('google-auth-library');
 
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
@@ -260,7 +260,7 @@ class AuthManager {
         },
       };
     } catch (error) {
-      return {status: 500, json: error};
+      return { status: 500, json: error };
     }
   }
 
@@ -286,6 +286,33 @@ class AuthManager {
         json: {
           result,
           token,
+        },
+      };
+    } catch (error) {
+      return { status: 500, json: error };
+    }
+  }
+
+  async resendConfirmation(payload) {
+    const { email } = payload;
+    const userData = {
+      Username: email,
+      Pool: userPool
+    };
+    const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+    try {
+      const result = await new Promise((resolve, reject) => {
+        cognitoUser.resendConfirmationCode((error, result) => {
+          if (error) {
+            reject(error);
+          }
+          resolve(result);
+        });
+      });
+      return {
+        status: 200,
+        json: {
+          result,
         },
       };
     } catch (error) {
