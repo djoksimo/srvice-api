@@ -227,8 +227,6 @@ class AuthManager {
   async signup(data) {
     try {
       await this._signupCognito(data);
-      const result = await this._signupMongo(data);
-      const token = await this._getToken(data.email);
       return {
         status: 201,
         json: {
@@ -237,8 +235,6 @@ class AuthManager {
             type: "POST",
             url: "http://" + "165.227.42.141:5000" + route + "signup",
           },
-          result,
-          token,
         },
       };
     } catch (error) {
