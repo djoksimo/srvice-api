@@ -227,6 +227,7 @@ class AuthManager {
   async signup(data) {
     try {
       await this._signupCognito(data);
+      await this._signupMongo(data);
       return {
         status: 201,
         json: {
@@ -276,11 +277,13 @@ class AuthManager {
           resolve(cognitoResult);
         });
       });
+      const userResult = await this._userManager.find(email);
+      const user = userResult.json.result;
       const token = await this._getToken(email);
       return {
         status: 200,
         json: {
-          result,
+          user,
           token,
         },
       };
