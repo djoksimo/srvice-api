@@ -247,7 +247,8 @@ class AuthManager {
     const { email } = credentials;
     try {
       await this._loginCognito(credentials);
-      const user = await this._userManager.find(email);
+      const userResult = await this._userManager.find(email);
+      const user = userResult.json.result;
       const token = await this._getToken(email);
       return {
         status: 200,
