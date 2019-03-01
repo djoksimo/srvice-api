@@ -326,7 +326,8 @@ class AuthManager {
       return { status: 403, json: result };
     }
     try {
-      const user = await this._userManager.find(result.email);
+      const userResult = await this._userManager.find(result.email);
+      const user = userResult.json.result;
       return { status: 200, json: user };
     } catch (error) {
       return { status: 403, json: error };
