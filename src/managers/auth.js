@@ -8,9 +8,17 @@ const mongoose = require("mongoose");
 const User = require("../models/user");
 
 const route = "/auth/";
+
+// prod
+// const poolData = {
+//   UserPoolId: "us-east-1_5LnENujLz",
+//   ClientId: "7stqncgt58t6tk6sokoa57ajbd",
+// };
+
+// sandbox 01
 const poolData = {
-  UserPoolId: "us-east-1_5LnENujLz",
-  ClientId: "7stqncgt58t6tk6sokoa57ajbd",
+  UserPoolId: "us-east-1_PQ6pkrE6F",
+  ClientId: "674mh87fc0bg8m588r8sslf87q",
 };
 
 AWS.config = new AWS.Config({
