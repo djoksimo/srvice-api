@@ -7,15 +7,16 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const socketEvents = require('./socketEvents');
-
-const authRoutes = require("./routes/auth");
-const userRoutes = require("./routes/user");
-const categoryRoutes = require("./routes/category");
-const serviceRoutes = require("./routes/service");
-const ratingRoutes = require("./routes/rating");
-const adminRoutes = require("./routes/admin");
-const sendRoutes = require("./routes/send");
-const chatRoutes = require("./routes/chat");
+const {
+  AuthenticationRoutes,
+  UserRoutes,
+  CategoryRoutes,
+  ServiceRoutes,
+  RatingRoutes,
+  AdminRoutes,
+  SendRoutes,
+  ChatRoutes,
+} = require("./routes");
 
 const adminPassword = "iakd8k98qogbb8eku1nwzmxdhyhyogxbpn22rub473499rkbpu0hvux4ne6ifjxqqxgvabsxukf0f88904lqxtlf9";
 
@@ -50,13 +51,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/auth", authRoutes);
-app.use("/user", userRoutes);
-app.use("/category", categoryRoutes);
-app.use("/service", serviceRoutes);
-app.use("/rating", ratingRoutes);
-app.use("/send", sendRoutes);
-app.use("/chat", chatRoutes);
+app.use("/auth", AuthenticationRoutes);
+app.use("/user", UserRoutes);
+app.use("/category", CategoryRoutes);
+app.use("/service", ServiceRoutes);
+app.use("/rating", RatingRoutes);
+app.use("/send", SendRoutes);
+app.use("/chat", ChatRoutes);
 
 app.use((req, res, next) => {
   const { url, body } = req;
@@ -66,7 +67,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/admin", adminRoutes);
+app.use("/admin", AdminRoutes);
 
 
 app.use((req, res, next) => {

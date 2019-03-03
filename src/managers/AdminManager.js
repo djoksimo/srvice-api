@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
-const Category = require("../models/category");
+const Category = require("../models/CategoryModel");
 
 const route = "/admin/";
 
 class AdminManager {
 
-  constructor(AuthManager, CategoryService) {
-    this._authManager = AuthManager;
+  constructor(AuthenticationManager, CategoryService) {
+    this._authenticationManager = AuthenticationManager;
     this._categoryService = CategoryService;
 
   }
@@ -25,7 +25,7 @@ class AdminManager {
     });
     try {
 
-      const verificationBody = await this._authManager.verifyToken(token);
+      const verificationBody = await this._authenticationManager.verifyToken(token);
       if (verificationBody.status === 403) {
         return {
           status: 403,
@@ -51,7 +51,7 @@ class AdminManager {
 
   async updateCategory(data) {
     try {
-      const verificationBody = await this._authManager.verifyToken(data.token);
+      const verificationBody = await this._authenticationManager.verifyToken(data.token);
       if (verificationBody.status === 403) {
         return {
           status: 403,

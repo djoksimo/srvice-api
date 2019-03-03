@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-const Chat = require("../models/chat");
+const Chat = require("../models/ChatModel");
 const route = "/chat/";
 
 class ChatManager {
 
-  constructor(AuthManager, ChatService) {
-    this._authManager = AuthManager;
+  constructor(AuthenticationManager, ChatService) {
+    this._authenticationManager = AuthenticationManager;
     this._chatService = ChatService;
   }
 
@@ -18,7 +18,7 @@ class ChatManager {
       messages,
     });
     try {
-      const verificationBody = await this._authManager.verifyToken(token);
+      const verificationBody = await this._authenticationManager.verifyToken(token);
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
@@ -41,7 +41,7 @@ class ChatManager {
 
   async update(data) {
     try {
-      const verificationBody = await this._authManager.verifyToken(data.token);
+      const verificationBody = await this._authenticationManager.verifyToken(data.token);
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
@@ -74,7 +74,7 @@ class ChatManager {
   async findPairChats(data) {
     const { token, byEmail, toEmail } = data;
     try {
-      const verificationBody = await this._authManager.verifyToken(token);
+      const verificationBody = await this._authenticationManager.verifyToken(token);
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
@@ -112,7 +112,7 @@ class ChatManager {
   async findUserChats(data) {
     const { token, byEmail } = data;
     try {
-      const verificationBody = await this._authManager.verifyToken(token);
+      const verificationBody = await this._authenticationManager.verifyToken(token);
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }

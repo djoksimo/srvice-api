@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
-const Rating = require("../models/rating");
+const Rating = require("../models/RatingModel");
 const route = "/rating/";
 
 class RatingManager {
 
-  constructor(AuthManager, RatingService) {
+  constructor(AuthenticationManager, RatingService) {
     this._ratingService = RatingService;
-    this._authManager = AuthManager;
+    this._authenticationManager = AuthenticationManager;
   }
 
   async create(data) {
     const { forEmail, byEmail, rating, text, token } = data;
-    const verificationBody = await this._authManager.verifyToken(token);
+    const verificationBody = await this._authenticationManager.verifyToken(token);
     if (verificationBody.status === 403) {
       return { status: 403, json: verificationBody };
     }
@@ -126,7 +126,7 @@ class RatingManager {
 
   async update(data) {
     try {
-      const verificationBody = await this._authManager.verifyToken(data.token);
+      const verificationBody = await this._authenticationManager.verifyToken(data.token);
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
@@ -149,7 +149,7 @@ class RatingManager {
 
   async remove(data) {
     try {
-      const verificationBody = await this._authManager.verifyToken(data.token);
+      const verificationBody = await this._authenticationManager.verifyToken(data.token);
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
