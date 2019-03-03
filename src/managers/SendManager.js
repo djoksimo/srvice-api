@@ -10,8 +10,8 @@ AWS.config.update({
 
 class SendManager {
 
-  constructor(AuthManager) {
-    this._authManager = AuthManager;
+  constructor(AuthenticationManager) {
+    this._authenticationManager = AuthenticationManager;
   }
 
   async sendMail(data) {
@@ -25,7 +25,7 @@ class SendManager {
     } = data;
 
 
-    const verificationBody = await this._authManager.verifyToken(token);
+    const verificationBody = await this._authenticationManager.verifyToken(token);
     if (verificationBody.status === 403) {
       return {
         status: 403,

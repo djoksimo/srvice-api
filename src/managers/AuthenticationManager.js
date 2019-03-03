@@ -1,11 +1,10 @@
 const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
 const AWS = require('aws-sdk');
 const { OAuth2Client } = require('google-auth-library');
-
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 
-const User = require("../models/user");
+const User = require("../models/UserModel");
 
 const route = "/auth/";
 
@@ -33,7 +32,7 @@ const secretJwtKey = "8xStlNM+DbJTIQ0zOk+3X00gngEB9JOEKiVMYWAVWfc";
 const clientId = '107550134059-tttr1lbgnc499l32hhc9vt7pnkf5fij5.apps.googleusercontent.com';
 const client = new OAuth2Client(clientId);
 
-class AuthManager {
+class AuthenticationManager {
 
   constructor(UserManager, UserService) {
     this._userManager = UserManager;
@@ -343,4 +342,4 @@ class AuthManager {
   }
 }
 
-module.exports = AuthManager;
+module.exports = AuthenticationManager;
