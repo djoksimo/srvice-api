@@ -21,7 +21,10 @@ class AgentPrivateService {
           {
             path: "service",
             populate: [
-              { path: "category" },
+              {
+                path: "category",
+                select: "_id name",
+              },
               {
                 path: "ratings",
                 populate: { path: "user" },
