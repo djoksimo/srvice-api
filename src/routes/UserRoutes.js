@@ -7,7 +7,7 @@ const router = express.Router();
 const userManager = Bottle.UserManager;
 
 router.get("/:id", async (req, res) => {
-  HttpUtils.sendResponse(res, await userManager.find(req.params.id));
+  HttpUtils.sendResponse(res, await userManager.findById(req.params.id));
 });
 
 router.get("/", async (req, res) => {

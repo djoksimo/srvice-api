@@ -36,9 +36,9 @@ class CategoryManager {
   async getHomeCategories() {
     const categoryIds = ["5c7cbbcae344b32a42dc06ad", "5c7cbc15e344b32a42dc06b2"];
     try {
-      const categoryDocumentsPromise = categoryIds.map(async id => {
-        return await this.categoryService.getCategoryByIdWithoutServices(id)
-      });
+      const categoryDocumentsPromise = categoryIds.map(async id =>
+        await this.categoryService.getCategoryByIdWithoutServices(id)
+      );
       const categoryDocuments = await Promise.all(categoryDocumentsPromise);
       return { status: 200, json: categoryDocuments };
     } catch (error) {
