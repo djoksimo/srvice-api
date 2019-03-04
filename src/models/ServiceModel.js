@@ -4,7 +4,6 @@ const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
 
 const serviceSchema = Schema({
-  _id: { type: ObjectId, auto: true, required: true },
   agent: { type: ObjectId, ref: "Agent", required: true },
   category: { type: ObjectId, ref: "Category", required: true },
   title: { type: String, required: true },
@@ -21,7 +20,7 @@ const serviceSchema = Schema({
   radius: { type: Number, required: true },
   rating: { type: Number, required: true },
   ratings: { type: [{ type: ObjectId, ref: "ServiceRating" }], required: true },
-});
+}, { versionKey: false });
 
 const serviceModel = Mongoose.model("Service", serviceSchema);
 

@@ -1,28 +1,45 @@
-const Category = require("../models/CategoryModel");
+const { CategoryModel } = require("../models/");
 
 class CategoryService {
-  async create(data) {
-    return data.save();
+
+  createCategory(newCategory) {
+    return newCategory.save();
+  }
+
+  getAllCategories() {
+    return CategoryModel.find().exec();
+  }
+
+  getCategoryById(id) {
+    return CategoryModel.findById(id).exec();
+  }
+
+  deleteCategory(id) {
+    return CategoryModel.remove({ _id: id }).exec();
+  }
+
+  updateCategory(category) {
+    return CategoryModel.update({ _id: category._id }, { $set: category }).exec();
   }
 
   async find(id) {
-    return Category.findById(id).exec();
+    return CategoryModel.findById(id).exec();
   }
 
   async get() {
-    return Category.find().exec();
+    return CategoryModel.find().exec();
   }
 
   async update(id, data) {
-    return Category.update({ _id: id }, { $set: data }).exec();
+    return CategoryModel.update({ _id: id }, { $set: data }).exec();
   }
 
   async getRootCategories() {
-    return Category.find({ isRoot: true }).exec();
+    return CategoryModel.find({ isRoot: true }).exec();
   }
 
   async findWithParentId(id) {
-    return Category.find({ parentId: id }).exec();
+    return CategoryModel.find({ parentId: id }).exec();
   }
 }
 

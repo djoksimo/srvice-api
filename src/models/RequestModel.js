@@ -10,7 +10,7 @@ const requestSchema = Schema({
   pictureUrls: { type: [String], required: true },
   bookings: { type: [{ type: ObjectId, ref: "Booking" }], required: true },
   booked: { type: Boolean, required: true },
-});
+}, { versionKey: false });
 
 const requestModel = Mongoose.model("Request", requestSchema);
 
