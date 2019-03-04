@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 });
 
 router.patch("/", async (req, res) => {
-  HttpUtils.sendResponse(res, await userManager.update(req.body));
+  HttpUtils.sendResponse(res, await userManager.updateUser(req.body));
 });
 
 module.exports = router;

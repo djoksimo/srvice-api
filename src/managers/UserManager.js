@@ -5,13 +5,23 @@ const secretJwtKey = "8xStlNM+DbJTIQ0zOk+3X00gngEB9JOEKiVMYWAVWfc";
 class UserManager {
 
   constructor(userService, ratingService) {
-    this._userService = userService;
+    this.userService = userService;
     this._ratingService = ratingService;
+  }
+
+  async updateUser(user) {
+    try {
+      // TODO: verify user sending request
+      await this.userService.updateUser(user);
+      return { status: 200, json: {} };
+    } catch (error) {
+      return { status: 500, json: error };
+    }
   }
 
   async find(email) {
     try {
-      const result = await this._userService.find(email);
+      const result = await this.userService.find(email);
       if (!result) {
         return {
           status: 404,
@@ -50,7 +60,7 @@ class UserManager {
 
   async findById(id) {
     try {
-      const result = await this._userService.findById(id);
+      const result = await this.userService.findById(id);
       if (!result) {
         return {
           status: 404,
@@ -88,7 +98,7 @@ class UserManager {
 
   async get() {
     try {
-      const result = await this._userService.get();
+      const result = await this.userService.get();
       if (result.length === 0) {
         return {
           status: 404,
@@ -139,30 +149,6 @@ class UserManager {
       return { status: 403, json: error };
     }
   }
-
-  async update(data) {
-    try {
-      const verificationBody = await this.verifyToken(data.token);
-      if (verificationBody.status === 403) {
-        return { status: 403, json: verificationBody };
-      }
-      const result = await this._userService.update(data.email, data);
-      return {
-        status: 200,
-        json: {
-          message: "User updated in database",
-          request: {
-            type: "PATCH",
-            url: "http://" + "165.227.42.141:5000" + route,
-          },
-          result,
-        },
-      };
-    } catch (error) {
-      return { status: 500, json: error };
-    }
-  }
-
 }
 
 module.exports = UserManager;

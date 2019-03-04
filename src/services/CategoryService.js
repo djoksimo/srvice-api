@@ -10,8 +10,8 @@ class CategoryService {
     return CategoryModel.find().exec();
   }
 
-  getCategoryById(id) {
-    return CategoryModel.findById(id).exec();
+  getCategoryByIdWithoutServices(id) {
+    return CategoryModel.findById(id).select("-services").exec();
   }
 
   deleteCategory(id) {
