@@ -6,6 +6,10 @@ const bottle = require("../bottle");
 const router = Express.Router();
 const serviceManager = bottle.ServiceManager;
 
+router.post("/nearby", async (req, res) => {
+  HttpUtils.sendResponse(res, await serviceManager.getNearbyServicesByCategory(req.body));
+});
+
 router.post("/", async (req, res) => {
   HttpUtils.sendResponse(res, await serviceManager.createService(req.body));
 });
