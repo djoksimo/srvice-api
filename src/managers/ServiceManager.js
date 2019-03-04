@@ -1,14 +1,24 @@
 const mongoose = require("mongoose");
-const { ServiceModel } = require("../models/");
+
+const { ServiceModel } = require("../models");
+const { CalculationUtils } = require("../utils");
+
 const route = "/service/";
+const MAX_CATEGORY_ENTRY_AGE = 600000;
+const MAX_IN_CALL_DISTANCE = 50;
 
 class ServiceManager {
 
-  constructor(AuthenticationManager, ServiceService, CategoryService, AgentService) {
+  static get MAX_CATEGORY_ENTRY_AGE() { return MAX_CATEGORY_ENTRY_AGE }
+  static get MAX_IN_CALL_DISTANCE() { return MAX_IN_CALL_DISTANCE }
+
+  constructor(AuthenticationManager, ServiceService, CategoryService, AgentService, GoogleMapsService) {
     this.authenticationManager = AuthenticationManager;
     this.serviceService = ServiceService;
     this.categoryService = CategoryService;
     this.agentService = AgentService;
+    this.googleMapsService = GoogleMapsService;
+    this.categoryToServiceMap = {};
   }
 
   async createService({ agent, category, title, description, pictureUrls, phone, email, inCall, outCall, remoteCall, address, latitude, longitude, radius, rating, ratings }) {
@@ -22,6 +32,37 @@ class ServiceManager {
     } catch (error) {
       return { status: 500, json: error };
     }
+  }
+
+  async getNearbyServicesByCategory({ categoryId, postalCode }) {
+    const result = await this.googleMapsService.getCoordinatesFromPostalCode(postalCode);
+    const { formatted_address: address, geometry } = result.results[0];
+    const { lat, lng } = geometry.location;
+    const categoryEntry = this.categoryToServiceMap[categoryId];
+    if (!categoryEntry || Date.now() - categoryEntry.updatedAt >= ServiceManager.MAX_CATEGORY_ENTRY_AGE) {
+      const categoryDocument = await this.categoryService.getCategoryById(categoryId);
+      this.categoryToServiceMap[categoryId] = { services: categoryDocument.toObject().services, updatedAt: Date.now() };
+    }
+    const services = this.categoryToServiceMap[categoryId].services.filter(service => {
+      const { remoteCall, inCall, outCall, latitude, longitude, radius } = service;
+      const distance = CalculationUtils.calculateCrowDistance(lat, lng, latitude, longitude);
+      let possible = false;
+      if (remoteCall) {
+        possible = true
+      }
+      if (inCall && distance < ServiceManager.MAX_IN_CALL_DISTANCE) {
+        service.inCallDistance = distance;
+        possible = true;
+      }
+      if (outCall && distance < radius) {
+        service.outCallAvailable = true;
+        possible = true;
+      } else {
+        service.outCallAvailable = false;
+      }
+     return possible;
+    }).sort((a, b) => b.rating - a.rating);
+    return { status: 200, json: { address, services } };
   }
 
   async create(data) {
@@ -155,10 +196,10 @@ class ServiceManager {
 
   async update(data) {
     try {
-      const verificationBody = await this.authenticationManager.verifyToken(data.token);
-      if (verificationBody.status === 403) {
-        return { status: 403, json: verificationBody };
-      }
+      // const verificationBody = await this.authenticationManager.verifyToken(data.token);
+      // if (verificationBody.status === 403) {
+      //   return { status: 403, json: verificationBody };
+      // }
 
       const result = await this.serviceService.update(data._id, data);
       return {

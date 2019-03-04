@@ -4,6 +4,7 @@ const {
   CognitoService,
   AgentService,
   AgentPrivateService,
+  GoogleMapsService,
   UserService,
   CategoryService,
   ServiceService,
@@ -26,6 +27,7 @@ const bottle = new Bottle();
 bottle.service("CognitoService", CognitoService);
 bottle.service("AgentService", AgentService);
 bottle.service("AgentPrivateService", AgentPrivateService);
+bottle.service("GoogleMapsService", GoogleMapsService);
 bottle.service("UserService", UserService);
 bottle.service("CategoryService", CategoryService);
 bottle.service("ServiceService", ServiceService);
@@ -35,7 +37,7 @@ bottle.service("AuthenticationManager", AuthenticationManager, "UserManager", "C
 bottle.service("AgentManager", AgentManager, "AgentService");
 bottle.service("UserManager", UserManager, "UserService", "RatingService");
 bottle.service("CategoryManager", CategoryManager,  "CategoryService", "ServiceService");
-bottle.service("ServiceManager", ServiceManager, "AuthenticationManager", "ServiceService", "CategoryService", "AgentService");
+bottle.service("ServiceManager", ServiceManager, "AuthenticationManager", "ServiceService", "CategoryService", "AgentService", "GoogleMapsService");
 bottle.service("RatingManager", RatingManager, "AuthenticationManager", "RatingService");
 bottle.service("SendManager", SendManager, "AuthenticationManager");
 bottle.service("ChatManager", ChatManager, "AuthenticationManager", "ChatService");
