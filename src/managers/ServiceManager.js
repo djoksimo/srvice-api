@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-const Service = require("../models/service");
+const Service = require("../models/ServiceModel");
 const route = "/service/";
 
 class ServiceManager {
 
-  constructor(AuthManager, ServiceService) {
-    this._authManager = AuthManager;
+  constructor(AuthenticationManager, ServiceService) {
+    this._authenticationManager = AuthenticationManager;
     this._serviceService = ServiceService;
   }
 
@@ -19,7 +19,7 @@ class ServiceManager {
     } = data;
 
     const newService = new Service({
-      _id: new mongoose.Types.ObjectId(),
+      _id: new mongoose.Types.Mongoose.Schema.Types.ObjectId(),
       email,
       title,
       categoryId,
@@ -35,7 +35,7 @@ class ServiceManager {
       products
     });
     try {
-      const verificationBody = await this._authManager.verifyToken(token);
+      const verificationBody = await this._authenticationManager.verifyToken(token);
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
@@ -140,7 +140,7 @@ class ServiceManager {
 
   async update(data) {
     try {
-      const verificationBody = await this._authManager.verifyToken(data.token);
+      const verificationBody = await this._authenticationManager.verifyToken(data.token);
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
@@ -164,7 +164,7 @@ class ServiceManager {
 
   async remove(data) {
     try {
-      const verificationBody = await this._authManager.verifyToken(data.token);
+      const verificationBody = await this._authenticationManager.verifyToken(data.token);
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
