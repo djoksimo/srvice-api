@@ -10,7 +10,7 @@ const userSchema = Schema({
   lastName: { type: String, required: true },
   dateJoined: { type: Date, required: true },
   profilePictureUrl: { type: String, required: true },
-});
+}, { versionKey: false });
 
 const userModel = Mongoose.model("User", userSchema);
 

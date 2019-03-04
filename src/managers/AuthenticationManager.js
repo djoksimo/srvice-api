@@ -4,7 +4,12 @@ const { OAuth2Client } = require("google-auth-library");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 
-const User = require("../models/UserModel");
+const {
+  AgentModel,
+  AgentPrivateModel,
+  UserModel,
+  UserPrivateModel
+} = require("../models/");
 
 const route = "/auth/";
 
@@ -34,40 +39,67 @@ const client = new OAuth2Client(clientId);
 
 class AuthenticationManager {
 
-  constructor(UserManager, UserService) {
+  constructor(UserManager, CognitoService, AgentService, AgentPrivateService, UserService) {
     this._userManager = UserManager;
+    this.cognitoService = CognitoService;
+    this.agentService = AgentService;
+    this.agentPrivateService = AgentPrivateService;
     this._userService = UserService;
   }
 
-  _signupCognito(data) {
-    const { firstName, lastName, password, email } = data;
-    const dataFirstName = {
-      Name: "given_name",
-      Value: firstName,
-    };
-    const dataLastName = {
-      Name: "family_name",
-      Value: lastName,
-    };
-    const dataEmail = {
-      Name: "email",
-      Value: email,
-    };
-    const attributeList = [];
-    const attributeFirstName = new AmazonCognitoIdentity.CognitoUserAttribute(dataFirstName);
-    const attributeLastName = new AmazonCognitoIdentity.CognitoUserAttribute(dataLastName);
-    const attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
-    attributeList.push(attributeFirstName);
-    attributeList.push(attributeLastName);
-    attributeList.push(attributeEmail);
-    return new Promise((resolve, reject) => {
-      userPool.signUp(email, password, attributeList, null, (error, result) => {
-        if (error) {
-          reject(error);
-        }
-        resolve(result);
-      });
+  async signupAgent({ email, firstName, lastName, password, dateJoined, profilePictureUrl, services, location, languages, company, education, certifications, phone, governmentIdUrl, secondaryIdUrl, selfieUrl, givenRatings, bookings }) {
+    try {
+      await this.cognitoService.createAccount(firstName, lastName, password, email);
+      const newAgent = new AgentModel({ email, firstName, lastName, dateJoined, profilePictureUrl, services, location, languages, company, education, certifications });
+      const newAgentPrivate = new AgentPrivateModel({ email, phone, governmentIdUrl, secondaryIdUrl, selfieUrl, givenRatings, bookings });
+      await this.agentService.createAgent(newAgent);
+      await this.agentPrivateService.createAgentPrivate(newAgentPrivate);
+      return { status: 201, json: {} };
+    } catch (error) {
+      return { status: 500, json: error };
+    }
+  }
+
+  async confirmAgent({ email, code }) {
+    try {
+      await this.cognitoService.confirmAccount(email, code);
+      const agentDocument = await this.agentService.getAgentByEmail(email);
+      const agentPrivateDocument = await this.agentPrivateService.getAgentPrivateByEmail(email);
+      const agent = Object.assign({}, agentPrivateDocument.toObject(), agentDocument.toObject());
+      const token = await this._getToken(email);
+      return { status: 200, json: { agent, token } };
+    } catch (error) {
+      return { status: 500, json: error };
+    }
+  }
+
+  async confirmUser({ email, code }) {
+    try {
+      await this.cognitoService.confirmAccount(email, code);
+      const userResult = await this._userManager.find(email);
+      const user = userResult.json.result;
+      const token = await this._getToken(email);
+      return {
+        status: 200,
+        json: {
+          user,
+          token,
+        },
+      };
+    } catch (error) {
+      return { status: 500, json: error };
+    }
+  }
+
+  async createUser({ email, firstName, lastName, dateJoined, profilePictureUrl, phone, savedServices, givenRatings, requests, bookings }) {
+    const newUser = new UserModel({
+      _id: new mongoose.Types.Mongoose.Schema.Types.ObjectId(),
+      firstName,
+      lastName,
+      email,
+      dateJoined: new Date(),
     });
+    return this._userService.create(newUser);
   }
 
   async signupGoogle(data) {
@@ -172,7 +204,7 @@ class AuthenticationManager {
 
   async _signupMongo(data) {
     const { firstName, lastName, email } = data;
-    const newUser = new User({
+    const newUser = new UserModel({
       _id: new mongoose.Types.Mongoose.Schema.Types.ObjectId(),
       firstName,
       lastName,
@@ -233,7 +265,7 @@ class AuthenticationManager {
 
   async signup(data) {
     try {
-      await this._signupCognito(data);
+      await this.cognitoService.createAccount(data);
       await this._signupMongo(data);
       return {
         status: 201,
@@ -254,37 +286,6 @@ class AuthenticationManager {
     const { email } = credentials;
     try {
       await this._loginCognito(credentials);
-      const userResult = await this._userManager.find(email);
-      const user = userResult.json.result;
-      const token = await this._getToken(email);
-      return {
-        status: 200,
-        json: {
-          user,
-          token,
-        },
-      };
-    } catch (error) {
-      return { status: 500, json: error };
-    }
-  }
-
-  async confirm(credentials) {
-    const { email, code } = credentials;
-    const userData = {
-      Username: email,
-      Pool: userPool,
-    };
-    const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-    try {
-      const result = await new Promise((resolve, reject) => {
-        cognitoUser.confirmRegistration(code, true, (error, cognitoResult) => {
-          if (error) {
-            reject(error);
-          }
-          resolve(cognitoResult);
-        });
-      });
       const userResult = await this._userManager.find(email);
       const user = userResult.json.result;
       const token = await this._getToken(email);

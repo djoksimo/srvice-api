@@ -6,6 +6,14 @@ const { HttpUtils } = require("../utils");
 const router = express.Router();
 const authenticationManager = Bottle.AuthenticationManager;
 
+router.post("/agent/signup", async (req, res) => {
+  HttpUtils.sendResponse(res, await authenticationManager.signupAgent(req.body));
+});
+
+router.post("/agent/confirm", async (req, res) => {
+  HttpUtils.sendResponse(res, await authenticationManager.confirmAgent(req.body));
+});
+
 router.post("/signup", async (req, res) => {
   HttpUtils.sendResponse(res, await authenticationManager.signup(req.body));
 });
@@ -15,7 +23,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/confirm", async (req, res) => {
-  HttpUtils.sendResponse(res, await authenticationManager.confirm(req.body));
+  HttpUtils.sendResponse(res, await authenticationManager.confirmUser(req.body));
 });
 
 router.post("/resend-confirmation", async (req, res) => {

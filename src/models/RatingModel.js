@@ -10,6 +10,6 @@ const ratingSchema = Schema({
   date: { type: Date, required: true },
   rating: { type: Number, required: true },
   text: { type: String, required: false },
-});
+}, { versionKey: false });
 
 module.exports = Mongoose.model("Rating", ratingSchema);

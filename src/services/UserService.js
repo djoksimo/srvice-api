@@ -1,4 +1,4 @@
-const User = require("../models/UserModel");
+const { UserModel } = require("../models");
 
 class UserService {
   async create(data) {
@@ -6,19 +6,19 @@ class UserService {
   }
 
   async find(email) {
-    return User.findOne({ email }).populate('services savedServices').exec();
+    return UserModel.findOne({ email }).populate('services savedServices').exec();
   }
 
   async findById(id) {
-    return User.findById(id).populate('services savedServices').exec();
+    return UserModel.findById(id).populate('services savedServices').exec();
   }
 
   async get() {
-    return User.find().exec();
+    return UserModel.find().exec();
   }
 
-  async update(email, data) {
-    return User.update({ email }, { $set: data }).exec();
+  async updateUser(user) {
+    return UserModel.update({ _id: user._id }, { $set: user }).exec();
   }
 }
 
