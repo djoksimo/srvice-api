@@ -16,7 +16,7 @@ class AdminManager {
     const { name, isRoot, parentId, childrenIds, serviceIds, token} = data;
 
     const newCategory = new Category({
-      _id: new mongoose.Types.ObjectId(),
+      _id: new mongoose.Types.Mongoose.Schema.Types.ObjectId(),
       name,
       isRoot,
       parentId,

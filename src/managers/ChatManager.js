@@ -13,7 +13,7 @@ class ChatManager {
     const { token, messages, participants } = data;
 
     const newMessage = new Chat({
-      _id: new mongoose.Types.ObjectId(),
+      _id: new mongoose.Types.Mongoose.Schema.Types.ObjectId(),
       participants,
       messages,
     });

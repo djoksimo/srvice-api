@@ -19,7 +19,7 @@ class ServiceManager {
     } = data;
 
     const newService = new Service({
-      _id: new mongoose.Types.ObjectId(),
+      _id: new mongoose.Types.Mongoose.Schema.Types.ObjectId(),
       email,
       title,
       categoryId,

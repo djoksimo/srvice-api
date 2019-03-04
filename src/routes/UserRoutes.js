@@ -1,30 +1,25 @@
 const express = require("express");
+
 const Bottle = require("../bottle");
+const { HttpUtils } = require("../utils");
 
 const router = express.Router();
+const userManager = Bottle.UserManager;
 
 router.get("/:id", async (req, res) => {
-  const result = await Bottle.UserManager.find(req.params.id);
-  const { status, json } = result;
-  res.status(status).json(json);
+  HttpUtils.sendResponse(res, await userManager.find(req.params.id));
 });
 
 router.get("/agent/:id", async (req, res) => {
-  const result = await Bottle.UserManager.findById(req.params.id);
-  const { status, json } = result;
-  res.status(status).json(json);
+  HttpUtils.sendResponse(res, await userManager.findById(req.params.id));
 });
 
 router.get("/", async (req, res) => {
-  const result = await Bottle.UserManager.get();
-  const { status, json } = result;
-  res.status(status).json(json);
+  HttpUtils.sendResponse(res, await userManager.get());
 });
 
 router.patch("/", async (req, res) => {
-  const result = await Bottle.UserManager.update(req.body);
-  const { status, json } = result;
-  res.status(status).json(json);
+  HttpUtils.sendResponse(res, await userManager.update(req.body));
 });
 
 module.exports = router;

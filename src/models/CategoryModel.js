@@ -1,13 +1,14 @@
-const mongoose = require("mongoose");
+const Mongoose = require("mongoose");
 
-const categorySchema = mongoose.Schema({
-  _id: { type: mongoose.Schema.Types.ObjectId, required: true, auto: true },
-  name: { type: String, required: true },
-  isRoot: { type: Boolean, required: true },
-  parentId: { type: mongoose.Schema.Types.ObjectId, required: false, ref: "Category" },
-  // add these as empty arrays when creating new category
-  services: { type: [], required: true },
-  children: { type: [], required: true },
+const { Schema } = Mongoose;
+const { ObjectId } = Schema.Types;
+
+const categorySchema = Schema({
+  _id: { type: ObjectId, required: true },
+  name: { type: "String", required: true },
+  services: { type: [{ type: ObjectId, ref: "Service" }], required: true },
 });
 
-module.exports = mongoose.model("Category", categorySchema);
+const categoryModel = Mongoose.model("Category", categorySchema);
+
+module.exports = categoryModel;
