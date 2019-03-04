@@ -9,7 +9,7 @@ const userSchema = Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   dateJoined: { type: Date, required: true },
-  profilePictureUrl: { type: String, required: true },
+  profilePictureUrl: { type: String, required: false },
 }, { versionKey: false });
 
 const userModel = Mongoose.model("User", userSchema);

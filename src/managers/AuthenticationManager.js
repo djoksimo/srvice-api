@@ -49,7 +49,7 @@ class AuthenticationManager {
 
   async signupAgent({ email, firstName, lastName, password, dateJoined, profilePictureUrl, services, location, languages, company, education, certifications, phone, governmentIdUrl, secondaryIdUrl, selfieUrl, givenRatings, bookings }) {
     try {
-      await this.cognitoService.createAccount(firstName, lastName, password, email);
+      await this.cognitoService.createAccount(firstName, lastName, email, password);
       const newAgent = new AgentModel({ email, firstName, lastName, dateJoined, profilePictureUrl, services, location, languages, company, education, certifications });
       const newAgentPrivate = new AgentPrivateModel({ email, phone, governmentIdUrl, secondaryIdUrl, selfieUrl, givenRatings, bookings });
       await this.agentService.createAgent(newAgent);
@@ -202,14 +202,14 @@ class AuthenticationManager {
     }
   }
 
-  async _signupMongo(data) {
-    const { firstName, lastName, email } = data;
+  async _signupMongo(firstName, lastName, email) {
     const newUser = new UserModel({
-      _id: new mongoose.Types.Mongoose.Schema.Types.ObjectId(),
+      _id: new mongoose.Types.ObjectId(),
       firstName,
       lastName,
       email,
       dateJoined: new Date(),
+      profilePictureUrl: "",
     });
     return this._userService.create(newUser);
   }
@@ -263,10 +263,10 @@ class AuthenticationManager {
     });
   }
 
-  async signup(data) {
+  async signup({ firstName, lastName, email, password }) {
     try {
-      await this.cognitoService.createAccount(data);
-      await this._signupMongo(data);
+      await this.cognitoService.createAccount(firstName, lastName, email, password);
+      await this._signupMongo(firstName, lastName, email);
       return {
         status: 201,
         json: {
