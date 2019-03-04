@@ -4,20 +4,21 @@ const route = "/service/";
 
 class ServiceManager {
 
-  constructor(AuthenticationManager, ServiceService, CategoryService) {
+  constructor(AuthenticationManager, ServiceService, CategoryService, AgentService) {
     this.authenticationManager = AuthenticationManager;
     this.serviceService = ServiceService;
     this.categoryService = CategoryService;
+    this.agentService = AgentService;
   }
 
-  async createService({ agent, category, title, description, pictureUrls, phone, email, inCall, outCall, remoteCall, address, latitude, longitude, radius, rating, ratings, }) {
+  async createService({ agent, category, title, description, pictureUrls, phone, email, inCall, outCall, remoteCall, address, latitude, longitude, radius, rating, ratings }) {
     const newService = new ServiceModel({ agent, category, title, description, pictureUrls, phone, email, inCall, outCall, remoteCall, address, latitude, longitude, radius, rating, ratings });
     // TODO: verify agent sending request
     try {
-      const result = await this.serviceService.createService(newService);
-      const categoryToUpdate = await this.categoryService.getCategoryById(category);
-      category
-      return { status: 201, json: result };
+      const serviceDocument = await this.serviceService.createService(newService);
+      await this.categoryService.addServiceToCategory(category, serviceDocument.toObject()._id);
+      await this.agentService.addServiceToAgent(agent, serviceDocument.toObject()._id);
+      return { status: 201, json: {} };
     } catch (error) {
       return { status: 500, json: error };
     }

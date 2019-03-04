@@ -18,8 +18,8 @@ class CategoryService {
     return CategoryModel.remove({ _id: id }).exec();
   }
 
-  updateCategory(category) {
-    return CategoryModel.update({ _id: category._id }, { $set: category }).exec();
+  addServiceToCategory(categoryId, serviceId) {
+    return CategoryModel.findByIdAndUpdate(categoryId, { $push : { services: serviceId }});
   }
 
   async find(id) {

@@ -9,6 +9,7 @@ const cors = require("cors");
 const socketEvents = require('./socketEvents');
 const {
   AuthenticationRoutes,
+  AgentRoutes,
   UserRoutes,
   CategoryRoutes,
   ServiceRoutes,
@@ -52,6 +53,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/auth", AuthenticationRoutes);
+app.use("/agent", AgentRoutes);
 app.use("/user", UserRoutes);
 app.use("/category", CategoryRoutes);
 app.use("/service", ServiceRoutes);
