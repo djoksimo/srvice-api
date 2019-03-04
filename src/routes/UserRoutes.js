@@ -10,10 +10,6 @@ router.get("/:id", async (req, res) => {
   HttpUtils.sendResponse(res, await userManager.find(req.params.id));
 });
 
-router.get("/agent/:id", async (req, res) => {
-  HttpUtils.sendResponse(res, await userManager.findById(req.params.id));
-});
-
 router.get("/", async (req, res) => {
   HttpUtils.sendResponse(res, await userManager.get());
 });

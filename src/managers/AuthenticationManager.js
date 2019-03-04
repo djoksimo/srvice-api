@@ -63,9 +63,9 @@ class AuthenticationManager {
   async confirmAgent({ email, code }) {
     try {
       await this.cognitoService.confirmAccount(email, code);
-      const agentObject = await this.agentService.getAgentByEmail(email);
-      const agentPrivateObject = await this.agentPrivateService.getAgentPrivateByEmail(email);
-      const agent = Object.assign({}, agentObject.toObject(), agentPrivateObject.toObject());
+      const agentDocument = await this.agentService.getAgentByEmail(email);
+      const agentPrivateDocument = await this.agentPrivateService.getAgentPrivateByEmail(email);
+      const agent = Object.assign({}, agentPrivateDocument.toObject(), agentDocument.toObject());
       const token = await this._getToken(email);
       return { status: 200, json: { agent, token } };
     } catch (error) {

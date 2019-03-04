@@ -11,8 +11,9 @@ const {
   ChatService,
 } = require("./services");
 const {
-  UserManager,
   AuthenticationManager,
+  AgentManager,
+  UserManager,
   CategoryManager,
   ServiceManager,
   RatingManager,
@@ -30,10 +31,11 @@ bottle.service("CategoryService", CategoryService);
 bottle.service("ServiceService", ServiceService);
 bottle.service("RatingService", RatingService);
 bottle.service("ChatService", ChatService);
-bottle.service("UserManager", UserManager, "UserService", "RatingService");
 bottle.service("AuthenticationManager", AuthenticationManager, "UserManager", "CognitoService", "AgentService", "AgentPrivateService", "UserService");
+bottle.service("AgentManager", AgentManager, "AgentService");
+bottle.service("UserManager", UserManager, "UserService", "RatingService");
 bottle.service("CategoryManager", CategoryManager,  "CategoryService", "ServiceService");
-bottle.service("ServiceManager", ServiceManager, "AuthenticationManager", "ServiceService", "CategoryService");
+bottle.service("ServiceManager", ServiceManager, "AuthenticationManager", "ServiceService", "CategoryService", "AgentService");
 bottle.service("RatingManager", RatingManager, "AuthenticationManager", "RatingService");
 bottle.service("SendManager", SendManager, "AuthenticationManager");
 bottle.service("ChatManager", ChatManager, "AuthenticationManager", "ChatService");

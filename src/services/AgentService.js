@@ -17,6 +17,23 @@ class AgentService {
       ],
     }).exec();
   }
+
+  getAgentById(id) {
+    return AgentModel.findById(id).populate({
+      path: "services",
+      populate: [
+        { path: "category" },
+        {
+          path: "ratings",
+          populate: { path: "user" },
+        },
+      ],
+    }).exec();
+  }
+
+  addServiceToAgent(agentId, serviceId) {
+    return AgentModel.findByIdAndUpdate(agentId, { $push : { services: serviceId }});
+  }
 }
 
 module.exports = AgentService;

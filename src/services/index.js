@@ -4,7 +4,7 @@ module.exports = {
   AgentPrivateService: require("./AgentPrivateService"),
   UserService: require("./UserService"),
   CategoryService: require("./CategoryService"),
-  ServiceService: require("./RatingService"),
+  ServiceService: require("./ServiceService"),
   RatingService: require("./RatingService"),
   ChatService: require("./ChatService"),
 };

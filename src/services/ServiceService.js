@@ -3,7 +3,7 @@ const Service = require("../models/ServiceModel");
 class ServiceService {
 
   createService(newService) {
-    newService.save();
+    return newService.save();
   }
 
   async create(data) {
