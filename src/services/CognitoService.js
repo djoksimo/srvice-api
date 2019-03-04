@@ -15,7 +15,7 @@ class CognitoService {
     });
   }
 
-  createAccount(firstName, lastName, password, email) {
+  createAccount(firstName, lastName, email, password) {
     const dataFirstName = { Name: "given_name", Value: firstName };
     const dataLastName = { Name: "family_name", Value: lastName };
     const dataEmail = { Name: "email", Value: email };
