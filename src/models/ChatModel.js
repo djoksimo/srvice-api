@@ -1,8 +1,11 @@
-const mongoose = require("mongoose");
+const Mongoose = require("mongoose");
 
-const chatSchema = mongoose.Schema(
+const { Schema } = Mongoose;
+const { ObjectId } = Schema.Types;
+
+const chatSchema = Schema(
   {
-    _id: { type: mongoose.Schema.Types.ObjectId, required: true, auto: true },
+    _id: { type: ObjectId, required: true, auto: true },
     participants: [{type: String, required: true }],
     messages: {
       type: [{
@@ -25,5 +28,5 @@ const chatSchema = mongoose.Schema(
   },
 );
 
-module.exports = mongoose.model("Chat", chatSchema);
+module.exports = Mongoose.model("Chat", chatSchema);
 
