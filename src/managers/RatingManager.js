@@ -16,7 +16,7 @@ class RatingManager {
       return { status: 403, json: verificationBody };
     }
     const newRating = new Rating({
-      _id: new mongoose.Types.ObjectId(),
+      _id: new mongoose.Types.Mongoose.Schema.Types.ObjectId(),
       forEmail,
       byEmail,
       date: new Date(),

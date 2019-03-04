@@ -1,6 +1,6 @@
 const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
-const AWS = require('aws-sdk');
-const { OAuth2Client } = require('google-auth-library');
+const AWS = require("aws-sdk");
+const { OAuth2Client } = require("google-auth-library");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 
@@ -21,15 +21,15 @@ const poolData = {
 };
 
 AWS.config = new AWS.Config({
-  region: 'us-east-1',
-  accessKeyId: 'AKIAJX7UB3Q56ZXUKHRQ',
-  secretAccessKey: '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',
+  region: "us-east-1",
+  accessKeyId: "AKIAJX7UB3Q56ZXUKHRQ",
+  secretAccessKey: "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",
 });
 
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 const secretJwtKey = "8xStlNM+DbJTIQ0zOk+3X00gngEB9JOEKiVMYWAVWfc";
 
-const clientId = '107550134059-tttr1lbgnc499l32hhc9vt7pnkf5fij5.apps.googleusercontent.com';
+const clientId = "107550134059-tttr1lbgnc499l32hhc9vt7pnkf5fij5.apps.googleusercontent.com";
 const client = new OAuth2Client(clientId);
 
 class AuthenticationManager {
@@ -114,7 +114,7 @@ class AuthenticationManager {
       });
 
       const payload = ticket.getPayload();
-      const userId = payload['sub'];
+      const userId = payload["sub"];
 
       return {
         status: 200,
@@ -173,7 +173,7 @@ class AuthenticationManager {
   async _signupMongo(data) {
     const { firstName, lastName, email } = data;
     const newUser = new User({
-      _id: new mongoose.Types.ObjectId(),
+      _id: new mongoose.Types.Mongoose.Schema.Types.ObjectId(),
       firstName,
       lastName,
       email,

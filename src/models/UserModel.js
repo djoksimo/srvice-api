@@ -1,37 +1,17 @@
-const mongoose = require("mongoose");
+const Mongoose = require("mongoose");
 
-const userSchema = mongoose.Schema({
-  _id: { type: mongoose.Schema.Types.ObjectId, required: true, auto: true },
+const { Schema } = Mongoose;
+const { ObjectId } = Schema.Types;
+
+const userSchema = Schema({
+  _id: { type: ObjectId, auto: true, required: true },
+  email: { type: String, required: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  email: { type: String, required: true },
   dateJoined: { type: Date, required: true },
-  phone: { type: Number, required: false },
-  profilePictureUrl: { type: String, required: false },
-  gender: { type: String, required: false },
-  birthday: { type: Date, required: false },
-  longitude: { type: Number, required: false },
-  latitude: { type: Number, required: false },
-  savedServices: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: "Service" }],
-  isServer: { type: Boolean, required: false },
-  isPending: { type: Boolean, required: false },
-  governmentIdUrl: { type: String, required: false },
-  secondaryIdUrl: { type: String, required: false },
-  selfieUrl: { type: String, required: false },
-  pictureUrls: { type: [String], required: false },
-  websiteUrls: { type: [String], required: false },
-  bio: { type: String, required: false },
-  company: { type: String, required: false },
-  education: { type: String, required: false },
-  experience: { type: String, required: false },
-  skills: { type: [String], required: false },
-  languages: { type: [String], required: false },
-  certifications: { type: [String], required: false },
-  categories: [{ type: mongoose.Schema.Types.ObjectId, required: false, ref: "Category" }],
-  services: [{ type: mongoose.Schema.Types.ObjectId, required: false, ref: "Service" }],
-  ratingAverage: { type: Number, required: false },
-  followers: { type: [String], required: false },
-  following: { type: [String], required: false },
+  profilePictureUrl: { type: String, required: true },
 });
 
-module.exports = mongoose.model("User", userSchema);
+const userModel = Mongoose.model("User", userSchema);
+
+module.exports = userModel;
