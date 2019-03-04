@@ -1,6 +1,11 @@
 const Service = require("../models/ServiceModel");
 
 class ServiceService {
+
+  createService(newService) {
+    newService.save();
+  }
+
   async create(data) {
     return data.save();
   }

@@ -10,7 +10,7 @@ const userRatingSchema = Schema({
   rating: { type: Number, required: true },
   comment: { type: String, required: true },
   date: { type: Date, required: true },
-});
+}, { versionKey: false });
 
 const userRatingModel = Mongoose.model("UserRating", userRatingSchema);
 

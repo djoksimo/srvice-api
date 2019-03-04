@@ -9,14 +9,14 @@ const agentSchema = Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   dateJoined: { type: Date, required: true },
-  profilePictureUrl: { type: Boolean, required: true },
+  profilePictureUrl: { type: String, required: false },
   services: { type: [{ type: ObjectId, ref: "Service" }], required: true },
-  location: { type: String, required: true },
+  location: { type: String, required: false },
   languages: { type: [String], required: true },
-  company: { type: String, required: true },
+  company: { type: String, required: false },
   education: { type: [String], required: true },
   certifications: { type: [String], required: true },
-});
+}, { versionKey: false });
 
 const agentModel = Mongoose.model("Agent", agentSchema);
 

@@ -11,7 +11,7 @@ const bookingSchema = Schema({
   priceEstimate: { type: Number, required: true },
   agentAccepted: { type: Boolean, required: true },
   userAccepted: { type: Boolean, required: true },
-});
+}, { versionKey: false });
 
 const bookingModel = Mongoose.model("Booking", bookingSchema);
 

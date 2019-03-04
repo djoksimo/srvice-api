@@ -1,12 +1,26 @@
 const mongoose = require("mongoose");
-const Service = require("../models/ServiceModel");
+const { ServiceModel } = require("../models/");
 const route = "/service/";
 
 class ServiceManager {
 
-  constructor(AuthenticationManager, ServiceService) {
-    this._authenticationManager = AuthenticationManager;
-    this._serviceService = ServiceService;
+  constructor(AuthenticationManager, ServiceService, CategoryService) {
+    this.authenticationManager = AuthenticationManager;
+    this.serviceService = ServiceService;
+    this.categoryService = CategoryService;
+  }
+
+  async createService({ agent, category, title, description, pictureUrls, phone, email, inCall, outCall, remoteCall, address, latitude, longitude, radius, rating, ratings, }) {
+    const newService = new ServiceModel({ agent, category, title, description, pictureUrls, phone, email, inCall, outCall, remoteCall, address, latitude, longitude, radius, rating, ratings });
+    // TODO: verify agent sending request
+    try {
+      const result = await this.serviceService.createService(newService);
+      const categoryToUpdate = await this.categoryService.getCategoryById(category);
+      category
+      return { status: 201, json: result };
+    } catch (error) {
+      return { status: 500, json: error };
+    }
   }
 
   async create(data) {
@@ -18,7 +32,7 @@ class ServiceManager {
       homeScreenGroups, schedule, products
     } = data;
 
-    const newService = new Service({
+    const newService = new ServiceModel({
       _id: new mongoose.Types.Mongoose.Schema.Types.ObjectId(),
       email,
       title,
@@ -35,11 +49,11 @@ class ServiceManager {
       products
     });
     try {
-      const verificationBody = await this._authenticationManager.verifyToken(token);
+      const verificationBody = await this.authenticationManager.verifyToken(token);
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
-      const result = await this._serviceService.create(newService);
+      const result = await this.serviceService.create(newService);
       return {
         status: 201,
         json: {
@@ -58,7 +72,7 @@ class ServiceManager {
 
   async find(id) {
     try {
-      const result = await this._serviceService.find(id);
+      const result = await this.serviceService.find(id);
       if (!result) {
         return {
           status: 404,
@@ -86,7 +100,7 @@ class ServiceManager {
 
   async get() {
     try {
-      const result = await this._serviceService.get();
+      const result = await this.serviceService.get();
       if (result.length === 0) {
         return {
           status: 404,
@@ -113,7 +127,7 @@ class ServiceManager {
 
   async getTwenty() {
     try {
-      const result = await this._serviceService.getTwenty();
+      const result = await this.serviceService.getTwenty();
       if (result.length === 0) {
         return {
           status: 404,
@@ -140,12 +154,12 @@ class ServiceManager {
 
   async update(data) {
     try {
-      const verificationBody = await this._authenticationManager.verifyToken(data.token);
+      const verificationBody = await this.authenticationManager.verifyToken(data.token);
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
 
-      const result = await this._serviceService.update(data._id, data);
+      const result = await this.serviceService.update(data._id, data);
       return {
         status: 200,
         json: {
@@ -164,11 +178,11 @@ class ServiceManager {
 
   async remove(data) {
     try {
-      const verificationBody = await this._authenticationManager.verifyToken(data.token);
+      const verificationBody = await this.authenticationManager.verifyToken(data.token);
       if (verificationBody.status === 403) {
         return { status: 403, json: verificationBody };
       }
-      const result = await this._serviceService.remove(data.id);
+      const result = await this.serviceService.remove(data.id);
       return {
         status: 200,
         json: {
@@ -190,19 +204,19 @@ class ServiceManager {
       const result = [];
       result.push({
         name: "Popular",
-        services: await this._serviceService.findByHomeScreenGroup("Popular"),
+        services: await this.serviceService.findByHomeScreenGroup("Popular"),
       });
       result.push({
         name: "Toronto",
-        services: await this._serviceService.findByHomeScreenGroup("Toronto"),
+        services: await this.serviceService.findByHomeScreenGroup("Toronto"),
       });
       result.push({
         name: "Waterloo",
-        services: await this._serviceService.findByHomeScreenGroup("Waterloo"),
+        services: await this.serviceService.findByHomeScreenGroup("Waterloo"),
       });
       result.push({
         name: "Kitchener",
-        services: await this._serviceService.findByHomeScreenGroup("Kitchener"),
+        services: await this.serviceService.findByHomeScreenGroup("Kitchener"),
       });
       return {
         status: 200,
@@ -222,7 +236,7 @@ class ServiceManager {
 
   async queryWithName(name) {
     try {
-      const result = await this._serviceService.findByName(name);
+      const result = await this.serviceService.findByName(name);
       return {
         status: 200,
         json: {
@@ -241,7 +255,7 @@ class ServiceManager {
 
   async queryWithCategory(categoryId) {
     try {
-      const result = await this._serviceService.findByCategoryId(categoryId);
+      const result = await this.serviceService.findByCategoryId(categoryId);
       return {
         status: 200,
         json: {

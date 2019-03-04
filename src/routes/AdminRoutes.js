@@ -1,19 +1,21 @@
-const express = require("express");
+const Express = require("express");
 
 const Bottle = require("../bottle");
+const { HttpUtils } = require("../utils");
 
-const router = express.Router();
+const router = Express.Router();
+const categoryManager = Bottle.CategoryManager;
 
 router.post("/category", async (req, res) => {
-  const result = await Bottle.AdminManager.createCategory(req.body);
-  const { status, json } = result;
-  res.status(status).json(json);
+  HttpUtils.sendResponse(res, await categoryManager.createCategory(req.body));
 });
 
-router.patch("/category", async (req, res) => {
-  const result = await Bottle.AdminManager.updateCategory(req.body);
-  const { status, json } = result;
-  res.status(status).json(json);
+router.get("/category", async (req, res) => {
+  HttpUtils.sendResponse(res, await categoryManager.getAllCategories());
+});
+
+router.delete("/category", async (req, res) => {
+  HttpUtils.sendResponse(res, await categoryManager.deleteCategory(req.body));
 });
 
 module.exports = router;

@@ -60,8 +60,8 @@ app.use("/send", SendRoutes);
 app.use("/chat", ChatRoutes);
 
 app.use((req, res, next) => {
-  const { url, body } = req;
-  if (url.split("/")[1] === "admin" && body.adminPassword !== adminPassword) {
+  const { url, headers } = req;
+  if (url.split("/")[1] === "admin" && (!headers.authorization || headers.authorization !== adminPassword)) {
     return res.sendStatus(403);
   }
   next();

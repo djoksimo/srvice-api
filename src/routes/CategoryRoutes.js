@@ -1,23 +1,23 @@
-const express = require("express");
+const Express = require("express");
 
 const Bottle = require("../bottle");
+const { HttpUtils } = require("../utils");
 
-const router = express.Router();
+const router = Express.Router();
+const categoryManager = Bottle.CategoryManager;
 
-router.get("/tree", async(req, res) => {
-  const result = await Bottle.CategoryManager.getCategoryTree();
-  const { status, json } = result;
-  res.status(status).json(json);
+router.get("/home", async(req, res) => {
+  HttpUtils.sendResponse(res, await categoryManager.getHomeCategories());
 });
 
 router.get("/:id", async (req, res) => {
-  const result = await Bottle.CategoryManager.find(req.params.id);
+  const result = await categoryManager.find(req.params.id);
   const { status, json } = result;
   res.status(status).json(json);
 });
 
 router.get("/", async (req, res) => {
-  const result = await Bottle.CategoryManager.get();
+  const result = await categoryManager.get();
   const { status, json } = result;
   res.status(status).json(json);
 });
