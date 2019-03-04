@@ -9,6 +9,7 @@ const cors = require("cors");
 const socketEvents = require('./socketEvents');
 const {
   AuthenticationRoutes,
+  AgentRoutes,
   UserRoutes,
   CategoryRoutes,
   ServiceRoutes,
@@ -52,6 +53,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/auth", AuthenticationRoutes);
+app.use("/agent", AgentRoutes);
 app.use("/user", UserRoutes);
 app.use("/category", CategoryRoutes);
 app.use("/service", ServiceRoutes);
@@ -60,8 +62,8 @@ app.use("/send", SendRoutes);
 app.use("/chat", ChatRoutes);
 
 app.use((req, res, next) => {
-  const { url, body } = req;
-  if (url.split("/")[1] === "admin" && body.adminPassword !== adminPassword) {
+  const { url, headers } = req;
+  if (url.split("/")[1] === "admin" && (!headers.authorization || headers.authorization !== adminPassword)) {
     return res.sendStatus(403);
   }
   next();

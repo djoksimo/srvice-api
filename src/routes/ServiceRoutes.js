@@ -1,12 +1,13 @@
-const express = require("express");
+const Express = require("express");
+
+const { HttpUtils } = require("../utils");
 const bottle = require("../bottle");
-const router = express.Router();
+
+const router = Express.Router();
 const serviceManager = bottle.ServiceManager;
 
 router.post("/", async (req, res) => {
-  const result = await serviceManager.create(req.body);
-  const { status, json } = result;
-  res.status(status).json(json);
+  HttpUtils.sendResponse(res, await serviceManager.createService(req.body));
 });
 
 router.get("/home", async (req, res) => {

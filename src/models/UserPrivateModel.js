@@ -11,7 +11,7 @@ const userPrivateSchema = Schema({
   givenRatings: { type: [{ type: ObjectId, ref: "ServiceRating"}], required: true },
   requests: { type: [{ type: ObjectId, ref: "Request" }], required: true },
   bookings: { type: [{ type: ObjectId, ref: "Booking" }], required: true },
-});
+}, { versionKey: false });
 
 const userPrivateModel = Mongoose.model("UserPrivate", userPrivateSchema);
 
