@@ -10,6 +10,7 @@ const {
   GoogleMapsService,
   CategoryService,
   ServiceService,
+  BookingService,
   RequestService,
   RatingService,
   ChatService,
@@ -37,6 +38,7 @@ bottle.service("JwtService", JwtService);
 bottle.service("GoogleMapsService", GoogleMapsService);
 bottle.service("CategoryService", CategoryService);
 bottle.service("ServiceService", ServiceService);
+bottle.service("BookingService", BookingService);
 bottle.service("RequestService", RequestService);
 bottle.service("RatingService", RatingService);
 bottle.service("ChatService", ChatService);
@@ -45,7 +47,7 @@ bottle.service("AgentManager", AgentManager, "AgentService");
 bottle.service("UserManager", UserManager, "UserService", "RatingService");
 bottle.service("CategoryManager", CategoryManager,  "CategoryService", "ServiceService");
 bottle.service("ServiceManager", ServiceManager, "AuthenticationManager", "ServiceService", "CategoryService", "AgentService", "GoogleMapsService");
-bottle.service("RequestManager", RequestManager, "RequestService");
+bottle.service("RequestManager", RequestManager, "ServiceService", "BookingService", "AgentPrivateService", "RequestService", "UserPrivateService");
 bottle.service("RatingManager", RatingManager, "AuthenticationManager", "RatingService");
 bottle.service("SendManager", SendManager, "AuthenticationManager");
 bottle.service("ChatManager", ChatManager, "AuthenticationManager", "ChatService");

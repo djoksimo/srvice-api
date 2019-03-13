@@ -8,6 +8,7 @@ module.exports = {
   GoogleMapsService: require("./GoogleMapsService"),
   CategoryService: require("./CategoryService"),
   ServiceService: require("./ServiceService"),
+  BookingService: require("./BookingService"),
   RequestService: require("./RequestService"),
   RatingService: require("./RatingService"),
   ChatService: require("./ChatService"),

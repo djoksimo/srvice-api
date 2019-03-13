@@ -3,7 +3,7 @@ const { UserPrivateModel } = require("../models");
 class UserPrivateService {
 
   constructor() {
-    this.categoryPath = { path: "category" };
+    this.categoryPath = { path: "category", select: "_id name" };
     this.ratingsPath = {
       path: "ratings",
       populate: { path: "user" },
@@ -59,6 +59,10 @@ class UserPrivateService {
       },
       this.bookingsPath,
     ]).exec();
+  }
+
+  addRequestToUserPrivate(email, requestId) {
+    return UserPrivateModel.findOneAndUpdate({ email }, { $push: { requests: requestId }});
   }
 }
 
