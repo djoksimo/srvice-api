@@ -45,6 +45,23 @@ class CognitoService {
       });
     });
   }
+
+  loginAccount(email, password) {
+    const userData = { Username: email, Pool: this.userPool };
+    const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+    const authenticationData = { Username: email, Password: password };
+    const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+    return new Promise((resolve, reject) => {
+      cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: (result) => {
+          resolve(result);
+        },
+        onFailure: (error) => {
+          reject(error);
+        },
+      });
+    });
+  }
 }
 
 module.exports = CognitoService;
