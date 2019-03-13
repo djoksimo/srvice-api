@@ -39,12 +39,13 @@ const client = new OAuth2Client(clientId);
 
 class AuthenticationManager {
 
-  constructor(UserManager, CognitoService, AgentService, AgentPrivateService, UserService) {
+  constructor(UserManager, CognitoService, AgentService, AgentPrivateService, UserService, UserPrivateService) {
     this._userManager = UserManager;
     this.cognitoService = CognitoService;
     this.agentService = AgentService;
     this.agentPrivateService = AgentPrivateService;
-    this._userService = UserService;
+    this.userService = UserService;
+    this.userPrivateService = UserPrivateService;
   }
 
   async signupAgent({ email, firstName, lastName, password, dateJoined, profilePictureUrl, services, location, languages, company, education, certifications, phone, governmentIdUrl, secondaryIdUrl, selfieUrl, givenRatings, bookings }) {
@@ -52,8 +53,12 @@ class AuthenticationManager {
       await this.cognitoService.createAccount(firstName, lastName, email, password);
       const newAgent = new AgentModel({ email, firstName, lastName, dateJoined, profilePictureUrl, services, location, languages, company, education, certifications });
       const newAgentPrivate = new AgentPrivateModel({ email, phone, governmentIdUrl, secondaryIdUrl, selfieUrl, givenRatings, bookings });
+      const newUser = new UserModel({ email, firstName, lastName, dateJoined, profilePictureUrl });
+      const newUserPrivate = new UserPrivateModel({ email, phone, savedServices: [], givenRatings: [], requests: [], bookings: [] });
       await this.agentService.createAgent(newAgent);
       await this.agentPrivateService.createAgentPrivate(newAgentPrivate);
+      await this.userService.createUser(newUser);
+      await this.userPrivateService.createUserPrivate(newUserPrivate);
       return { status: 201, json: {} };
     } catch (error) {
       return { status: 500, json: error };
@@ -66,8 +71,21 @@ class AuthenticationManager {
       const agentDocument = await this.agentService.getAgentByEmail(email);
       const agentPrivateDocument = await this.agentPrivateService.getAgentPrivateByEmail(email);
       const agent = Object.assign({}, agentPrivateDocument.toObject(), agentDocument.toObject());
-      const token = await this._getToken(email);
+      const token = await this.createTokenFromEmail(email);
       return { status: 200, json: { agent, token } };
+    } catch (error) {
+      return { status: 500, json: error };
+    }
+  }
+
+  async signupUser({ email, firstName, lastName, password, dateJoined, profilePictureUrl, phone, savedServices, givenRatings, requests, bookings }) {
+    try {
+      await this.cognitoService.createAccount(firstName, lastName, email, password);
+      const newUser = new UserModel({ email, firstName, lastName, dateJoined, profilePictureUrl });
+      const newUserPrivate = new UserPrivateModel({ email, phone, savedServices, givenRatings, requests, bookings });
+      await this.userService.createUser(newUser);
+      await this.userPrivateService.createUserPrivate(newUserPrivate);
+      return { status: 201, json: {} };
     } catch (error) {
       return { status: 500, json: error };
     }
@@ -76,30 +94,22 @@ class AuthenticationManager {
   async confirmUser({ email, code }) {
     try {
       await this.cognitoService.confirmAccount(email, code);
-      const userResult = await this._userManager.find(email);
-      const user = userResult.json.result;
-      const token = await this._getToken(email);
-      return {
-        status: 200,
-        json: {
-          user,
-          token,
-        },
-      };
+      const userDocument = await this.userService.getUserByEmail(email);
+      const userPrivateDocument = await this.userPrivateService.getUserPrivateByEmail(email);
+      const user = Object.assign({}, userPrivateDocument.toObject(), userDocument.toObject());
+      const token = await this.createTokenFromEmail(email);
+      return { status: 200, json: { user, token } };
     } catch (error) {
       return { status: 500, json: error };
     }
   }
 
-  async createUser({ email, firstName, lastName, dateJoined, profilePictureUrl, phone, savedServices, givenRatings, requests, bookings }) {
-    const newUser = new UserModel({
-      _id: new mongoose.Types.Mongoose.Schema.Types.ObjectId(),
-      firstName,
-      lastName,
-      email,
-      dateJoined: new Date(),
+  async createTokenFromEmail(email) {
+    return await new Promise(resolve => {
+      jwt.sign({ email }, secretJwtKey, (err, token) => {
+        resolve(token);
+      });
     });
-    return this._userService.create(newUser);
   }
 
   async signupGoogle(data) {
@@ -117,7 +127,7 @@ class AuthenticationManager {
         };
       }
       const mongoResult = await this._signupMongo({ firstName, lastName, email });
-      const token = await this._getToken(email);
+      const token = await this.createTokenFromEmail(email);
 
       return {
         status: 200,
@@ -167,7 +177,7 @@ class AuthenticationManager {
     if (userResult == null) {
       try {
         const mongoResult = await this._signupMongo({ firstName, lastName, email });
-        const token = await this._getToken(email);
+        const token = await this.createTokenFromEmail(email);
         return {
           status: 200,
           json: {
@@ -186,7 +196,7 @@ class AuthenticationManager {
       }
 
     } else {
-      const token = await this._getToken(email);
+      const token = await this.createTokenFromEmail(email);
       return {
         status: 200,
         json: {
@@ -243,14 +253,6 @@ class AuthenticationManager {
     });
   }
 
-  _getToken(email) {
-    return new Promise((resolve) => {
-      jwt.sign({ email }, secretJwtKey, (err, token) => {
-        resolve(token);
-      });
-    });
-  }
-
   _verifyToken(token) {
     return new Promise((resolve) => {
       jwt.verify(token, secretJwtKey, (err, authData) => {
@@ -288,7 +290,7 @@ class AuthenticationManager {
       await this._loginCognito(credentials);
       const userResult = await this._userManager.find(email);
       const user = userResult.json.result;
-      const token = await this._getToken(email);
+      const token = await this.createTokenFromEmail(email);
       return {
         status: 200,
         json: {
