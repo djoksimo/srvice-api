@@ -14,6 +14,10 @@ router.post("/agent/confirm", async (req, res) => {
   HttpUtils.sendResponse(res, await authenticationManager.confirmAgent(req.body));
 });
 
+router.post("/agent/login", async (req, res) => {
+  HttpUtils.sendResponse(res, await authenticationManager.loginAgent(req.body));
+});
+
 router.post("/user/signup", async (req, res) => {
   HttpUtils.sendResponse(res, await authenticationManager.signupUser(req.body));
 });
@@ -22,8 +26,8 @@ router.post("/user/confirm", async (req, res) => {
   HttpUtils.sendResponse(res, await authenticationManager.confirmUser(req.body));
 });
 
-router.post("/login", async (req, res) => {
-  HttpUtils.sendResponse(res, await authenticationManager.login(req.body));
+router.post("/user/login", async (req, res) => {
+  HttpUtils.sendResponse(res, await authenticationManager.loginUser(req.body));
 });
 
 router.post("/confirm", async (req, res) => {

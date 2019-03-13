@@ -78,6 +78,22 @@ class AuthenticationManager {
     }
   }
 
+  async loginAgent({ email, password }) {
+    try {
+      await this.cognitoService.loginAccount(email, password);
+      const agentDocument = await this.agentService.getAgentByEmail(email);
+      if (!agentDocument) {
+        return { status: 404, json: { code: "AccountExistsNotAgent" }};
+      }
+      const agentPrivateDocument = await this.agentPrivateService.getAgentPrivateByEmail(email);
+      const agent = Object.assign({}, agentPrivateDocument.toObject(), agentDocument.toObject());
+      const token = await this.createTokenFromEmail(email);
+      return { status: 200, json: { agent, token } };
+    } catch (error) {
+      return { status: 500, json: error };
+    }
+  }
+
   async signupUser({ email, firstName, lastName, password, dateJoined, profilePictureUrl, phone, savedServices, givenRatings, requests, bookings }) {
     try {
       await this.cognitoService.createAccount(firstName, lastName, email, password);
@@ -94,6 +110,19 @@ class AuthenticationManager {
   async confirmUser({ email, code }) {
     try {
       await this.cognitoService.confirmAccount(email, code);
+      const userDocument = await this.userService.getUserByEmail(email);
+      const userPrivateDocument = await this.userPrivateService.getUserPrivateByEmail(email);
+      const user = Object.assign({}, userPrivateDocument.toObject(), userDocument.toObject());
+      const token = await this.createTokenFromEmail(email);
+      return { status: 200, json: { user, token } };
+    } catch (error) {
+      return { status: 500, json: error };
+    }
+  }
+
+  async loginUser({ email, password }) {
+    try {
+      await this.cognitoService.loginAccount(email, password);
       const userDocument = await this.userService.getUserByEmail(email);
       const userPrivateDocument = await this.userPrivateService.getUserPrivateByEmail(email);
       const user = Object.assign({}, userPrivateDocument.toObject(), userDocument.toObject());
@@ -224,35 +253,6 @@ class AuthenticationManager {
     return this._userService.create(newUser);
   }
 
-  _loginCognito(credentials) {
-    const { email, password } = credentials;
-    const authenticationData = {
-      Username: email,
-      Password: password,
-    };
-    const authenticationDetails =
-      new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
-    const userData = {
-      Username: email,
-      Pool: userPool,
-    };
-    const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-    return new Promise((resolve, reject) => {
-      cognitoUser.authenticateUser(authenticationDetails, {
-        onSuccess: (result) => {
-          resolve(result);
-        },
-        onFailure: (error) => {
-          reject(error);
-        },
-        newPasswordRequired: () => {
-          // TODO: consider option for when we're manually adding servers - Erik
-          resolve({ asdf: "new password pls" });
-        },
-      });
-    });
-  }
-
   _verifyToken(token) {
     return new Promise((resolve) => {
       jwt.verify(token, secretJwtKey, (err, authData) => {
@@ -284,10 +284,9 @@ class AuthenticationManager {
     }
   }
 
-  async login(credentials) {
-    const { email } = credentials;
+  async login({ email, password }) {
     try {
-      await this._loginCognito(credentials);
+      await this.cognitoService.loginAccount(email, password);
       const userResult = await this._userManager.find(email);
       const user = userResult.json.result;
       const token = await this.createTokenFromEmail(email);
