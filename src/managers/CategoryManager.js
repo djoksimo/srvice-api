@@ -10,7 +10,7 @@ class CategoryManager {
   }
 
   async createCategory({ name }) {
-    const newCategory = new CategoryModel({ name, services: [] });
+    const newCategory = new CategoryModel({ name });
     try {
       const result = await this.categoryService.createCategory(newCategory);
       return { status: 201, json: result };
