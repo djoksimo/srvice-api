@@ -1,9 +1,14 @@
 const Service = require("../models/ServiceModel");
+const { ServiceModel } = require("../models");
 
 class ServiceService {
 
   createService(newService) {
     return newService.save();
+  }
+
+  getSemiPopulatedAgentServiceById(id) {
+    return ServiceModel.findById(id).populate("agent").exec();
   }
 
   async create(data) {
