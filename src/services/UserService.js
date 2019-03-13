@@ -1,6 +1,14 @@
 const { UserModel } = require("../models");
 
 class UserService {
+  createUser(newUser) {
+    return newUser.save();
+  }
+
+  getUserByEmail(email) {
+    return UserModel.findOne({ email }).exec();
+  }
+
   async create(data) {
     return data.save();
   }
