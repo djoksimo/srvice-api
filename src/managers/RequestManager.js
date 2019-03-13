@@ -12,7 +12,7 @@ class RequestManager {
     this.userPrivateService = UserPrivateService;
   }
 
-  async createRequest({ email, id: user, description, pictureUrls, serviceIds, booked }) {
+  async createRequest({ email, userId: user, description, pictureUrls, serviceIds, booked }) {
     try {
       const requestId = Mongoose.Types.ObjectId();
       const bookings = await Promise.all(serviceIds.map(async service =>{
@@ -24,7 +24,8 @@ class RequestManager {
         return bookingDocument._id;
       }));
       const newRequest = new RequestModel({ _id: requestId, user, description, pictureUrls, bookings, booked });
-      const requestDocument = await this.requestService.createRequest(newRequest);
+      const requestDocumentNonPopulated = await this.requestService.createRequest(newRequest);
+      const requestDocument = await this.requestService.getRequestById(requestDocumentNonPopulated._id);
       await this.userPrivateService.addRequestToUserPrivate(email, requestDocument._id);
       return { status: 201, json: requestDocument };
     } catch (error) {
