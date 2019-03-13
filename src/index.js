@@ -15,6 +15,7 @@ const {
   CategoryRoutes,
   ServiceRoutes,
   RequestRoutes,
+  BookingRoutes,
   RatingRoutes,
   AdminRoutes,
   SendRoutes,
@@ -68,6 +69,7 @@ app.use((req, res, next) => {
     .catch(() => res.status(403).json({}));
 });
 app.use("/request", RequestRoutes);
+app.use("/booking", BookingRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Route not found");
