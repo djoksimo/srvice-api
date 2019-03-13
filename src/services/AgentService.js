@@ -31,6 +31,10 @@ class AgentService {
     }).exec();
   }
 
+  getNonPopulatedAgentById(id) {
+    return AgentModel.findById(id).exec();
+  }
+
   addServiceToAgent(agentId, serviceId) {
     return AgentModel.findByIdAndUpdate(agentId, { $push : { services: serviceId }});
   }
