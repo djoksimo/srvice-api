@@ -7,19 +7,19 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const socketEvents = require('./socketEvents');
+const Bottle = require("./bottle");
 const {
   AuthenticationRoutes,
   AgentRoutes,
   UserRoutes,
   CategoryRoutes,
   ServiceRoutes,
+  RequestRoutes,
   RatingRoutes,
   AdminRoutes,
   SendRoutes,
   ChatRoutes,
 } = require("./routes");
-
-const adminPassword = "iakd8k98qogbb8eku1nwzmxdhyhyogxbpn22rub473499rkbpu0hvux4ne6ifjxqqxgvabsxukf0f88904lqxtlf9";
 
 // prod
 // mongoose.connect(`mongodb://${process.env.DOMAIN || "localhost:27017"}/srvice`, { useNewUrlParser: true })
@@ -29,6 +29,7 @@ mongoose.connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-s
   .catch(error => console.log(error));
 
 const app = express();
+const authenticationManager = Bottle.AuthenticationManager;
 
 const allowedOrigins = ['http://localhost:4200', 'http://192.168.0.116:4200', 'https://srvice.ca'];
 
@@ -60,17 +61,13 @@ app.use("/service", ServiceRoutes);
 app.use("/rating", RatingRoutes);
 app.use("/send", SendRoutes);
 app.use("/chat", ChatRoutes);
-
-app.use((req, res, next) => {
-  const { url, headers } = req;
-  if (url.split("/")[1] === "admin" && (!headers.authorization || headers.authorization !== adminPassword)) {
-    return res.sendStatus(403);
-  }
-  next();
-});
-
 app.use("/admin", AdminRoutes);
-
+app.use((req, res, next) => {
+  authenticationManager.authenticateIdEmailToken(req.body)
+    .then(() => next())
+    .catch(() => res.status(403).json({}));
+});
+app.use("/request", RequestRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Route not found");

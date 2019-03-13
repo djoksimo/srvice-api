@@ -9,6 +9,10 @@ class UserService {
     return UserModel.findOne({ email }).exec();
   }
 
+  getNonPopulatedUserById(id) {
+    return UserModel.findById(id).exec();
+  }
+
   async create(data) {
     return data.save();
   }
