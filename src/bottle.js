@@ -22,6 +22,7 @@ const {
   CategoryManager,
   ServiceManager,
   RequestManager,
+  BookingManager,
   RatingManager,
   SendManager,
   ChatManager,
@@ -48,6 +49,7 @@ bottle.service("UserManager", UserManager, "UserService", "RatingService");
 bottle.service("CategoryManager", CategoryManager,  "CategoryService", "ServiceService");
 bottle.service("ServiceManager", ServiceManager, "AuthenticationManager", "ServiceService", "CategoryService", "AgentService", "GoogleMapsService");
 bottle.service("RequestManager", RequestManager, "ServiceService", "BookingService", "AgentPrivateService", "RequestService", "UserPrivateService");
+bottle.service("BookingManager", BookingManager, "BookingService", "UserPrivateService");
 bottle.service("RatingManager", RatingManager, "AuthenticationManager", "RatingService");
 bottle.service("SendManager", SendManager, "AuthenticationManager");
 bottle.service("ChatManager", ChatManager, "AuthenticationManager", "ChatService");

@@ -134,14 +134,17 @@ class AuthenticationManager {
     }
   }
 
-  async authenticateIdEmailToken({ id, email, token }) {
-    const userDocument = await this.userService.getNonPopulatedUserById(id);
-    if (userDocument && userDocument.email === email) {
-      return await this.authenticateEmailToken(email, token);
-    }
-    const agentDocument = await this.agentService.getNonPopulatedAgentById(id);
-    if (agentDocument && agentDocument.email === email) {
-      return await this.authenticateEmailToken(email, token);
+  async authenticateIdEmailToken({ userId, agentId, email, token }) {
+    if (userId) {
+      const userDocument = await this.userService.getNonPopulatedUserById(userId);
+      if (userDocument && userDocument.email === email) {
+        return await this.authenticateEmailToken(email, token);
+      }
+    } else if (agentId) {
+      const agentDocument = await this.agentService.getNonPopulatedAgentById(agentId);
+      if (agentDocument && agentDocument.email === email) {
+        return await this.authenticateEmailToken(email, token);
+      }
     }
     throw new Error();
   }

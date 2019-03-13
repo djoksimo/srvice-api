@@ -19,7 +19,6 @@ class UserPrivateService {
       },
     };
     this.servicePopulate = [
-      this.agentPath,
       this.categoryPath,
       this.ratingsPath,
     ];
@@ -34,7 +33,6 @@ class UserPrivateService {
       ],
     };
   }
-
 
   createUserPrivate(newUserPrivate) {
     return newUserPrivate.save();
@@ -63,6 +61,10 @@ class UserPrivateService {
 
   addRequestToUserPrivate(email, requestId) {
     return UserPrivateModel.findOneAndUpdate({ email }, { $push: { requests: requestId }});
+  }
+
+  addBookingToUserPrivate(email, bookingId) {
+    return UserPrivateModel.findOneAndUpdate({ email }, { $push: { bookings: bookingId }});
   }
 }
 
