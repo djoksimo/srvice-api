@@ -26,7 +26,6 @@ class ServiceManager {
     // TODO: verify agent sending request
     try {
       const serviceDocument = await this.serviceService.createService(newService);
-      await this.categoryService.addServiceToCategory(category, serviceDocument.toObject()._id);
       await this.agentService.addServiceToAgent(agent, serviceDocument.toObject()._id);
       return { status: 201, json: {} };
     } catch (error) {
