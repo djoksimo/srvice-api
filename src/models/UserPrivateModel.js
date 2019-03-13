@@ -6,7 +6,7 @@ const { ObjectId } = Schema.Types;
 const userPrivateSchema = Schema({
   _id: { type: ObjectId, auto: true, required: true },
   email: { type: String, required: true },
-  phone: { type: String, required: true },
+  phone: { type: String, required: false },
   savedServices: { type: [{ type: ObjectId, ref: "Service" }], required: true },
   givenRatings: { type: [{ type: ObjectId, ref: "ServiceRating"}], required: true },
   requests: { type: [{ type: ObjectId, ref: "Request" }], required: true },
