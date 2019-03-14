@@ -19,6 +19,7 @@ class UserPrivateService {
       },
     };
     this.servicePopulate = [
+      this.agentPath,
       this.categoryPath,
       this.ratingsPath,
     ];
