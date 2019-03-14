@@ -14,10 +14,6 @@ class CategoryService {
     return CategoryModel.findById(id).select("-services").exec();
   }
 
-  getCategoryById(id) {
-    return CategoryModel.findById(id).populate("services").exec();
-  }
-
   deleteCategory(id) {
     return CategoryModel.remove({ _id: id }).exec();
   }
