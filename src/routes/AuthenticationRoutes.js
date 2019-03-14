@@ -18,6 +18,10 @@ router.post("/agent/login", async (req, res) => {
   HttpUtils.sendResponse(res, await authenticationManager.loginAgent(req.body));
 });
 
+router.post("/agent/token", async (req, res) => {
+  HttpUtils.sendResponse(res, await authenticationManager.verifyAgentToken(req.body));
+});
+
 router.post("/user/signup", async (req, res) => {
   HttpUtils.sendResponse(res, await authenticationManager.signupUser(req.body));
 });
@@ -28,6 +32,10 @@ router.post("/user/confirm", async (req, res) => {
 
 router.post("/user/login", async (req, res) => {
   HttpUtils.sendResponse(res, await authenticationManager.loginUser(req.body));
+});
+
+router.post("/user/token", async (req, res) => {
+  HttpUtils.sendResponse(res, await authenticationManager.verifyUserToken(req.body));
 });
 
 router.post("/confirm", async (req, res) => {
