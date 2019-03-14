@@ -54,6 +54,7 @@ class ServiceManager {
         possible = true;
       }
       if (outCall && distance < radius) {
+        service.inCallDistance = distance;
         service.outCallAvailable = true;
         possible = true;
       } else {
