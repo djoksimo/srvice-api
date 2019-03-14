@@ -95,6 +95,22 @@ class AuthenticationManager {
     }
   }
 
+  async verifyAgentToken({ token }) {
+    try {
+      const result = await this.jwtService.getEmailFromToken(token);
+      const { email } = result;
+      if (!email) {
+        return { status: 403, json: result };
+      }
+      const agentDocument = await this.agentService.getAgentByEmail(email);
+      const agentPrivateDocument = await this.agentPrivateService.getAgentPrivateByEmail(email);
+      const agent = Object.assign({}, agentPrivateDocument.toObject(), agentDocument.toObject());
+      return { status: 200, json: agent };
+    } catch (error) {
+      return { status: 403, json: error };
+    }
+  }
+
   async signupUser({ email, firstName, lastName, password, dateJoined, profilePictureUrl, phone, savedServices, givenRatings, requests, bookings }) {
     try {
       await this.cognitoService.createAccount(firstName, lastName, email, password);
@@ -131,6 +147,22 @@ class AuthenticationManager {
       return { status: 200, json: { user, token } };
     } catch (error) {
       return { status: 500, json: error };
+    }
+  }
+
+  async verifyUserToken({ token }) {
+    try {
+      const result = await this.jwtService.getEmailFromToken(token);
+      const { email } = result;
+      if (!email) {
+        return { status: 403, json: result };
+      }
+      const userDocument = await this.userService.getUserByEmail(email);
+      const userPrivateDocument = await this.userPrivateService.getUserPrivateByEmail(email);
+      const user = Object.assign({}, userPrivateDocument.toObject(), userDocument.toObject());
+      return { status: 200, json: user };
+    } catch (error) {
+      return { status: 403, json: error };
     }
   }
 
