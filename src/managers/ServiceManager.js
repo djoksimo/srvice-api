@@ -39,10 +39,10 @@ class ServiceManager {
     const { lat, lng } = geometry.location;
     const categoryEntry = this.categoryToServiceMap[categoryId];
     if (!categoryEntry || Date.now() - categoryEntry.updatedAt >= ServiceManager.MAX_CATEGORY_ENTRY_AGE) {
-      const categoryDocument = await this.categoryService.getCategoryById(categoryId);
-      this.categoryToServiceMap[categoryId] = { services: categoryDocument.toObject().services, updatedAt: Date.now() };
+      const serviceDocuments = await this.serviceService.getServicesByCategoryId(categoryId);
+      this.categoryToServiceMap[categoryId] = { services: serviceDocuments, updatedAt: Date.now() };
     }
-    const services = this.categoryToServiceMap[categoryId].services.filter(service => {
+    const services = JSON.parse(JSON.stringify(this.categoryToServiceMap[categoryId].services)).filter(service => {
       const { remoteCall, inCall, outCall, latitude, longitude, radius } = service;
       const distance = CalculationUtils.calculateCrowDistance(lat, lng, latitude, longitude);
       let possible = false;
