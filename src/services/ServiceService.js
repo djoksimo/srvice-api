@@ -3,8 +3,24 @@ const { ServiceModel } = require("../models");
 
 class ServiceService {
 
+  constructor() {
+    this.categoryPath = { path: "category", select: "_id name" };
+    this.ratingsPath = {
+      path: "ratings",
+      populate: { path: "user" },
+    };
+    this.servicePopulate = [
+      this.categoryPath,
+      this.ratingsPath,
+    ];
+  }
+
   createService(newService) {
     return newService.save();
+  }
+
+  getServicesByCategoryId(category) {
+    return ServiceModel.find({ category }).populate(this.servicePopulate).exec();
   }
 
   getSemiPopulatedAgentServiceById(id) {
