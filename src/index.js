@@ -106,3 +106,5 @@ const io = require('socket.io')(server);
 socketEvents(io);
 
 server.listen(port, () => console.log(`Srvice REST API listening on port: ${port}`));
+
+module.exports = server;
