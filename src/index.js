@@ -22,12 +22,25 @@ const {
   ChatRoutes,
 } = require("./routes");
 
-// prod
-// mongoose.connect(`mongodb://${process.env.DOMAIN || "localhost:27017"}/srvice`, { useNewUrlParser: true })
+const dbInst = process.env.NODE_ENV;
 
-// sandbox01
-mongoose.connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", { useNewUrlParser: true })
-  .catch(error => console.log(error));
+switch (dbInst) {
+  case "prod":
+    mongoose.connect(`mongodb://${process.env.DOMAIN || "localhost:27017"}/srvice`, { useNewUrlParser: true })
+      .catch((error) => console.log(error));
+    break;
+  case "sandbox01":
+    mongoose.connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", { useNewUrlParser: true })
+      .catch(error => console.log(error));
+    break;
+  case "test":
+    mongoose.connect("mongodb://danilo:BlackBerry123@ds117913.mlab.com:17913/srvice-test", { useNewUrlParser: true })
+      .catch(error => console.log(error));
+    break;
+  default:
+    mongoose.connect(`mongodb://${process.env.DOMAIN || "localhost:27017"}/srvice`, { useNewUrlParser: true })
+      .catch((error) => console.log(error));
+}
 
 const app = express();
 const authenticationManager = Bottle.AuthenticationManager;
