@@ -1,16 +1,18 @@
 const mongoose = require("mongoose");
 const Rating = require("../models/RatingModel");
+
 const route = "/rating/";
 
 class RatingManager {
-
   constructor(AuthenticationManager, RatingService) {
     this._ratingService = RatingService;
     this._authenticationManager = AuthenticationManager;
   }
 
   async create(data) {
-    const { forEmail, byEmail, rating, text, token } = data;
+    const {
+      forEmail, byEmail, rating, text, token, 
+    } = data;
     const verificationBody = await this._authenticationManager.verifyToken(token);
     if (verificationBody.status === 403) {
       return { status: 403, json: verificationBody };
@@ -58,9 +60,9 @@ class RatingManager {
           message: `Ratings addressed to ${email} pulled from database`,
           request: {
             type: "GET",
-            url: `https://api.srvice.ca${route}name/${email}`
+            url: `https://api.srvice.ca${route}name/${email}`,
           },
-          result
+          result,
         },
       };
     } catch (error) {
@@ -94,7 +96,6 @@ class RatingManager {
       return { status: 500, json: error };
     }
   }
-
 
 
   async get() {
@@ -166,7 +167,7 @@ class RatingManager {
         },
       };
     } catch (error) {
-      return { status: 500, json: error }
+      return { status: 500, json: error };
     }
   }
 }

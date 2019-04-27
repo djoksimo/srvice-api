@@ -1,5 +1,4 @@
 class BookingManager {
-
   constructor(BookingService, UserPrivateService) {
     this.bookingService = BookingService;
     this.userPrivateService = UserPrivateService;

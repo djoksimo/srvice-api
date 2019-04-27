@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const Chat = require("../models/ChatModel");
+
 const route = "/chat/";
 
 class ChatManager {
-
   constructor(AuthenticationManager, ChatService) {
     this._authenticationManager = AuthenticationManager;
     this._chatService = ChatService;
@@ -49,8 +49,8 @@ class ChatManager {
         return {
           status: 403,
           json: {
-            message: "Emails don't match, not authorized"
-          }
+            message: "Emails don't match, not authorized",
+          },
         };
       }
 
@@ -84,8 +84,8 @@ class ChatManager {
           status: 200,
           json: {
             isEmpty: true,
-            message: "No chat pairs"
-          }
+            message: "No chat pairs",
+          },
         };
       }
       if (byEmail !== verificationBody.json.json.result.email &&
@@ -101,7 +101,7 @@ class ChatManager {
             type: "POST",
             url: `http://165.227.42.141:3000${route}pair`,
           },
-          result
+          result,
         },
       };
     } catch (error) {
@@ -124,7 +124,7 @@ class ChatManager {
           json: {
             isEmpty: true,
             message: "No chat pairs",
-            verificationBody
+            verificationBody,
           },
         };
       }

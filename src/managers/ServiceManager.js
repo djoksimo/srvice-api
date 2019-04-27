@@ -8,11 +8,16 @@ const MAX_CATEGORY_ENTRY_AGE = 600000;
 const MAX_IN_CALL_DISTANCE = 50;
 
 class ServiceManager {
+  static get MAX_CATEGORY_ENTRY_AGE() { return MAX_CATEGORY_ENTRY_AGE; }
+  static get MAX_IN_CALL_DISTANCE() { return MAX_IN_CALL_DISTANCE; }
 
-  static get MAX_CATEGORY_ENTRY_AGE() { return MAX_CATEGORY_ENTRY_AGE }
-  static get MAX_IN_CALL_DISTANCE() { return MAX_IN_CALL_DISTANCE }
-
-  constructor(AuthenticationManager, ServiceService, CategoryService, AgentService, GoogleMapsService) {
+  constructor(
+    AuthenticationManager, 
+    ServiceService,
+    CategoryService, 
+    AgentService,
+    GoogleMapsService,
+  ) {
     this.authenticationManager = AuthenticationManager;
     this.serviceService = ServiceService;
     this.categoryService = CategoryService;
@@ -21,8 +26,42 @@ class ServiceManager {
     this.categoryToServiceMap = {};
   }
 
-  async createService({ agent, category, title, description, pictureUrls, phone, email, inCall, outCall, remoteCall, address, latitude, longitude, radius, rating, ratings }) {
-    const newService = new ServiceModel({ agent, category, title, description, pictureUrls, phone, email, inCall, outCall, remoteCall, address, latitude, longitude, radius, rating, ratings });
+  async createService({
+    agent, 
+    category, 
+    title, 
+    description, 
+    pictureUrls, 
+    phone, 
+    email, 
+    inCall, 
+    outCall, 
+    remoteCall, 
+    address, 
+    latitude, 
+    longitude, 
+    radius, 
+    rating, 
+    ratings, 
+  }) {
+    const newService = new ServiceModel({
+      agent, 
+      category, 
+      title, 
+      description, 
+      pictureUrls, 
+      phone, 
+      email, 
+      inCall, 
+      outCall, 
+      remoteCall, 
+      address, 
+      latitude, 
+      longitude, 
+      radius, 
+      rating, 
+      ratings, 
+    });
     // TODO: verify agent sending request
     try {
       const serviceDocument = await this.serviceService.createService(newService);
@@ -38,30 +77,34 @@ class ServiceManager {
     const { formatted_address: address, geometry } = result.results[0];
     const { lat, lng } = geometry.location;
     const categoryEntry = this.categoryToServiceMap[categoryId];
-    if (!categoryEntry || Date.now() - categoryEntry.updatedAt >= ServiceManager.MAX_CATEGORY_ENTRY_AGE) {
+    if (!categoryEntry || 
+      Date.now() - categoryEntry.updatedAt >= ServiceManager.MAX_CATEGORY_ENTRY_AGE) {
       const serviceDocuments = await this.serviceService.getServicesByCategoryId(categoryId);
       this.categoryToServiceMap[categoryId] = { services: serviceDocuments, updatedAt: Date.now() };
     }
-    const services = JSON.parse(JSON.stringify(this.categoryToServiceMap[categoryId].services)).filter(service => {
-      const { remoteCall, inCall, outCall, latitude, longitude, radius } = service;
-      const distance = CalculationUtils.calculateCrowDistance(lat, lng, latitude, longitude);
-      let possible = false;
-      if (remoteCall) {
-        possible = true
-      }
-      if (inCall && distance < ServiceManager.MAX_IN_CALL_DISTANCE) {
-        service.inCallDistance = distance;
-        possible = true;
-      }
-      if (outCall && distance < radius) {
-        service.inCallDistance = distance;
-        service.outCallAvailable = true;
-        possible = true;
-      } else {
-        service.outCallAvailable = false;
-      }
-     return possible;
-    }).sort((a, b) => b.rating - a.rating);
+    const services = JSON.parse(JSON.stringify(this.categoryToServiceMap[categoryId].services))
+      .filter((service) => {
+        const {
+          remoteCall, inCall, outCall, latitude, longitude, radius,
+        } = service;
+        const distance = CalculationUtils.calculateCrowDistance(lat, lng, latitude, longitude);
+        let possible = false;
+        if (remoteCall) {
+          possible = true;
+        }
+        if (inCall && distance < ServiceManager.MAX_IN_CALL_DISTANCE) {
+          service.inCallDistance = distance;
+          possible = true;
+        }
+        if (outCall && distance < radius) {
+          service.inCallDistance = distance;
+          service.outCallAvailable = true;
+          possible = true;
+        } else {
+          service.outCallAvailable = false;
+        }
+        return possible;
+      }).sort((a, b) => b.rating - a.rating);
     return { status: 200, json: { address, services } };
   }
 
@@ -71,7 +114,7 @@ class ServiceManager {
       email, title, categoryId, pictureUrls, description,
       phone, contactEmail,
       latitude, longitude, radius,
-      homeScreenGroups, schedule, products
+      homeScreenGroups, schedule, products,
     } = data;
 
     const newService = new ServiceModel({
@@ -88,7 +131,7 @@ class ServiceManager {
       radius,
       homeScreenGroups,
       schedule,
-      products
+      products,
     });
     try {
       const verificationBody = await this.authenticationManager.verifyToken(token);
@@ -163,7 +206,7 @@ class ServiceManager {
         },
       };
     } catch (error) {
-      return { status: 500, json : error };
+      return { status: 500, json: error };
     }
   }
 
@@ -190,7 +233,7 @@ class ServiceManager {
         },
       };
     } catch (error) {
-      return { status: 500, json : error };
+      return { status: 500, json: error };
     }
   }
 
@@ -237,7 +280,7 @@ class ServiceManager {
         },
       };
     } catch (error) {
-      return {status: 500, json: error };
+      return { status: 500, json: error };
     }
   }
 
@@ -272,7 +315,7 @@ class ServiceManager {
         },
       };
     } catch (error) {
-      return {status: 500, json: error };
+      return { status: 500, json: error };
     }
   }
 
@@ -285,7 +328,7 @@ class ServiceManager {
           message: `Services with name containing "${name}" pulled from database`,
           request: {
             type: "GET",
-            url: `https://api.srvice.ca${route}name/${name}`
+            url: `https://api.srvice.ca${route}name/${name}`,
           },
           result,
         },
@@ -304,7 +347,7 @@ class ServiceManager {
           message: "Services in category " + categoryId + " pulled from database",
           request: {
             type: "GET",
-            url: `https://api.srvice.ca${route}name/${categoryId}`
+            url: `https://api.srvice.ca${route}name/${categoryId}`,
           },
           result,
         },

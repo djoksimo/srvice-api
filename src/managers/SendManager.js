@@ -9,7 +9,6 @@ AWS.config.update({
 });
 
 class SendManager {
-
   constructor(AuthenticationManager) {
     this._authenticationManager = AuthenticationManager;
   }
@@ -21,7 +20,7 @@ class SendManager {
       name,
       message,
       email,
-      token
+      token,
     } = data;
 
 
@@ -29,8 +28,8 @@ class SendManager {
     if (verificationBody.status === 403) {
       return {
         status: 403,
-        json: verificationBody
-      }
+        json: verificationBody,
+      };
     }
 
     const ses = new AWS.SES({ apiVersion: "2012-10-17" });

@@ -1,9 +1,9 @@
 const route = "/user/";
 const jwt = require("jsonwebtoken");
+
 const secretJwtKey = "8xStlNM+DbJTIQ0zOk+3X00gngEB9JOEKiVMYWAVWfc";
 
 class UserManager {
-
   constructor(userService, ratingService) {
     this.userService = userService;
     this._ratingService = ratingService;
@@ -47,13 +47,13 @@ class UserManager {
           message: "User pulled from database",
           request: {
             type: "GET",
-            url: "http://" + "165.227.42.141:5000" + route + email,
+            url: `http:165.227.42.141${route}${email}`,
           },
           result,
         },
       };
     } catch (error) {
-	    console.log(error);
+      console.log(error);
       return { status: 500, json: error };
     }
   }
@@ -114,7 +114,7 @@ class UserManager {
           message: "All users pulled from database",
           request: {
             type: "GET",
-            url: "http://" + "165.227.42.141:5000" + route,
+            url: `http://165.227.42.141:5000${route}`,
           },
           result,
         },
@@ -136,9 +136,8 @@ class UserManager {
     });
   }
 
-
   async verifyToken(token) {
-    const result = await this._verifyToken(token);
+    const result = await UserManager._verifyToken(token);
     if (!result.email) {
       return { status: 403, json: result };
     }
