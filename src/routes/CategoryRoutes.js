@@ -6,7 +6,7 @@ const { HttpUtils } = require("../utils");
 const router = Express.Router();
 const categoryManager = Bottle.CategoryManager;
 
-router.get("/home", async(req, res) => {
+router.get("/home", async (req, res) => {
   HttpUtils.sendResponse(res, await categoryManager.getHomeCategories());
 });
 

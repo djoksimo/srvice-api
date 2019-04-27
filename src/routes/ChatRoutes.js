@@ -10,7 +10,7 @@ router.post("/pair", async (req, res) => {
   res.status(status).json(json);
 });
 
-router.post("/", async(req, res) => {
+router.post("/", async (req, res) => {
   const result = await Bottle.ChatManager.create(req.body);
   const { status, json } = result;
   res.status(status).json(json);
