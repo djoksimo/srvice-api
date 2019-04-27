@@ -1,7 +1,6 @@
 const { CategoryModel } = require("../models/");
 
 class CategoryService {
-
   createCategory(newCategory) {
     return newCategory.save();
   }

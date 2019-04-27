@@ -1,7 +1,6 @@
 const { UserPrivateModel } = require("../models");
 
 class UserPrivateService {
-
   constructor() {
     this.categoryPath = { path: "category", select: "_id name" };
     this.ratingsPath = {
@@ -15,7 +14,7 @@ class UserPrivateService {
         populate: [
           this.categoryPath,
           this.ratingsPath,
-        ]
+        ],
       },
     };
     this.servicePopulate = [
@@ -61,11 +60,11 @@ class UserPrivateService {
   }
 
   addRequestToUserPrivate(email, requestId) {
-    return UserPrivateModel.findOneAndUpdate({ email }, { $push: { requests: requestId }});
+    return UserPrivateModel.findOneAndUpdate({ email }, { $push: { requests: requestId } });
   }
 
   addBookingToUserPrivate(email, bookingId) {
-    return UserPrivateModel.findOneAndUpdate({ email }, { $push: { bookings: bookingId }});
+    return UserPrivateModel.findOneAndUpdate({ email }, { $push: { bookings: bookingId } });
   }
 }
 

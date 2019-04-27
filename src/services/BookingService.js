@@ -1,7 +1,6 @@
 const { BookingModel } = require("../models");
 
 class BookingService {
-
   constructor() {
     this.categoryPath = { path: "category", select: "_id name" };
     this.ratingsPath = {
@@ -15,7 +14,7 @@ class BookingService {
         populate: [
           this.categoryPath,
           this.ratingsPath,
-        ]
+        ],
       },
     };
     this.servicePath = {
@@ -32,11 +31,11 @@ class BookingService {
   }
 
   updatePriceEstimateAgentAcceptedById(_id, priceEstimate, agentAccepted) {
-    return BookingModel.update({ _id }, { $set: { priceEstimate, agentAccepted }})
+    return BookingModel.update({ _id }, { $set: { priceEstimate, agentAccepted } });
   }
 
   updateUserAcceptedById(_id, userAccepted) {
-    return BookingModel.update({ _id }, { $set: { userAccepted }});
+    return BookingModel.update({ _id }, { $set: { userAccepted } });
   }
 
   getBookingById(id) {

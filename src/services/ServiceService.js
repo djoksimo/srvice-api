@@ -2,7 +2,6 @@ const Service = require("../models/ServiceModel");
 const { ServiceModel } = require("../models");
 
 class ServiceService {
-
   constructor() {
     this.categoryPath = { path: "category", select: "_id name" };
     this.ratingsPath = {
@@ -16,7 +15,7 @@ class ServiceService {
         populate: [
           this.categoryPath,
           this.ratingsPath,
-        ]
+        ],
       },
     };
     this.servicePopulate = [
@@ -67,11 +66,11 @@ class ServiceService {
   }
 
   async update(id, data) {
-    return Service.update({_id: id}, {$set: data}).exec();
+    return Service.update({ _id: id }, { $set: data }).exec();
   }
 
   async remove(id) {
-    return Service.remove({_id: id}).exec();
+    return Service.remove({ _id: id }).exec();
   }
 }
 

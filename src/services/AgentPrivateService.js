@@ -27,14 +27,14 @@ class AgentPrivateService {
                 populate: { path: "user" },
               },
             ],
-          }
+          },
         ],
-      }
+      },
     ]).exec();
   }
 
   addBookingToAgentPrivate(email, bookingId) {
-    return AgentPrivateModel.findOneAndUpdate({ email }, { $push: { bookings: bookingId }});
+    return AgentPrivateModel.findOneAndUpdate({ email }, { $push: { bookings: bookingId } });
   }
 }
 
