@@ -10,5 +10,7 @@ module.exports = {
     "prefer-template": "off",
     "no-use-before-define": "off",
     "no-underscore-dangle": "off",
+    "global-require": 0,
+    "no-return-assign": 0
   }
 };
