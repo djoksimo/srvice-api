@@ -26,52 +26,28 @@ class ServiceService {
     ];
   }
 
-  createService(newService) {
+  saveService(newService) {
     return newService.save();
   }
 
-  getServicesByCategoryId(category) {
+  findServicesByCategoryId(category) {
     return ServiceModel.find({ category }).populate(this.servicePopulate).exec();
   }
 
-  getSemiPopulatedAgentServiceById(id) {
+  findSemiPopulatedAgentServiceById(id) {
     return ServiceModel.findById(id).populate("agent").exec();
   }
 
-  async create(data) {
-    return data.save();
+  findServiceById(id) {
+    return Service.findById(id).exec();
   }
 
-  async find(id) {
-    return Service.findById(id).populate('ratings').exec();
+  updateService(service) {
+    return Service.update({ _id: service._id }, { $set: service }).exec();
   }
 
-  async findByName(name) {
-    return Service.find({ title: { $regex: [name], $options: 'i' } }).populate('ratings').exec();
-  }
-
-  async findByHomeScreenGroup(group) {
-    return Service.find({ homeScreenGroups: group }).populate('ratings').exec();
-  }
-
-  async findByCategoryId(id) {
-    return Service.find({ categoryId: id }).populate('ratings').exec();
-  }
-
-  async get() {
-    return Service.find().populate('ratings').exec();
-  }
-
-  async getTwenty() {
-    return Service.find().limit(20).populate('ratings').exec();
-  }
-
-  async update(id, data) {
-    return Service.update({_id: id}, {$set: data}).exec();
-  }
-
-  async remove(id) {
-    return Service.remove({_id: id}).exec();
+  removeService(id) {
+    return Service.remove({ _id: id }).exec();
   }
 }
 

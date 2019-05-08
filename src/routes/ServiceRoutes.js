@@ -6,60 +6,24 @@ const bottle = require("../bottle");
 const router = Express.Router();
 const serviceManager = bottle.ServiceManager;
 
-router.post("/nearby", async (req, res) => {
-  HttpUtils.sendResponse(res, await serviceManager.getNearbyServicesByCategory(req.body));
-});
-
 router.post("/", async (req, res) => {
   HttpUtils.sendResponse(res, await serviceManager.createService(req.body));
 });
 
-router.get("/home", async (req, res) => {
-  const result = await serviceManager.getHomeScreenServices();
-  const { status, json } = result;
-  res.status(status).json(json);
-});
-
-router.get("/name/:name", async (req, res) => {
-  const result = await serviceManager.queryWithName(req.params.name);
-  const { status, json } = result;
-  res.status(status).json(json);
-});
-
-router.get("/category/:categoryId", async (req, res) => {
-  const result = await serviceManager.queryWithCategory(req.params.categoryId);
-  const { status, json } = result;
-  res.status(status).json(json);
+router.get("/nearby", async (req, res) => {
+  HttpUtils.sendResponse(res, await serviceManager.getNearbyServicesByCategoryId(req.params));
 });
 
 router.get("/:id", async (req, res) => {
-  const result = await serviceManager.find(req.params.id);
-  const { status, json } = result;
-  res.status(status).json(json);
-});
-
-router.get("/", async (req, res) => {
-  const result = await serviceManager.get();
-  const { status, json } = result;
-  res.status(status).json(json);
-});
-
-router.get("/limit/twenty", async (req, res) => {
-  const result = await serviceManager.getTwenty();
-  const { status, json } = result;
-  res.status(status).json(json);
+  HttpUtils.sendResponse(res, await serviceManager.getServiceById(req.params));
 });
 
 router.patch("/", async (req, res) => {
-  const result = await serviceManager.update(req.body);
-  const { status, json } = result;
-  res.status(status).json(json);
+  HttpUtils.sendResponse(res, await serviceManager.patchService(req.body));
 });
 
-router.delete("/", async (req, res) => {
-  const result = await serviceManager.remove(req.body);
-  const { status, json } = result;
-  res.status(status).json(json);
+router.delete("/:id", async (req, res) => {
+  HttpUtils.sendResponse(res, await serviceManager.deleteService(req.params));
 });
 
 module.exports = router;
