@@ -29,14 +29,6 @@ class CategoryService {
   async update(id, data) {
     return CategoryModel.update({ _id: id }, { $set: data }).exec();
   }
-
-  async getRootCategories() {
-    return CategoryModel.find({ isRoot: true }).exec();
-  }
-
-  async findWithParentId(id) {
-    return CategoryModel.find({ parentId: id }).exec();
-  }
 }
 
 module.exports = CategoryService;

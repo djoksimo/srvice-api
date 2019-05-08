@@ -34,7 +34,7 @@ class RequestService {
     };
   }
 
-  createRequest(newRequest) {
+  saveRequest(newRequest) {
     return newRequest.save();
   }
 
