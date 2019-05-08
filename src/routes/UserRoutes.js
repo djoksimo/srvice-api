@@ -7,15 +7,11 @@ const router = express.Router();
 const userManager = Bottle.UserManager;
 
 router.get("/:id", async (req, res) => {
-  HttpUtils.sendResponse(res, await userManager.findById(req.params.id));
-});
-
-router.get("/", async (req, res) => {
-  HttpUtils.sendResponse(res, await userManager.get());
+  HttpUtils.sendResponse(res, await userManager.getUserById(req.params));
 });
 
 router.patch("/", async (req, res) => {
-  HttpUtils.sendResponse(res, await userManager.updateUser(req.body));
+  HttpUtils.sendResponse(res, await userManager.patchUser(req.body));
 });
 
 module.exports = router;

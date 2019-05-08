@@ -16,10 +16,4 @@ router.get("/:id", async (req, res) => {
   res.status(status).json(json);
 });
 
-router.get("/", async (req, res) => {
-  const result = await categoryManager.get();
-  const { status, json } = result;
-  res.status(status).json(json);
-});
-
 module.exports = router;
