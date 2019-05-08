@@ -16,7 +16,7 @@ class RequestManager {
     try {
       const requestId = Mongoose.Types.ObjectId();
       const bookings = await Promise.all(serviceIds.map(async service =>{
-        const serviceDocument = await this.serviceService.getSemiPopulatedAgentServiceById(service);
+        const serviceDocument = await this.serviceService.findSemiPopulatedAgentServiceById(service);
         const { agent } = serviceDocument;
         const newBooking = new BookingModel({ request: requestId, agent: agent._id, service, priceEstimate: -1, agentAccepted: false, userAccepted: false });
         const bookingDocument = await this.bookingService.createBooking(newBooking);
@@ -24,7 +24,7 @@ class RequestManager {
         return bookingDocument._id;
       }));
       const newRequest = new RequestModel({ _id: requestId, user, description, pictureUrls, bookings, booked });
-      const requestDocumentNonPopulated = await this.requestService.createRequest(newRequest);
+      const requestDocumentNonPopulated = await this.requestService.saveRequest(newRequest);
       const requestDocument = await this.requestService.getRequestById(requestDocumentNonPopulated._id);
       await this.userPrivateService.addRequestToUserPrivate(email, requestDocument._id);
       return { status: 201, json: requestDocument };

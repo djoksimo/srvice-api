@@ -39,8 +39,7 @@ const client = new OAuth2Client(clientId);
 
 class AuthenticationManager {
 
-  constructor(UserManager, CognitoService, AgentService, AgentPrivateService, UserService, UserPrivateService, JwtService) {
-    this._userManager = UserManager;
+  constructor(CognitoService, AgentService, AgentPrivateService, UserService, UserPrivateService, JwtService) {
     this.cognitoService = CognitoService;
     this.agentService = AgentService;
     this.agentPrivateService = AgentPrivateService;
@@ -127,7 +126,7 @@ class AuthenticationManager {
   async confirmUser({ email, code }) {
     try {
       await this.cognitoService.confirmAccount(email, code);
-      const userDocument = await this.userService.getUserByEmail(email);
+      const userDocument = await this.userService.findUserByEmail(email);
       const userPrivateDocument = await this.userPrivateService.getUserPrivateByEmail(email);
       const user = Object.assign({}, userPrivateDocument.toObject(), userDocument.toObject());
       const token = await this.jwtService.createTokenFromEmail(email);
@@ -140,7 +139,7 @@ class AuthenticationManager {
   async loginUser({ email, password }) {
     try {
       await this.cognitoService.loginAccount(email, password);
-      const userDocument = await this.userService.getUserByEmail(email);
+      const userDocument = await this.userService.findUserByEmail(email);
       const userPrivateDocument = await this.userPrivateService.getUserPrivateByEmail(email);
       const user = Object.assign({}, userPrivateDocument.toObject(), userDocument.toObject());
       const token = await this.jwtService.createTokenFromEmail(email);
@@ -157,7 +156,7 @@ class AuthenticationManager {
       if (!email) {
         return { status: 403, json: result };
       }
-      const userDocument = await this.userService.getUserByEmail(email);
+      const userDocument = await this.userService.findUserByEmail(email);
       const userPrivateDocument = await this.userPrivateService.getUserPrivateByEmail(email);
       const user = Object.assign({}, userPrivateDocument.toObject(), userDocument.toObject());
       return { status: 200, json: user };
@@ -168,7 +167,7 @@ class AuthenticationManager {
 
   async authenticateIdEmailToken({ userId, agentId, email, token }) {
     if (userId) {
-      const userDocument = await this.userService.getNonPopulatedUserById(userId);
+      const userDocument = await this.userService.findNonPopulatedUserById(userId);
       if (userDocument && userDocument.email === email) {
         return await this.authenticateEmailToken(email, token);
       }
@@ -193,7 +192,7 @@ class AuthenticationManager {
 
     try {
       const googleResult = await this.verifyGoogle(googleToken);
-      const userResult = await this._userService.find(email);
+      const userResult = await this._userService.findUserByEmail(email);
       if (userResult != null) {
         return {
           status: 500,
@@ -249,7 +248,7 @@ class AuthenticationManager {
   async loginGoogle(data) {
     const { firstName, lastName, email, googleToken } = data;
     const googleResult = await this.verifyGoogle(googleToken);
-    const userResult = await this._userService.find(email);
+    const userResult = await this._userService.findUserByEmail(email);
     if (userResult == null) {
       try {
         const mongoResult = await this._signupMongo({ firstName, lastName, email });
@@ -288,37 +287,6 @@ class AuthenticationManager {
     }
   }
 
-  async _signupMongo(firstName, lastName, email) {
-    const newUser = new UserModel({
-      _id: new mongoose.Types.ObjectId(),
-      firstName,
-      lastName,
-      email,
-      dateJoined: new Date(),
-      profilePictureUrl: "",
-    });
-    return this._userService.create(newUser);
-  }
-
-  async signup({ firstName, lastName, email, password }) {
-    try {
-      await this.cognitoService.createAccount(firstName, lastName, email, password);
-      await this._signupMongo(firstName, lastName, email);
-      return {
-        status: 201,
-        json: {
-          message: "User added to cognito and database",
-          request: {
-            type: "POST",
-            url: "http://" + "165.227.42.141:5000" + route + "signup",
-          },
-        },
-      };
-    } catch (error) {
-      return { status: 500, json: error };
-    }
-  }
-
   async resendConfirmation(payload) {
     const { email } = payload;
     const userData = {
@@ -352,7 +320,7 @@ class AuthenticationManager {
       return { status: 403, json: result };
     }
     try {
-      const userResult = await this._userManager.find(result.email);
+      const userResult = await this.userService.findUserByEmail(result.email);
       const user = userResult.json.result;
       return { status: 200, json: user };
     } catch (error) {
