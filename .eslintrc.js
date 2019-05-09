@@ -10,5 +10,6 @@ module.exports = {
     "prefer-template": "off",
     "no-use-before-define": "off",
     "no-underscore-dangle": "off",
+    "max-len": "off",
   }
 };

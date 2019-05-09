@@ -10,4 +10,8 @@ router.post("/", async (req, res) => {
   HttpUtils.sendResponse(res, await requestManager.createRequest(req.body));
 });
 
+router.get("/user-id/:user", async (req, res) => {
+  HttpUtils.sendResponse(res, await requestManager.getRequestsByUserId(req.params));
+});
+
 module.exports = router;

@@ -1,12 +1,13 @@
 const { CategoryModel } = require("../models");
 
-const route = "/category";
+const HOME_CATEGORY_IDS = ["5c7cbbcae344b32a42dc06ad", "5c7cbc15e344b32a42dc06b2"];
 
 class CategoryManager {
 
-  constructor(CategoryService, ServiceService) {
+  static get HOME_CATEGORY_IDS() { return HOME_CATEGORY_IDS; }
+
+  constructor(CategoryService) {
     this.categoryService = CategoryService;
-    this.serviceService = ServiceService;
   }
 
   async createCategory({ name }) {
@@ -19,11 +20,6 @@ class CategoryManager {
     }
   }
 
-  async getAllCategories() {
-    const result = await this.categoryService.getAllCategories();
-    return { status: 200, json: result };
-  }
-
   async deleteCategory({ id }) {
     try {
       const result = await this.categoryService.deleteCategory(id);
@@ -34,11 +30,8 @@ class CategoryManager {
   }
 
   async getHomeCategories() {
-    const categoryIds = ["5c7cbbcae344b32a42dc06ad", "5c7cbc15e344b32a42dc06b2"];
     try {
-      const categoryDocumentsPromise = categoryIds.map(async id =>
-        await this.categoryService.getCategoryByIdWithoutServices(id)
-      );
+      const categoryDocumentsPromise = CategoryManager.HOME_CATEGORY_IDS.map(async id => this.categoryService.findCategoryById(id));
       const categoryDocuments = await Promise.all(categoryDocumentsPromise);
       return { status: 200, json: categoryDocuments };
     } catch (error) {

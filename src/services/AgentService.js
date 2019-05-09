@@ -1,11 +1,11 @@
 const { AgentModel } = require("../models");
 
 class AgentService {
-  createAgent(newAgent) {
+  saveAgent(newAgent) {
     return newAgent.save();
   }
 
-  getAgentByEmail(email) {
+  findAgentByEmail(email) {
     return AgentModel.findOne({ email }).populate({
       path: "services",
       populate: [

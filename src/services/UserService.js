@@ -13,10 +13,6 @@ class UserService {
     return UserModel.findOne({ email }).exec();
   }
 
-  findNonPopulatedUserById(id) {
-    return UserModel.findById(id).exec();
-  }
-
   updateUser(user) {
     return UserModel.update({ _id: user._id }, { $set: user }).exec();
   }

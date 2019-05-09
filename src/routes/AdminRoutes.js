@@ -19,10 +19,6 @@ router.post("/category", async (req, res) => {
   HttpUtils.sendResponse(res, await categoryManager.createCategory(req.body));
 });
 
-router.get("/category", async (req, res) => {
-  HttpUtils.sendResponse(res, await categoryManager.getAllCategories());
-});
-
 router.delete("/category", async (req, res) => {
   HttpUtils.sendResponse(res, await categoryManager.deleteCategory(req.body));
 });

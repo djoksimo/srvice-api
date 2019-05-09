@@ -6,12 +6,8 @@ class CategoryService {
     return newCategory.save();
   }
 
-  getAllCategories() {
-    return CategoryModel.find().exec();
-  }
-
-  getCategoryByIdWithoutServices(id) {
-    return CategoryModel.findById(id).select("-services").exec();
+  findCategoryById(id) {
+    return CategoryModel.findById(id).exec();
   }
 
   deleteCategory(id) {

@@ -24,13 +24,16 @@ class RequestManager {
         return bookingDocument._id;
       }));
       const newRequest = new RequestModel({ _id: requestId, user, description, pictureUrls, bookings, booked });
-      const requestDocumentNonPopulated = await this.requestService.saveRequest(newRequest);
-      const requestDocument = await this.requestService.getRequestById(requestDocumentNonPopulated._id);
+      const requestDocument = await this.requestService.saveRequest(newRequest);
       await this.userPrivateService.addRequestToUserPrivate(email, requestDocument._id);
       return { status: 201, json: requestDocument };
     } catch (error) {
       return { status: 500, json: error };
     }
+  }
+
+  async getRequestsByUserId({ user }) {
+    return this.requestService.findRequestByUserId(user);
   }
 }
 
