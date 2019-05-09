@@ -19,7 +19,6 @@ const {
   RatingRoutes,
   AdminRoutes,
   SendRoutes,
-  ChatRoutes,
 } = require("./routes");
 
 // prod
@@ -61,7 +60,6 @@ app.use("/category", CategoryRoutes);
 app.use("/service", ServiceRoutes);
 app.use("/rating", RatingRoutes);
 app.use("/send", SendRoutes);
-app.use("/chat", ChatRoutes);
 app.use("/admin", AdminRoutes);
 app.use((req, res, next) => {
   authenticationManager.authenticateIdEmailToken(req.body)

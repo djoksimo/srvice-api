@@ -11,5 +11,4 @@ module.exports = {
   BookingService: require("./BookingService"),
   RequestService: require("./RequestService"),
   RatingService: require("./RatingService"),
-  ChatService: require("./ChatService"),
 };

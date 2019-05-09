@@ -8,5 +8,4 @@ module.exports = {
   ServiceManager: require("./ServiceManager"),
   RatingManager: require("./RatingManager"),
   SendManager: require("./SendManager"),
-  ChatManager: require("./ChatManager"),
 };
