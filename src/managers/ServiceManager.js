@@ -2,7 +2,7 @@ const { ServiceModel } = require("../models");
 const { CalculationUtils } = require("../utils");
 
 const MAX_CATEGORY_ENTRY_AGE = 600000;
-const MAX_IN_CALL_DISTANCE = 440;
+const MAX_IN_CALL_DISTANCE = 50;
 
 class ServiceManager {
 
