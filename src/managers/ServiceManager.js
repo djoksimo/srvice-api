@@ -2,12 +2,12 @@ const { ServiceModel } = require("../models");
 const { CalculationUtils } = require("../utils");
 
 const MAX_CATEGORY_ENTRY_AGE = 600000;
-const MAX_IN_CALL_DISTANCE = 50;
+const MAX_IN_CALL_DISTANCE = 440;
 
 class ServiceManager {
 
-  static get MAX_CATEGORY_ENTRY_AGE() { return MAX_CATEGORY_ENTRY_AGE }
-  static get MAX_IN_CALL_DISTANCE() { return MAX_IN_CALL_DISTANCE }
+  static get MAX_CATEGORY_ENTRY_AGE() { return MAX_CATEGORY_ENTRY_AGE; }
+  static get MAX_IN_CALL_DISTANCE() { return MAX_IN_CALL_DISTANCE; }
 
   constructor(ServiceService, AgentService, GoogleMapsService) {
     this.serviceService = ServiceService;
@@ -29,7 +29,9 @@ class ServiceManager {
   }
 
   async getNearbyServicesByCategoryId({ categoryId, postalCode }) {
+    console.log(postalCode);
     const result = await this.googleMapsService.getCoordinatesFromPostalCode(postalCode);
+    console.log(result);
     const { formatted_address: address, geometry } = result.results[0];
     const { lat, lng } = geometry.location;
     const categoryEntry = this.categoryToServiceMap[categoryId];
@@ -37,12 +39,12 @@ class ServiceManager {
       const serviceDocuments = await this.serviceService.findServicesByCategoryId(categoryId);
       this.categoryToServiceMap[categoryId] = { services: serviceDocuments, updatedAt: Date.now() };
     }
-    const services = JSON.parse(JSON.stringify(this.categoryToServiceMap[categoryId].services)).filter(service => {
+    const services = JSON.parse(JSON.stringify(this.categoryToServiceMap[categoryId].services)).filter((service) => {
       const { remoteCall, inCall, outCall, latitude, longitude, radius } = service;
       const distance = CalculationUtils.calculateCrowDistance(lat, lng, latitude, longitude);
       let possible = false;
       if (remoteCall) {
-        possible = true
+        possible = true;
       }
       if (inCall && distance < ServiceManager.MAX_IN_CALL_DISTANCE) {
         service.inCallDistance = distance;
@@ -55,7 +57,7 @@ class ServiceManager {
       } else {
         service.outCallAvailable = false;
       }
-     return possible;
+      return possible;
     }).sort((a, b) => b.rating - a.rating);
     return { status: 200, json: { address, services } };
   }
@@ -64,7 +66,7 @@ class ServiceManager {
     try {
       const result = await this.serviceService.findServiceById(id);
       if (!result) {
-        return { status: 404, json: { message: "Service not found" }};
+        return { status: 404, json: { message: "Service not found" } };
       }
       return { status: 200, json: result };
     } catch (error) {

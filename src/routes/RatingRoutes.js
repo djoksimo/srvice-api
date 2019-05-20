@@ -10,7 +10,6 @@ router.post("/", async (req, res) => {
   res.status(status).json(json);
 });
 
-
 router.get("/email/:email", async (req, res) => {
   const result = await Bottle.RatingManager.queryWithForEmail(req.params.email);
   const { status, json } = result;

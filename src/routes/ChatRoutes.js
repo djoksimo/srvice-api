@@ -1,3 +1,4 @@
+// Not in use since we're currently working with Pusher Chatkit
 const express = require("express");
 
 const Bottle = require("../bottle");
@@ -10,7 +11,7 @@ router.post("/pair", async (req, res) => {
   res.status(status).json(json);
 });
 
-router.post("/", async(req, res) => {
+router.post("/", async (req, res) => {
   const result = await Bottle.ChatManager.create(req.body);
   const { status, json } = result;
   res.status(status).json(json);

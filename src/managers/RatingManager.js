@@ -1,3 +1,4 @@
+/* eslint-disable */
 const mongoose = require("mongoose");
 const Rating = require("../models/RatingModel");
 const route = "/rating/";

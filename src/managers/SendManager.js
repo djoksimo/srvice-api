@@ -1,7 +1,5 @@
 const AWS = require("aws-sdk");
 
-const route = "/send/";
-
 AWS.config.update({
   accessKeyId: 'AKIAIE7SYRFTIRXOUW4A',
   secretAccessKey: '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',
@@ -15,7 +13,7 @@ class SendManager {
   }
 
   async sendMail(data) {
-    const { // email variable is replyTo address
+    const {
       fromEmail,
       toEmail,
       name,
@@ -30,12 +28,12 @@ class SendManager {
       return {
         status: 403,
         json: verificationBody
-      }
+      };
     }
 
     const ses = new AWS.SES({ apiVersion: "2012-10-17" });
     const params = {
-      Destination: { /* required */
+      Destination: {
         ToAddresses: [
           toEmail,
         ],
@@ -67,23 +65,16 @@ class SendManager {
           if (err) {
             reject(err);
           }
-          console.log('Here is the mail response: ', res);
           resolve(res);
         });
       });
       return {
         status: 201,
         json: {
-          message: "Mail sent successfully",
-          request: {
-            type: "POST",
-            url: "http://" + "165.227.42.141:5000" + route,
-          },
           result,
         },
       };
     } catch (err) {
-      console.error("Error sending mail: ", err);
       return { status: 500, json: err };
     }
   }
