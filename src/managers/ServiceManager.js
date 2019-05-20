@@ -29,9 +29,7 @@ class ServiceManager {
   }
 
   async getNearbyServicesByCategoryId({ categoryId, postalCode }) {
-    console.log(postalCode);
     const result = await this.googleMapsService.getCoordinatesFromPostalCode(postalCode);
-    console.log(result);
     const { formatted_address: address, geometry } = result.results[0];
     const { lat, lng } = geometry.location;
     const categoryEntry = this.categoryToServiceMap[categoryId];

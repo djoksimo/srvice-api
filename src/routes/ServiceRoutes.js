@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/nearby", async (req, res) => {
-  HttpUtils.sendResponse(res, await serviceManager.getNearbyServicesByCategoryId(req.params));
+  HttpUtils.sendResponse(res, await serviceManager.getNearbyServicesByCategoryId(req.query));
 });
 
 router.get("/:id", async (req, res) => {
