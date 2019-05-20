@@ -1,12 +1,11 @@
 const { CategoryModel } = require("../models");
 
-const route = "/category";
+// const route = "/category";
 
 class CategoryManager {
 
-  constructor(CategoryService, ServiceService) {
+  constructor(CategoryService) {
     this.categoryService = CategoryService;
-    this.serviceService = ServiceService;
   }
 
   async createCategory({ name }) {
@@ -21,6 +20,7 @@ class CategoryManager {
 
   async getAllCategories() {
     const result = await this.categoryService.getAllCategories();
+    console.log(result);
     return { status: 200, json: result };
   }
 
@@ -34,6 +34,7 @@ class CategoryManager {
   }
 
   async getHomeCategories() {
+    // TODO: Insert 8 initial categories:
     const categoryIds = ["5c7cbbcae344b32a42dc06ad", "5c7cbc15e344b32a42dc06b2"];
     try {
       const categoryDocumentsPromise = categoryIds.map(async id =>

@@ -8,8 +8,8 @@ const categoryManager = Bottle.CategoryManager;
 const ADMIN_PASSWORD = "iakd8k98qogbb8eku1nwzmxdhyhyogxbpn22rub473499rkbpu0hvux4ne6ifjxqqxgvabsxukf0f88904lqxtlf9";
 
 router.use((req, res, next) => {
-  const { url, headers } = req;
-  if (url.split("/")[1] === "admin" && (!headers.authorization || headers.authorization !== ADMIN_PASSWORD)) {
+  const { headers } = req;
+  if (!headers.authorization || headers.authorization !== ADMIN_PASSWORD) {
     return res.sendStatus(403);
   }
   next();

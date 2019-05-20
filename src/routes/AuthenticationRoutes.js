@@ -38,28 +38,20 @@ router.post("/user/token", async (req, res) => {
   HttpUtils.sendResponse(res, await authenticationManager.verifyUserToken(req.body));
 });
 
-router.post("/confirm", async (req, res) => {
-  HttpUtils.sendResponse(res, await authenticationManager.confirmUser(req.body));
-});
-
 router.post("/resend-confirmation", async (req, res) => {
   HttpUtils.sendResponse(res, await authenticationManager.resendConfirmation(req.body));
 });
 
-router.post("/verify", async (req, res) => {
-  HttpUtils.sendResponse(res, await authenticationManager.verifyToken(req.body.token));
-});
-
-router.post("/verify-google", async (req, res) => {
-  HttpUtils.sendResponse(res, await authenticationManager.verifyGoogle(req.body.googleToken));
-});
-
-router.post("/signup-google", async (req, res) => {
-  HttpUtils.sendResponse(res, await authenticationManager.signupGoogle(req.body));
-});
-
-router.post("/login-google", async (req, res) => {
-  HttpUtils.sendResponse(res, await authenticationManager.loginGoogle(req.body));
-});
+// router.post("/verify-google", async (req, res) => {
+//   HttpUtils.sendResponse(res, await authenticationManager.verifyGoogle(req.body.googleToken));
+// });
+//
+// router.post("/signup-google", async (req, res) => {
+//   HttpUtils.sendResponse(res, await authenticationManager.signupGoogle(req.body));
+// });
+//
+// router.post("/login-google", async (req, res) => {
+//   HttpUtils.sendResponse(res, await authenticationManager.loginGoogle(req.body));
+// });
 
 module.exports = router;

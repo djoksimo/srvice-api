@@ -61,11 +61,11 @@ class UserPrivateService {
   }
 
   addRequestToUserPrivate(email, requestId) {
-    return UserPrivateModel.findOneAndUpdate({ email }, { $push: { requests: requestId }});
+    return UserPrivateModel.findOneAndUpdate({ email }, { $push: { requests: requestId } });
   }
 
   addBookingToUserPrivate(email, bookingId) {
-    return UserPrivateModel.findOneAndUpdate({ email }, { $push: { bookings: bookingId }});
+    return UserPrivateModel.findOneAndUpdate({ email }, { $push: { bookings: bookingId } });
   }
 }
 
