@@ -1,3 +1,5 @@
+/* eslint-disable */
+// FILE NOT IN USER SINCE WE'RE USING PUSHER CHATKIT
 const Mongoose = require("mongoose");
 
 const { Schema } = Mongoose;

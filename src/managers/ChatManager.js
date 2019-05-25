@@ -1,4 +1,6 @@
+/* eslint-disable */
 const mongoose = require("mongoose");
+
 const Chat = require("../models/ChatModel");
 const route = "/chat/";
 

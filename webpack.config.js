@@ -1,3 +1,4 @@
+/* eslint-disable */
 module.exports = {
   // Example setup for your project:
   // The entry module that requires or imports the rest of your project.

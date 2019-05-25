@@ -1,8 +1,8 @@
 const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
 const AWS = require("aws-sdk");
-const { OAuth2Client } = require("google-auth-library");
-const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
+// const { OAuth2Client } = require("google-auth-library");
+// const jwt = require("jsonwebtoken");
+// const mongoose = require("mongoose");
 
 const {
   AgentModel,
@@ -11,7 +11,7 @@ const {
   UserPrivateModel
 } = require("../models/");
 
-const route = "/auth/";
+// const route = "/auth/";
 
 // prod
 // const poolData = {
@@ -32,10 +32,10 @@ AWS.config = new AWS.Config({
 });
 
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-const secretJwtKey = "8xStlNM+DbJTIQ0zOk+3X00gngEB9JOEKiVMYWAVWfc";
+// const secretJwtKey = "8xStlNM+DbJTIQ0zOk+3X00gngEB9JOEKiVMYWAVWfc";
 
-const clientId = "107550134059-tttr1lbgnc499l32hhc9vt7pnkf5fij5.apps.googleusercontent.com";
-const client = new OAuth2Client(clientId);
+// const clientId = "107550134059-tttr1lbgnc499l32hhc9vt7pnkf5fij5.apps.googleusercontent.com";
+// const client = new OAuth2Client(clientId);
 
 class AuthenticationManager {
 
@@ -83,7 +83,7 @@ class AuthenticationManager {
       await this.cognitoService.loginAccount(email, password);
       const agentDocument = await this.agentService.getAgentByEmail(email);
       if (!agentDocument) {
-        return { status: 404, json: { code: "AccountExistsNotAgent" }};
+        return { status: 404, json: { code: "AccountExistsNotAgent" } };
       }
       const agentPrivateDocument = await this.agentPrivateService.getAgentPrivateByEmail(email);
       const agent = Object.assign({}, agentPrivateDocument.toObject(), agentDocument.toObject());
@@ -187,120 +187,20 @@ class AuthenticationManager {
     }
   }
 
-  async signupGoogle(data) {
-    const { firstName, lastName, email, googleToken } = data;
-
-    try {
-      const googleResult = await this.verifyGoogle(googleToken);
-      const userResult = await this._userService.findUserByEmail(email);
-      if (userResult != null) {
-        return {
-          status: 500,
-          json: {
-            message: "User already exists",
-          },
-        };
-      }
-      const mongoResult = await this._signupMongo({ firstName, lastName, email });
-      const token = await this.jwtService.createTokenFromEmail(email);
-
-      return {
-        status: 200,
-        json: {
-          message: "User added to database via Google Sign In",
-          request: {
-            type: "POST",
-            url: "http://" + "165.227.42.141:5000" + route + "signup-google",
-          },
-          googleResult,
-          mongoResult,
-          token,
-        },
-      };
-    } catch (error) {
-      return { status: 500, json: error };
-    }
-
-  }
-
-  async verifyGoogle(googleToken) {
-    try {
-      const ticket = await client.verifyIdToken({
-        idToken: googleToken,
-        audience: clientId,
-      });
-
-      const payload = ticket.getPayload();
-      const userId = payload["sub"];
-
-      return {
-        status: 200,
-        json: {
-          payload,
-          userId,
-        },
-      };
-    } catch (error) {
-      return { status: 403, json: error };
-    }
-  }
-
-  async loginGoogle(data) {
-    const { firstName, lastName, email, googleToken } = data;
-    const googleResult = await this.verifyGoogle(googleToken);
-    const userResult = await this._userService.findUserByEmail(email);
-    if (userResult == null) {
-      try {
-        const mongoResult = await this._signupMongo({ firstName, lastName, email });
-        const token = await this.jwtService.createTokenFromEmail(email);
-        return {
-          status: 200,
-          json: {
-            message: "User added to database via Google Sign In",
-            request: {
-              type: "POST",
-              url: "http://" + "165.227.42.141:5000" + route + "signup-google",
-            },
-            googleResult,
-            mongoResult,
-            token,
-          },
-        };
-      } catch (error) {
-        return { status: 500, json: error };
-      }
-
-    } else {
-      const token = await this.jwtService.createTokenFromEmail(email);
-      return {
-        status: 200,
-        json: {
-          message: "User logged in via Google Sign In",
-          request: {
-            type: "POST",
-            url: "http://" + "165.227.42.141:5000" + route + "login-google",
-          },
-          googleResult,
-          token,
-        },
-      };
-    }
-  }
-
   async resendConfirmation(payload) {
     const { email } = payload;
     const userData = {
       Username: email,
-      Pool: userPool
+      Pool: userPool,
     };
     const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
     try {
       const result = await new Promise((resolve, reject) => {
-        cognitoUser.resendConfirmationCode((error, result) => {
+        cognitoUser.resendConfirmationCode((error, res) => {
           if (error) {
             reject(error);
           }
-          resolve(result);
+          resolve(res);
         });
       });
       return {
@@ -314,19 +214,90 @@ class AuthenticationManager {
     }
   }
 
-  async verifyToken(token) {
-    const result = await this.jwtService.getEmailFromToken(token);
-    if (!result.email) {
-      return { status: 403, json: result };
-    }
-    try {
-      const userResult = await this.userService.findUserByEmail(result.email);
-      const user = userResult.json.result;
-      return { status: 200, json: user };
-    } catch (error) {
-      return { status: 403, json: error };
-    }
-  }
+  // async signupGoogle(data) {
+  //   const { firstName, lastName, email, googleToken } = data;
+  //
+  //   try {
+  //     const googleResult = await this.verifyGoogle(googleToken);
+  //     const userResult = await this._userService.findUserByEmail(email);
+  //     if (userResult != null) {
+  //       return {
+  //         status: 500,
+  //         json: {
+  //           message: "User already exists",
+  //         },
+  //       };
+  //     }
+  //     const mongoResult = await this._signupMongo({ firstName, lastName, email });
+  //     const token = await this.jwtService.createTokenFromEmail(email);
+  //
+  //     return {
+  //       status: 200,
+  //       json: {
+  //         message: "User added to database via Google Sign In",
+  //         googleResult,
+  //         mongoResult,
+  //         token,
+  //       },
+  //     };
+  //   } catch (error) {
+  //     return { status: 500, json: error };
+  //   }
+  // }
+
+  // async verifyGoogle(googleToken) {
+  //   try {
+  //     const ticket = await client.verifyIdToken({
+  //       idToken: googleToken,
+  //       audience: clientId,
+  //     });
+  //
+  //     const payload = ticket.getPayload();
+  //     const userId = payload.sub;
+  //
+  //     return {
+  //       status: 200,
+  //       json: {
+  //         payload,
+  //         userId,
+  //       },
+  //     };
+  //   } catch (error) {
+  //     return { status: 403, json: error };
+  //   }
+  // }
+
+  // async loginGoogle(data) {
+  //   const { firstName, lastName, email, googleToken } = data;
+  //   const googleResult = await this.verifyGoogle(googleToken);
+  //   const userResult = await this._userService.findUserByEmail(email);
+  //   if (userResult == null) {
+  //     try {
+  //       const mongoResult = await this._signupMongo({ firstName, lastName, email });
+  //       const token = await this.jwtService.createTokenFromEmail(email);
+  //       return {
+  //         status: 200,
+  //         json: {
+  //           googleResult,
+  //           mongoResult,
+  //           token,
+  //         },
+  //       };
+  //     } catch (error) {
+  //       return { status: 500, json: error };
+  //     }
+  //
+  //   } else {
+  //     const token = await this.jwtService.createTokenFromEmail(email);
+  //     return {
+  //       status: 200,
+  //       json: {
+  //         googleResult,
+  //         token,
+  //       },
+  //     };
+  //   }
+  // }
 }
 
 module.exports = AuthenticationManager;

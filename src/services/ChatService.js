@@ -10,7 +10,7 @@ class ChatService {
   }
 
   async findPairChats(byEmail, toEmail) {
-    return Chat.find({ participants: { $all: [ byEmail, toEmail]} }).exec();
+    return Chat.find({ participants: { $all: [byEmail, toEmail] } }).exec();
   }
 
   async update(id, data) {
