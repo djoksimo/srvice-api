@@ -16,7 +16,7 @@ class UserManager {
   async patchUser(user) {
     try {
       const result = await this.userService.updateUser(user);
-      return { status: 200, json: result } ;
+      return { status: 200, json: result };
     } catch (error) {
       return { status: 500, json: error };
     }

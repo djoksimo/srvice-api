@@ -36,7 +36,7 @@ class AgentService {
   }
 
   addServiceToAgent(agentId, serviceId) {
-    return AgentModel.findByIdAndUpdate(agentId, { $push : { services: serviceId }});
+    return AgentModel.findByIdAndUpdate(agentId, { $push: { services: serviceId } });
   }
 }
 

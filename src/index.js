@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-const socketEvents = require('./socketEvents');
+// const socketEvents = require('./socketEvents');
 const Bottle = require("./bottle");
 const {
   AuthenticationRoutes,
@@ -89,7 +89,7 @@ const port = process.env.PORT || '5000';
 app.set('port', port);
 
 const server = http.createServer(app);
-const io = require('socket.io')(server);
-socketEvents(io);
+// const io = require('socket.io')(server);
+// socketEvents(io);
 
 server.listen(port, () => console.log(`Srvice REST API listening on port: ${port}`));

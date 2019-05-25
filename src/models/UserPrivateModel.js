@@ -8,7 +8,7 @@ const userPrivateSchema = Schema({
   email: { type: String, required: true },
   phone: { type: String, required: false },
   savedServices: { type: [{ type: ObjectId, ref: "Service" }], required: true },
-  givenRatings: { type: [{ type: ObjectId, ref: "ServiceRating"}], required: true },
+  givenRatings: { type: [{ type: ObjectId, ref: "ServiceRating" }], required: true },
   requests: { type: [{ type: ObjectId, ref: "Request" }], required: true },
   bookings: { type: [{ type: ObjectId, ref: "Booking" }], required: true },
 }, { versionKey: false });

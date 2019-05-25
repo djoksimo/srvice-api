@@ -10,5 +10,16 @@ module.exports = {
     "prefer-template": "off",
     "no-use-before-define": "off",
     "no-underscore-dangle": "off",
+    "function-paren-newline": "off",
+    "object-curly-newline": "off",
+    "padded-blocks": "off",
+    "global-require": "off",
+    "comma-dangle": "warn",
+    "max-len": "warn",
+    "no-return-await": "warn",
+    "class-methods-use-this": "warn",
+    "no-unused-vars": "warn",
+    "consistent-return": "warn",
+    "no-param-reassign": "warn"
   }
 };

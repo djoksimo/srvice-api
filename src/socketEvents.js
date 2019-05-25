@@ -1,4 +1,6 @@
-exports = module.exports = function(io) {
+/* eslint-disable */
+// FILE NOT IN USE SINCE WE'RE USING PUSHER CHATKIT
+exports = module.exports = function (io) {
   // Set socket.io listeners.
   io.on('connection', (socket) => {
     console.log('a user connected');
