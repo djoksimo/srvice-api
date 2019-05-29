@@ -28,10 +28,7 @@ class ServiceManager {
     }
   }
 
-  async getNearbyServicesByCategoryId({ categoryId, postalCode }) {
-    const result = await this.googleMapsService.getCoordinatesFromPostalCode(postalCode);
-    const { formatted_address: address, geometry } = result.results[0];
-    const { lat, lng } = geometry.location;
+  async getNearbyServicesByCategoryId({ categoryId, lat, lng }) {
     const categoryEntry = this.categoryToServiceMap[categoryId];
     if (!categoryEntry || Date.now() - categoryEntry.updatedAt >= ServiceManager.MAX_CATEGORY_ENTRY_AGE) {
       const serviceDocuments = await this.serviceService.findServicesByCategoryId(categoryId);
@@ -57,7 +54,7 @@ class ServiceManager {
       }
       return possible;
     }).sort((a, b) => b.rating - a.rating);
-    return { status: 200, json: { address, services } };
+    return { status: 200, json: { services } };
   }
 
   async getServiceById({ id }) {
