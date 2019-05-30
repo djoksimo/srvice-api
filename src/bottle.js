@@ -47,7 +47,7 @@ bottle.service("AuthenticationManager", AuthenticationManager, "CognitoService",
 bottle.service("AgentManager", AgentManager, "AgentService");
 bottle.service("UserManager", UserManager, "UserService");
 bottle.service("CategoryManager", CategoryManager, "CategoryService", "ServiceService");
-bottle.service("ServiceManager", ServiceManager, "ServiceService", "AgentService", "GoogleMapsService");
+bottle.service("ServiceManager", ServiceManager, "ServiceService", "AgentService");
 bottle.service("RequestManager", RequestManager, "ServiceService", "BookingService", "AgentPrivateService", "RequestService", "UserPrivateService");
 bottle.service("BookingManager", BookingManager, "BookingService", "UserPrivateService");
 bottle.service("RatingManager", RatingManager, "AuthenticationManager", "RatingService");

@@ -9,10 +9,9 @@ class ServiceManager {
   static get MAX_CATEGORY_ENTRY_AGE() { return MAX_CATEGORY_ENTRY_AGE; }
   static get MAX_IN_CALL_DISTANCE() { return MAX_IN_CALL_DISTANCE; }
 
-  constructor(ServiceService, AgentService, GoogleMapsService) {
+  constructor(ServiceService, AgentService) {
     this.serviceService = ServiceService;
     this.agentService = AgentService;
-    this.googleMapsService = GoogleMapsService;
     this.categoryToServiceMap = {};
   }
 
