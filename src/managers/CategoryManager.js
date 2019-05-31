@@ -18,7 +18,6 @@ class CategoryManager {
 
   async getAllCategories() {
     const result = await this.categoryService.getAllCategories();
-    console.log(result);
     return { status: 200, json: result };
   }
 

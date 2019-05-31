@@ -14,6 +14,16 @@ class CalculationUtils {
   static degreesToRadians(degrees) {
     return degrees * (Math.PI / 180);
   }
+
+  static average(numbers, numDecimalPlaces) {
+    if (numbers.length !== 0) {
+      let sum = 0;
+      numbers.forEach(num => sum += num);
+      const average = sum / numbers.length;
+      return Math.round(average * (10 ** numDecimalPlaces)) / (10 ** numDecimalPlaces);
+    }
+    return 0;
+  }
 }
 
 module.exports = CalculationUtils;

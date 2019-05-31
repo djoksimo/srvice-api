@@ -6,6 +6,6 @@ module.exports = {
   AgentManager: require("./AgentManager"),
   CategoryManager: require("./CategoryManager"),
   ServiceManager: require("./ServiceManager"),
-  RatingManager: require("./RatingManager"),
+  ServiceRatingManager: require("./ServiceRatingManager"),
   SendManager: require("./SendManager"),
 };
