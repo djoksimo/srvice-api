@@ -3,7 +3,6 @@ module.exports = {
   AgentPrivateModel: require("./AgentPrivateModel"),
   BookingModel: require("./BookingModel"),
   CategoryModel: require("./CategoryModel"),
-  ChatModel: require("./ChatModel"),
   RatingModel: require("./RatingModel"),
   RequestModel: require("./RequestModel"),
   ServiceModel: require("./ServiceModel"),

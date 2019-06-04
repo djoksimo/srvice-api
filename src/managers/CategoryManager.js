@@ -1,7 +1,5 @@
 const { CategoryModel } = require("../models");
 
-// const route = "/category";
-
 class CategoryManager {
 
   constructor(CategoryService) {
