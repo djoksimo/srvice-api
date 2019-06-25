@@ -8,8 +8,8 @@ class CategoryManager {
     this.categoryService = CategoryService;
   }
 
-  async createCategory({ name }) {
-    const newCategory = new CategoryModel({ name });
+  async createCategory({ name, iconUrl }) {
+    const newCategory = new CategoryModel({ name, iconUrl });
     try {
       const result = await this.categoryService.createCategory(newCategory);
       return { status: 201, json: result };
