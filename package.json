@@ -13,22 +13,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "amazon-cognito-auth-js": "^1.2.4",
     "amazon-cognito-identity-js": "^2.0.6",
     "aws-sdk": "^2.344.0",
     "body-parser": "^1.18.3",
     "bottlejs": "^1.7.1",
     "cors": "^2.8.4",
     "express": "^4.16.3",
-    "google-auth-library": "^2.0.0",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.1",
     "morgan": "^1.9.1",
     "node-fetch": "^2.1.2",
     "node-ses": "^2.1.0",
     "nodemailer": "^4.6.8",
-    "nodemon": "^1.17.4",
-    "socket.io": "^2.2.0"
+    "nodemon": "^1.17.4"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.6",

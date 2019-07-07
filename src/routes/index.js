@@ -9,5 +9,4 @@ module.exports = {
   RatingRoutes: require("./RatingRoutes"),
   AdminRoutes: require("./AdminRoutes"),
   SendRoutes: require("./SendRoutes"),
-  ChatRoutes: require("./ChatRoutes"),
 };
