@@ -3,7 +3,7 @@ const { UserPrivateModel } = require("../models");
 class UserPrivateService {
 
   constructor() {
-    this.categoryPath = { path: "category", select: "_id name" };
+    this.categoryPath = { path: "category", select: "_id name iconUrl" };
     this.ratingsPath = {
       path: "ratings",
       populate: { path: "user" },

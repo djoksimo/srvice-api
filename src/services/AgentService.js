@@ -9,7 +9,7 @@ class AgentService {
     return AgentModel.findOne({ email }).populate({
       path: "services",
       populate: [
-        { path: "category", select: "_id name" },
+        { path: "category", select: "_id name iconUrl" },
         {
           path: "ratings",
           populate: { path: "user" },
@@ -22,7 +22,7 @@ class AgentService {
     return AgentModel.findById(id).populate({
       path: "services",
       populate: [
-        { path: "category", select: "_id name" },
+        { path: "category", select: "_id name iconUrl" },
         {
           path: "ratings",
           populate: { path: "user" },
