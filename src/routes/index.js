@@ -6,7 +6,7 @@ module.exports = {
   ServiceRoutes: require("./ServiceRoutes"),
   RequestRoutes: require("./RequestRoutes"),
   BookingRoutes: require("./BookingRoutes"),
-  RatingRoutes: require("./RatingRoutes"),
+  ServiceRatingRoutes: require("./ServiceRatingRoutes"),
   AdminRoutes: require("./AdminRoutes"),
   SendRoutes: require("./SendRoutes"),
 };

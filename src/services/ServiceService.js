@@ -1,4 +1,3 @@
-const Service = require("../models/ServiceModel");
 const { ServiceModel } = require("../models");
 
 class ServiceService {
@@ -6,7 +5,7 @@ class ServiceService {
   constructor() {
     this.categoryPath = { path: "category", select: "_id name iconUrl" };
     this.ratingsPath = {
-      path: "ratings",
+      path: "serviceRatings",
       populate: { path: "user" },
     };
     this.agentPath = {
@@ -16,7 +15,7 @@ class ServiceService {
         populate: [
           this.categoryPath,
           this.ratingsPath,
-        ]
+        ],
       },
     };
     this.servicePopulate = [
@@ -39,15 +38,19 @@ class ServiceService {
   }
 
   findServiceById(id) {
-    return Service.findById(id).exec();
+    return ServiceModel.findById(id).populate("serviceRatings").exec();
   }
 
   updateService(service) {
-    return Service.update({ _id: service._id }, { $set: service }).exec();
+    return ServiceModel.update({ _id: service._id }, { $set: service }).exec();
   }
 
   removeService(id) {
-    return Service.remove({ _id: id }).exec();
+    return ServiceModel.remove({ _id: id }).exec();
+  }
+
+  addServiceRatingToService(serviceId, serviceRatingId) {
+    return ServiceModel.findByIdAndUpdate(serviceId, { $push: { serviceRatings: serviceRatingId } }).exec();
   }
 }
 
