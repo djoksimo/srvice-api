@@ -14,6 +14,7 @@ module.exports = {
     "object-curly-newline": "off",
     "padded-blocks": "off",
     "global-require": "off",
+    "no-return-assign": "off",
     "comma-dangle": "warn",
     "max-len": "warn",
     "no-return-await": "warn",

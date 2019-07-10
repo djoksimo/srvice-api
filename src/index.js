@@ -7,6 +7,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const Bottle = require("./bottle");
+const { HttpUtils } = require("./utils");
+
 const {
   AuthenticationRoutes,
   AgentRoutes,
@@ -15,7 +17,7 @@ const {
   ServiceRoutes,
   RequestRoutes,
   BookingRoutes,
-  RatingRoutes,
+  ServiceRatingRoutes,
   AdminRoutes,
   SendRoutes,
 } = require("./routes");
@@ -57,14 +59,14 @@ app.use("/agent", AgentRoutes);
 app.use("/user", UserRoutes);
 app.use("/category", CategoryRoutes);
 app.use("/service", ServiceRoutes);
-app.use("/rating", RatingRoutes);
 app.use("/send", SendRoutes);
 app.use("/admin", AdminRoutes);
 app.use((req, res, next) => {
-  authenticationManager.authenticateIdEmailToken(req.body)
+  authenticationManager.authenticateIdEmailToken(HttpUtils.parseAuthHeaders(req))
     .then(() => next())
     .catch(() => res.status(403).json({}));
 });
+app.use("/service-rating", ServiceRatingRoutes);
 app.use("/request", RequestRoutes);
 app.use("/booking", BookingRoutes);
 

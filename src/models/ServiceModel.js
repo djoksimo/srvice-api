@@ -18,9 +18,9 @@ const serviceSchema = Schema({
   latitude: { type: Number, required: true },
   longitude: { type: Number, required: true },
   radius: { type: Number, required: true },
-  rating: { type: Number, required: true },
-  ratings: { type: [{ type: ObjectId, ref: "ServiceRating" }], required: true },
-}, { versionKey: false, timestamps: true });
+  averageServiceRating: { type: Number, required: true },
+  serviceRatings: { type: [{ type: ObjectId, ref: "ServiceRating" }], required: true },
+}, { versionKey: false });
 
 const serviceModel = Mongoose.model("Service", serviceSchema);
 

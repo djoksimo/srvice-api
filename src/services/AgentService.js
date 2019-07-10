@@ -11,7 +11,7 @@ class AgentService {
       populate: [
         { path: "category", select: "_id name iconUrl" },
         {
-          path: "ratings",
+          path: "serviceRatings",
           populate: { path: "user" },
         },
       ],
@@ -24,7 +24,7 @@ class AgentService {
       populate: [
         { path: "category", select: "_id name iconUrl" },
         {
-          path: "ratings",
+          path: "serviceRatings",
           populate: { path: "user" },
         },
       ],
@@ -37,6 +37,10 @@ class AgentService {
 
   addServiceToAgent(agentId, serviceId) {
     return AgentModel.findByIdAndUpdate(agentId, { $push: { services: serviceId } });
+  }
+
+  updateAgent(agent) {
+    return AgentModel.update({ _id: agent._id }, { $set: agent }).exec();
   }
 }
 
