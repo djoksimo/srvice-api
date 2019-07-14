@@ -31,8 +31,8 @@ class BookingService {
     return newBooking.save();
   }
 
-  updatePriceEstimateAgentAcceptedById(_id, priceEstimate, agentAccepted) {
-    return BookingModel.update({ _id }, { $set: { priceEstimate, agentAccepted } });
+  updatePriceEstimateAgentAcceptedById(_id, priceEstimate, timeEstimate, agentAccepted) {
+    return BookingModel.update({ _id }, { $set: { priceEstimate, timeEstimate, agentAccepted } });
   }
 
   updateUserAcceptedById(_id, userAccepted) {
