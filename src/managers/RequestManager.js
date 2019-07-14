@@ -18,7 +18,15 @@ class RequestManager {
       const bookings = await Promise.all(serviceIds.map(async (service) => {
         const serviceDocument = await this.serviceService.findSemiPopulatedAgentServiceById(service);
         const { agent } = serviceDocument;
-        const newBooking = new BookingModel({ request: requestId, agent: agent._id, service, priceEstimate: -1, agentAccepted: false, userAccepted: false });
+        const newBooking = new BookingModel({ 
+          request: requestId, 
+          agent: agent._id, 
+          service, 
+          priceEstimate: -1, 
+          timeEstimate: -1, 
+          agentAccepted: false, 
+          userAccepted: false,
+        });
         const bookingDocument = await this.bookingService.createBooking(newBooking);
         await this.agentPrivateService.addBookingToAgentPrivate(agent.email, bookingDocument._id);
         return bookingDocument._id;

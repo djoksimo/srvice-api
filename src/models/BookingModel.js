@@ -9,6 +9,7 @@ const bookingSchema = Schema({
   agent: { type: ObjectId, ref: "Agent", required: true },
   service: { type: ObjectId, ref: "Service", required: true },
   priceEstimate: { type: Number, required: true },
+  timeEstimate: { type: Number, required: true },
   agentAccepted: { type: Boolean, required: true },
   userAccepted: { type: Boolean, required: true },
 }, { versionKey: false });
