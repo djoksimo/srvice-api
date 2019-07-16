@@ -2,7 +2,7 @@ const { ServiceModel } = require("../models");
 const { CalculationUtils } = require("../utils");
 
 const MAX_CATEGORY_ENTRY_AGE = 600000;
-const MAX_IN_CALL_DISTANCE = 50;
+const MAX_IN_CALL_DISTANCE = 50; // in kilometers
 
 class ServiceManager {
 
@@ -53,7 +53,7 @@ class ServiceManager {
       }
       return possible;
     }).sort((a, b) => b.averageServiceRating - a.averageServiceRating);
-    return { status: 200, json: { address, services } };
+    return { status: 200, json: { services } };
   }
 
   async getServiceById({ id }) {
