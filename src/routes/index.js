@@ -9,4 +9,5 @@ module.exports = {
   ServiceRatingRoutes: require("./ServiceRatingRoutes"),
   AdminRoutes: require("./AdminRoutes"),
   SendRoutes: require("./SendRoutes"),
+  ProductRoutes: require("./ProductRoutes"),
 };

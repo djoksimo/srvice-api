@@ -27,6 +27,7 @@ class AgentService {
           path: "serviceRatings",
           populate: { path: "user" },
         },
+        { path: "products" },
       ],
     }).exec();
   }

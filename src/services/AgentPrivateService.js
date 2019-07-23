@@ -26,10 +26,11 @@ class AgentPrivateService {
                 path: "serviceRatings",
                 populate: { path: "user" },
               },
+              { path: "products" },
             ],
-          }
+          },
         ],
-      }
+      },
     ]).exec();
   }
 

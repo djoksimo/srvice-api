@@ -8,4 +8,5 @@ module.exports = {
   ServiceManager: require("./ServiceManager"),
   ServiceRatingManager: require("./ServiceRatingManager"),
   SendManager: require("./SendManager"),
+  ProductManager: require("./ProductManager"),
 };
