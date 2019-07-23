@@ -8,6 +8,7 @@ class ServiceService {
       path: "serviceRatings",
       populate: { path: "user" },
     };
+    this.productsPath = { path: "products" };
     this.agentPath = {
       path: "agent",
       populate: {
@@ -22,6 +23,7 @@ class ServiceService {
       this.agentPath,
       this.categoryPath,
       this.ratingsPath,
+      this.productsPath,
     ];
   }
 
@@ -51,6 +53,14 @@ class ServiceService {
 
   addServiceRatingToService(serviceId, serviceRatingId) {
     return ServiceModel.findByIdAndUpdate(serviceId, { $push: { serviceRatings: serviceRatingId } }).exec();
+  }
+
+  addProductToService(serviceId, productId) {
+    return ServiceModel.findByIdAndUpdate(serviceId, { $push: { products: productId } }).exec();
+  }
+
+  removeProductFromService(serviceId, productId) {
+    return ServiceModel.findByIdAndUpdate(serviceId, { $pull: { products: productId } }).exec();
   }
 }
 

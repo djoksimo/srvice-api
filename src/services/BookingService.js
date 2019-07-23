@@ -15,7 +15,7 @@ class BookingService {
         populate: [
           this.categoryPath,
           this.ratingsPath,
-        ]
+        ],
       },
     };
     this.servicePath = {

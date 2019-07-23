@@ -15,9 +15,46 @@ class ServiceManager {
     this.categoryToServiceMap = {};
   }
 
-  async createService({ agent, category, title, description, pictureUrls, phone, email, inCall, outCall, remoteCall, address, latitude, longitude, radius, averageServiceRating, serviceRatings }) {
-    const newService = new ServiceModel({ agent, category, title, description, pictureUrls, phone, email, inCall, outCall, remoteCall, address, latitude, longitude, radius, averageServiceRating, serviceRatings });
-    // TODO: verify agent sending request
+  async createService(payload) {
+    const {
+      agent,
+      category,
+      title,
+      description,
+      pictureUrls,
+      phone,
+      email,
+      inCall,
+      outCall,
+      remoteCall,
+      address,
+      latitude,
+      longitude,
+      radius,
+      averageServiceRating,
+      serviceRatings,
+      products,
+    } = payload;
+    const newService = new ServiceModel({
+      agent,
+      category,
+      title,
+      description,
+      pictureUrls,
+      phone,
+      email,
+      inCall,
+      outCall,
+      remoteCall,
+      address,
+      latitude,
+      longitude,
+      radius,
+      averageServiceRating,
+      serviceRatings,
+      products,
+    });
+
     try {
       const serviceDocument = await this.serviceService.saveService(newService);
       await this.agentService.addServiceToAgent(agent, serviceDocument.toObject()._id);
