@@ -21,6 +21,7 @@ const {
   AdminRoutes,
   SendRoutes,
   ProductRoutes,
+  FileRoutes,
 } = require("./routes");
 
 // prod
@@ -67,6 +68,7 @@ app.use((req, res, next) => {
     .then(() => next())
     .catch(() => res.status(403).json({}));
 });
+app.use("/file", FileRoutes);
 app.use("/service-rating", ServiceRatingRoutes);
 app.use("/request", RequestRoutes);
 app.use("/booking", BookingRoutes);

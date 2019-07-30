@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 
+// TODO: move to ../values
 const SECRET_JWT_KEY = "8xStlNM+DbJTIQ0zOk+3X00gngEB9JOEKiVMYWAVWfc";
 
 class JwtService {
