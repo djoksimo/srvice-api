@@ -10,4 +10,5 @@ module.exports = {
   AdminRoutes: require("./AdminRoutes"),
   SendRoutes: require("./SendRoutes"),
   ProductRoutes: require("./ProductRoutes"),
+  FileRoutes: require("./FileRoutes"),
 };
