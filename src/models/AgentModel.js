@@ -16,6 +16,7 @@ const agentSchema = Schema({
   company: { type: String, required: false },
   education: { type: [String], required: true },
   certifications: { type: [String], required: true },
+  skills: { type: [String], required: true },
 }, { versionKey: false });
 
 const agentModel = Mongoose.model("Agent", agentSchema);
