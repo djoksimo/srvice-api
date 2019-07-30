@@ -20,6 +20,7 @@ const {
   ServiceRatingRoutes,
   AdminRoutes,
   SendRoutes,
+  ProductRoutes,
 } = require("./routes");
 
 // prod
@@ -69,6 +70,7 @@ app.use((req, res, next) => {
 app.use("/service-rating", ServiceRatingRoutes);
 app.use("/request", RequestRoutes);
 app.use("/booking", BookingRoutes);
+app.use("/product", ProductRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Route not found");
