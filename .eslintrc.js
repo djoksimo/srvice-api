@@ -8,6 +8,7 @@ module.exports = {
     "no-trailing-spaces": "off",
     "linebreak-style": "off",
     "prefer-template": "off",
+    "class-methods-use-this": "off",
     "no-use-before-define": "off",
     "no-underscore-dangle": "off",
     "function-paren-newline": "off",
@@ -18,7 +19,6 @@ module.exports = {
     "comma-dangle": "warn",
     "max-len": "warn",
     "no-return-await": "warn",
-    "class-methods-use-this": "warn",
     "no-unused-vars": "warn",
     "consistent-return": "warn",
     "no-param-reassign": "warn"
