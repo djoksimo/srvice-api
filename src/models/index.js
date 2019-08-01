@@ -10,4 +10,5 @@ module.exports = {
   UserPrivateModel: require("./UserPrivateModel"),
   UserRatingModel: require("./UserRatingModel"),
   ProductModel: require("./ProductModel"),
+  ScheduleModel: require("./ScheduleModel"),
 };

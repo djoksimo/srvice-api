@@ -11,4 +11,5 @@ module.exports = {
   SendRoutes: require("./SendRoutes"),
   ProductRoutes: require("./ProductRoutes"),
   FileRoutes: require("./FileRoutes"),
+  ScheduleRoutes: require("./ScheduleRoutes"),
 };
