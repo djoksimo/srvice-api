@@ -10,4 +10,5 @@ module.exports = {
   SendManager: require("./SendManager"),
   ProductManager: require("./ProductManager"),
   FileManager: require("./FileManager"),
+  ScheduleManager: require("./ScheduleManager"),
 };
