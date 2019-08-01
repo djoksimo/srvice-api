@@ -17,6 +17,7 @@ const agentSchema = Schema({
   education: { type: [String], required: true },
   certifications: { type: [String], required: true },
   skills: { type: [String], required: true },
+  schedule: { type: ObjectId, ref: "Schedule", required: false },
 }, { versionKey: false });
 
 const agentModel = Mongoose.model("Agent", agentSchema);

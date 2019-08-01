@@ -19,17 +19,20 @@ class AgentService {
   }
 
   getAgentById(id) {
-    return AgentModel.findById(id).populate({
-      path: "services",
-      populate: [
-        { path: "category", select: "_id name iconUrl" },
-        {
-          path: "serviceRatings",
-          populate: { path: "user" },
-        },
-        { path: "products" },
-      ],
-    }).exec();
+    return AgentModel.findById(id).populate([
+      {
+        path: "services",
+        populate: [
+          { path: "category", select: "_id name iconUrl" },
+          {
+            path: "serviceRatings",
+            populate: { path: "user" },
+          },
+          { path: "products" },
+        ],
+      },
+      { path: "schedule" },
+    ]).exec();
   }
 
   getNonPopulatedAgentById(id) {
@@ -37,11 +40,15 @@ class AgentService {
   }
 
   addServiceToAgent(agentId, serviceId) {
-    return AgentModel.findByIdAndUpdate(agentId, { $push: { services: serviceId } });
+    return AgentModel.findByIdAndUpdate(agentId, { $push: { services: serviceId } }).exec();
   }
 
   updateAgent(agent) {
     return AgentModel.update({ _id: agent._id }, { $set: agent }).exec();
+  }
+
+  addScheduleToAgent(agentId, scheduleId) {
+    return AgentModel.findByIdAndUpdate(agentId, { schedule: scheduleId }).exec();
   }
 }
 

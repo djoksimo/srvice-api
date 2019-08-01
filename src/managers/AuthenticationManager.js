@@ -35,10 +35,45 @@ class AuthenticationManager {
     this.jwtService = JwtService;
   }
 
-  async signupAgent({ email, firstName, lastName, password, dateJoined, profilePictureUrl, services, location, languages, company, education, certifications, phone, governmentIdUrl, secondaryIdUrl, selfieUrl, givenRatings, bookings, skills }) {
+  async signupAgent(agent) {
+    const {
+      email,
+      firstName,
+      lastName,
+      password,
+      dateJoined,
+      profilePictureUrl,
+      services,
+      location,
+      languages,
+      company,
+      education,
+      certifications,
+      phone,
+      governmentIdUrl,
+      secondaryIdUrl,
+      selfieUrl,
+      givenRatings,
+      bookings,
+      skills,
+    } = agent;
+
     try {
       await this.cognitoService.createAccount(firstName, lastName, email, password);
-      const newAgent = new AgentModel({ email, firstName, lastName, dateJoined, profilePictureUrl, services, location, languages, company, education, certifications, skills });
+      const newAgent = new AgentModel({
+        email,
+        firstName,
+        lastName,
+        dateJoined,
+        profilePictureUrl,
+        services,
+        location,
+        languages,
+        company,
+        education,
+        certifications,
+        skills,
+      });
       const newAgentPrivate = new AgentPrivateModel({ email, phone, governmentIdUrl, secondaryIdUrl, selfieUrl, givenRatings, bookings });
       const newUser = new UserModel({ email, firstName, lastName, dateJoined, profilePictureUrl });
       const newUserPrivate = new UserPrivateModel({ email, phone, savedServices: [], givenRatings: [], requests: [], bookings: [] });
