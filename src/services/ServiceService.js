@@ -11,13 +11,18 @@ class ServiceService {
     this.productsPath = { path: "products" };
     this.agentPath = {
       path: "agent",
-      populate: {
-        path: "services",
-        populate: [
-          this.categoryPath,
-          this.ratingsPath,
-        ],
-      },
+      populate: [
+        {
+          path: "services",
+          populate: [
+            this.categoryPath,
+            this.ratingsPath,
+          ],
+        },
+        {
+          path: "schedule",
+        },
+      ],
     };
     this.servicePopulate = [
       this.agentPath,

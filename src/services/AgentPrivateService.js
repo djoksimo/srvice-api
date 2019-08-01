@@ -31,6 +31,9 @@ class AgentPrivateService {
           },
         ],
       },
+      {
+        path: "schedule",
+      },
     ]).exec();
   }
 
