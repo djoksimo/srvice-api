@@ -14,4 +14,8 @@ router.patch("/", async (req, res) => {
   HttpUtils.sendResponse(res, await scheduleManager.patchSchedule(req.body));
 });
 
+router.patch("/booking", async (req, res) => {
+  HttpUtils.sendResponse(res, await scheduleManager.addBookingToSchedule(req.body));
+});
+
 module.exports = router;
