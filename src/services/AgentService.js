@@ -6,16 +6,25 @@ class AgentService {
   }
 
   getAgentByEmail(email) {
-    return AgentModel.findOne({ email }).populate({
-      path: "services",
-      populate: [
-        { path: "category", select: "_id name iconUrl" },
-        {
-          path: "serviceRatings",
-          populate: { path: "user" },
-        },
-      ],
-    }).exec();
+    return AgentModel.findOne({ email }).populate([
+      {
+        path: "services",
+        populate: [
+          { path: "category", select: "_id name iconUrl" },
+          {
+            path: "serviceRatings",
+            populate: { path: "user" },
+          },
+        ],
+      },
+      {
+        path: "schedule",
+        populate: [
+          { path: "bookings.product" },
+          { path: "bookings.user" },
+        ],
+      },
+    ]).exec();
   }
 
   getAgentById(id) {
@@ -31,7 +40,13 @@ class AgentService {
           { path: "products" },
         ],
       },
-      { path: "schedule" },
+      {
+        path: "schedule",
+        populate: [
+          { path: "bookings.product" },
+          { path: "bookings.user" },
+        ],
+      },
     ]).exec();
   }
 
