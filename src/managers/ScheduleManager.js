@@ -31,6 +31,15 @@ class ScheduleManager {
       return { status: 500, json: error };
     }
   }
+
+  async addBookingToSchedule({ scheduleId, booking }) {
+    try {
+      const result = await this.scheduleService.addBookingAndSort(scheduleId, booking);
+      return { status: 200, json: result };
+    } catch (error) {
+      return { status: 500, json: error };
+    }
+  }
 }
 
 module.exports = ScheduleManager;

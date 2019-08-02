@@ -21,6 +21,10 @@ class ServiceService {
         },
         {
           path: "schedule",
+          populate: [
+            { path: "product" },
+            { path: "user" },
+          ],
         },
       ],
     };
