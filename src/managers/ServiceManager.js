@@ -57,8 +57,9 @@ class ServiceManager {
 
     try {
       const serviceDocument = await this.serviceService.saveService(newService);
-      await this.agentService.addServiceToAgent(agent, serviceDocument.toObject()._id);
-      return { status: 201, json: {} };
+      const serviceId = serviceDocument.toObject()._id;
+      await this.agentService.addServiceToAgent(agent, serviceId);
+      return { status: 201, json: { serviceId } };
     } catch (error) {
       return { status: 500, json: error };
     }

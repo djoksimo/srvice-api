@@ -34,7 +34,7 @@ class AgentPrivateService {
     ]).exec();
   }
 
-  addBookingToAgentPrivate(email, bookingId) {
+  async addBookingToAgentPrivate(email, bookingId) {
     return AgentPrivateModel.findOneAndUpdate({ email }, { $push: { bookings: bookingId } });
   }
 }

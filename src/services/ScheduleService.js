@@ -1,21 +1,41 @@
 const { ScheduleModel } = require("../models");
 
 class ScheduleService {
+  static isOwner(scheduleId, agentId) {
+    return new Promise((resolve, reject) => {
+      ScheduleModel.findById(scheduleId, (err, schedule) => {
+        if (err) {
+          return reject(err);
+        }
+        if (!schedule) {
+          return reject(new Error("Could not find schedule"));
+        }
+        if (agentId.toString() !== schedule.toObject().agent.toString()) {
+          resolve(false);
+        }
+        return resolve(true);
+      });
+    });
+  }
 
   saveSchedule(newSchedule) {
     return newSchedule.save();
   }
 
-  updateSchedule(schedule) {
-    return ScheduleModel.update({ _id: schedule.id }, { $set: schedule }).exec();
+  async updateSchedule(schedule, agentId) {
+    const isOwner = await ScheduleService.isOwner(schedule._id, agentId);
+    if (!isOwner) {
+      throw new Error("NICE TRY ;)");
+    }
+    return ScheduleModel.updateOne({ _id: schedule._id }, { $set: schedule }).exec();
   }
 
   addBookingAndSort(scheduleId, booking) {
-    return ScheduleModel.findByIdAndUpdate(scheduleId, {
+    return ScheduleModel.updateOne({ _id: scheduleId }, {
       $push: {
         bookings: {
           $each: [booking],
-          $sort: { "booking.end": -1 },
+          $sort: { end: 1 },
         },
       },
     }).exec();

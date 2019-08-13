@@ -18,7 +18,8 @@ const scheduleModel = Schema({
     product: { type: ObjectId, ref: "Product", required: true },
     user: { type: ObjectId, ref: "User", required: true },
   }],
-}, { versionKey: false });
+  agent: { type: ObjectId, ref: "Agent", required: true },
+}, { versionKey: false, timestamps: true });
 
 const productModel = Mongoose.model("Schedule", scheduleModel);
 

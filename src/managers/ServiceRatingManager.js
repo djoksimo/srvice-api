@@ -27,12 +27,12 @@ class ServiceRatingManager {
     }
   }
 
-  async patchServiceRating(serviceRating) {
+  async patchServiceRating(serviceRating, authHeaders) {
     try {
-      const result = await this.serviceService.updateServiceRating(serviceRating);
+      const result = await this.serviceRatingService.updateServiceRating(serviceRating, authHeaders.userId);
       return { status: 200, json: result };
     } catch (error) {
-      return { status: 500, json: error };
+      return { status: 500, json: { error: error.toString() } };
     }
   }
 }

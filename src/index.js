@@ -64,17 +64,12 @@ app.use("/category", CategoryRoutes);
 app.use("/service", ServiceRoutes);
 app.use("/send", SendRoutes);
 app.use("/admin", AdminRoutes);
-app.use((req, res, next) => {
-  authenticationManager.authenticateIdEmailToken(HttpUtils.parseAuthHeaders(req))
-    .then(() => next())
-    .catch(() => res.status(403).json({}));
-});
-app.use("/file", FileRoutes);
 app.use("/service-rating", ServiceRatingRoutes);
 app.use("/request", RequestRoutes);
 app.use("/booking", BookingRoutes);
 app.use("/product", ProductRoutes);
 app.use("/schedule", ScheduleRoutes);
+app.use("/file", FileRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Route not found");

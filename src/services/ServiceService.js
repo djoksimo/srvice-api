@@ -5,7 +5,6 @@ class ServiceService {
   static isOwner(serviceId, agentId) {
     return new Promise((resolve, reject) => {
       ServiceModel.findById(serviceId, (err, service) => {
-        console.log(err, service);
         if (err) {
           return reject(err);
         }
@@ -70,33 +69,38 @@ class ServiceService {
     return ServiceModel.findById(id).populate("serviceRatings").exec();
   }
 
-  updateService(service) {
-    return ServiceModel.update({ _id: service._id }, { $set: service }).exec();
+  async updateService(service, agentId) {
+    const isOwner = await ServiceService.isOwner(service._id, agentId);
+    if (!isOwner) {
+      throw new Error("NICE TRY");
+    }
+    return ServiceModel.updateOne({ _id: service._id }, { $set: service }).exec();
   }
 
   async removeService(serviceId, agentId) {
     const isOwner = await ServiceService.isOwner(serviceId, agentId); 
     if (!isOwner) {
-      return new Error("NICE TRY");
+      throw new Error("NICE TRY");
     }
-    return Promise.all([
-      ServiceModel.deleteOne({ _id: serviceId }).exec(),
-      ServiceModel.findByIdAndUpdate(serviceId, { $pullAll: [ "products", "serviceRatings"] }),
-    ]);
+    return ServiceModel.deleteOne({ _id: serviceId }).exec();
   }
 
   addServiceRatingToService(serviceId, serviceRatingId) {
     return ServiceModel.findByIdAndUpdate(serviceId, { $push: { serviceRatings: serviceRatingId } }).exec();
   }
 
-  addProductToService(serviceId, productId) {
-    return ServiceModel.findByIdAndUpdate(serviceId, { $push: { products: productId } }).exec();
+  async addProductToService(serviceId, productId, agentId) {
+    const isOwner = await ServiceService.isOwner(serviceId, agentId);
+    if (!isOwner) {
+      throw new Error("NICE TRY ;)");
+    }
+    return ServiceModel.updateOne({ _id: serviceId }, { $push: { products: productId } }).exec();
   }
 
   async removeProductFromService(serviceId, productId, agentId) {
     const isOwner = await ServiceService.isOwner(serviceId, agentId); 
     if (!isOwner) {
-      return new Error("NICE TRY");
+      throw new Error("NICE TRY");
     }
     return ServiceModel.findByIdAndUpdate(serviceId, { $pull: { products: productId } }).exec();
   }

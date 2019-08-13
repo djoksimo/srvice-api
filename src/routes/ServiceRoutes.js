@@ -22,14 +22,16 @@ router.get("/:id", async (req, res) => {
 });
 
 router.patch("/", async (req, res) => {
-  authenticationManager.authenticateIdEmailToken(HttpUtils.parseAuthHeaders(req)).then(async () => {
-    HttpUtils.sendResponse(res, await serviceManager.patchService(req.body, HttpUtils.parseAuthHeaders(req)));
+  const authHeaders = HttpUtils.parseAuthHeaders(req);
+  authenticationManager.authenticateIdEmailToken(authHeaders).then(async () => {
+    HttpUtils.sendResponse(res, await serviceManager.patchService(req.body, authHeaders));
   }).catch(() => res.status(403).json({}));  
 });
 
 router.delete("/:id", async (req, res) => {
-  authenticationManager.authenticateIdEmailToken(HttpUtils.parseAuthHeaders(req)).then(async () => {
-    HttpUtils.sendResponse(res, await serviceManager.deleteService(req.params.id, HttpUtils.parseAuthHeaders(req)));
+  const authHeaders = HttpUtils.parseAuthHeaders(req);
+  authenticationManager.authenticateIdEmailToken(authHeaders).then(async () => {
+    HttpUtils.sendResponse(res, await serviceManager.deleteService(req.params.id, authHeaders));
   }).catch(() => res.status(403).json({}));  
 });
 

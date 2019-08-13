@@ -7,6 +7,7 @@ const { HttpUtils, UuidUtils } = require("../utils");
 
 const router = Express.Router();
 const fileManager = Bottle.FileManager;
+const authenticationManager = Bottle.AuthenticationManager;
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -23,7 +24,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post("/upload/pictures/", upload.array("pictures", FileValues.MAX_PICTURE_COUNT), async (req, res) => {
-  HttpUtils.sendResponse(res, await fileManager.uploadPictures(req.files));
+  const authHeaders = HttpUtils.parseAuthHeaders(req);
+  authenticationManager.authenticateIdEmailToken(authHeaders).then(async () => {
+    HttpUtils.sendResponse(res, await fileManager.uploadPictures(req.files));
+  }).catch(() => res.status(403).json({}));
 });
 
 module.exports = router;

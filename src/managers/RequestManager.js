@@ -37,7 +37,7 @@ class RequestManager {
       await this.userPrivateService.addRequestToUserPrivate(email, requestDocument._id);
       return { status: 201, json: requestDocument };
     } catch (error) {
-      return { status: 500, json: error };
+      return { status: 500, json: { error: error.toString() } };
     }
   }
 }

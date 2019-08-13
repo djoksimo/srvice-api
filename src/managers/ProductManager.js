@@ -7,13 +7,15 @@ class ProductManager {
     this.serviceService = ServiceService;
   }
 
-  async createProduct(payload) {
+  // TODO switch so that this creates a list of products - DANILO
+  async createProduct(payload, authHeaders) {
     const {
       serviceId,
       title,
       duration,
       price,
       description,
+      agent,
     } = payload;
 
     const newProduct = new ProductModel({
@@ -21,30 +23,33 @@ class ProductManager {
       duration,
       price,
       description,
+      agent,
     });
 
     try {
       const productDocument = await this.productService.saveProduct(newProduct);
-      await this.serviceService.addProductToService(serviceId, productDocument.toObject()._id);
-      return { status: 201, json: {} };
+      await this.serviceService.addProductToService(serviceId, productDocument.toObject()._id, authHeaders.agentId);
+      const productId = productDocument.toObject()._id;
+
+      return { status: 201, json: { productId } };
     } catch (error) {
       console.log(error);
       return { status: 500, json: error };
     }
   }
 
-  async patchProduct(product) {
+  async patchProduct(product, authHeaders) {
     try {
-      const result = await this.productService.updateProduct(product);
+      const result = await this.productService.updateProduct(product, authHeaders.agentId);
       return { status: 200, json: result };
     } catch (error) {
       return { status: 500, json: error };
     }
   }
 
-  async deleteProduct({ productId, serviceId }) {
+  async deleteProduct({ productId, serviceId }, authHeaders) {
     try {
-      const productResult = await this.productService.removeProduct(productId);
+      const productResult = await this.productService.removeProduct(productId, authHeaders.agentId);
       const serviceResult = await this.serviceService.removeProductFromService(serviceId, productId);
       return { status: 200, json: { productResult, serviceResult } };
     } catch (error) {
