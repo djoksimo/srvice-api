@@ -2,6 +2,24 @@ const { ServiceModel } = require("../models");
 
 class ServiceService {
 
+  static isOwner(serviceId, agentId) {
+    return new Promise((resolve, reject) => {
+      ServiceModel.findById(serviceId, (err, service) => {
+        console.log(err, service);
+        if (err) {
+          return reject(err);
+        }
+        if (!service) {
+          return reject(new Error("Could not find service"));
+        }
+        if (agentId.toString() !== service.toObject().agent.toString()) {
+          resolve(false);
+        }
+        return resolve(true); 
+      });
+    });
+  }
+
   constructor() {
     this.categoryPath = { path: "category", select: "_id name iconUrl" };
     this.ratingsPath = {
@@ -56,8 +74,15 @@ class ServiceService {
     return ServiceModel.update({ _id: service._id }, { $set: service }).exec();
   }
 
-  removeService(id) {
-    return ServiceModel.remove({ _id: id }).exec();
+  async removeService(serviceId, agentId) {
+    const isOwner = await ServiceService.isOwner(serviceId, agentId); 
+    if (!isOwner) {
+      return new Error("NICE TRY");
+    }
+    return Promise.all([
+      ServiceModel.deleteOne({ _id: serviceId }).exec(),
+      ServiceModel.findByIdAndUpdate(serviceId, { $pullAll: [ "products", "serviceRatings"] }),
+    ]);
   }
 
   addServiceRatingToService(serviceId, serviceRatingId) {
@@ -68,7 +93,11 @@ class ServiceService {
     return ServiceModel.findByIdAndUpdate(serviceId, { $push: { products: productId } }).exec();
   }
 
-  removeProductFromService(serviceId, productId) {
+  async removeProductFromService(serviceId, productId, agentId) {
+    const isOwner = await ServiceService.isOwner(serviceId, agentId); 
+    if (!isOwner) {
+      return new Error("NICE TRY");
+    }
     return ServiceModel.findByIdAndUpdate(serviceId, { $pull: { products: productId } }).exec();
   }
 }

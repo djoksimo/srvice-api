@@ -105,21 +105,22 @@ class ServiceManager {
     }
   }
 
-  async patchService(service) {
+  async patchService(service, authHeaders) {
     try {
-      const result = await this.serviceService.updateService(service);
+      const result = await this.serviceService.updateService(service, authHeaders.agentId);
       return { status: 200, json: result };
     } catch (error) {
-      return { status: 500, json: error };
+      return { status: 500, json: { error: error.toString() } };
     }
   }
 
-  async deleteService({ id }) {
+  async deleteService(serviceId, authHeaders) {
     try {
-      const result = await this.serviceService.removeService(id);
+      const result = await this.serviceService.removeService(serviceId, authHeaders.agentId);
+      // TODO remove products and all other sub-documents in service (products, ratings, etc)
       return { status: 200, json: result };
     } catch (error) {
-      return { status: 500, json: error };
+      return { status: 500, json: { error: error.toString() } };
     }
   }
 }
