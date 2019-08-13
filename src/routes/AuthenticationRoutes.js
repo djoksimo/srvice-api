@@ -30,14 +30,7 @@ router.post("/user/confirm", async (req, res) => {
   HttpUtils.sendResponse(res, await authenticationManager.confirmUser(req.body));
 });
 
-const moss = (req, res, next) => {
-  console.log("MOSSSS");
-  console.log(req);
-  // console.log(JSON.stringify(res, null, 2));
-  next();
-};
-
-router.post("/user/login", moss, async (req, res) => {
+router.post("/user/login", async (req, res) => {
   HttpUtils.sendResponse(res, await authenticationManager.loginUser(req.body));
 });
 

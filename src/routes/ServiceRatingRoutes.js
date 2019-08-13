@@ -7,17 +7,20 @@ const router = Express.Router();
 const serviceRatingManager = bottle.ServiceRatingManager;
 const authenticationManager = bottle.AuthenticationManager;
 
-router.post("/", async (req, res) => {
-  authenticationManager.authenticateIdEmailToken(HttpUtils.parseAuthHeaders(req)).then(async () => {
-    HttpUtils.sendResponse(res, await serviceRatingManager.createServiceRating(req.body));
-  }).catch(() => res.status(403).json({}));
-});
-
-router.patch("/", async (req, res) => {
+const isAuthenticated = (req, res, callback) => {
   const authHeaders = HttpUtils.parseAuthHeaders(req);
   authenticationManager.authenticateIdEmailToken(authHeaders).then(async () => {
-    HttpUtils.sendResponse(res, await serviceRatingManager.patchServiceRating(req.body, authHeaders));
+    callback();
   }).catch(() => res.status(403).json({}));
-});
+};
+
+router.post("/", (req, res) => isAuthenticated(req, res, async () => {
+  HttpUtils.sendResponse(res, await serviceRatingManager.createServiceRating(req.body));
+}));
+
+router.patch("/", (req, res) => isAuthenticated(req, res, async () => {
+  const authHeaders = HttpUtils.parseAuthHeaders(req);
+  HttpUtils.sendResponse(res, await serviceRatingManager.patchServiceRating(req.body, authHeaders));
+}));
 
 module.exports = router;

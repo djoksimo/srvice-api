@@ -7,23 +7,24 @@ const router = Express.Router();
 const scheduleManager = Bottle.ScheduleManager;
 const authenticationManager = Bottle.AuthenticationManager;
 
-router.post("/", async (req, res) => {
-  authenticationManager.authenticateIdEmailToken(HttpUtils.parseAuthHeaders(req)).then(async () => {
-    HttpUtils.sendResponse(res, await scheduleManager.createSchedule(req.body));
-  }).catch(() => res.status(403).json({}));
-});
-
-router.patch("/", async (req, res) => {
+const isAuthenticated = (req, res, callback) => {
   const authHeaders = HttpUtils.parseAuthHeaders(req);
   authenticationManager.authenticateIdEmailToken(authHeaders).then(async () => {
-    HttpUtils.sendResponse(res, await scheduleManager.patchSchedule(req.body, authHeaders));
+    callback();
   }).catch(() => res.status(403).json({}));
-});
+};
 
-router.patch("/booking", async (req, res) => {
-  authenticationManager.authenticateIdEmailToken(HttpUtils.parseAuthHeaders(req)).then(async () => {
-    HttpUtils.sendResponse(res, await scheduleManager.addBookingToSchedule(req.body));
-  }).catch(() => res.status(403).json({}));
-});
+router.post("/", (req, res) => isAuthenticated(req, res, async () => {
+  HttpUtils.sendResponse(res, await scheduleManager.createSchedule(req.body));
+}));
+
+router.patch("/", (req, res) => isAuthenticated(req, res, async () => {
+  const authHeaders = HttpUtils.parseAuthHeaders(req);
+  HttpUtils.sendResponse(res, await scheduleManager.patchSchedule(req.body, authHeaders));
+}));
+
+router.patch("/booking", (req, res) => isAuthenticated(req, res, async () => {
+  HttpUtils.sendResponse(res, await scheduleManager.addBookingToSchedule(req.body));
+}));
 
 module.exports = router;
