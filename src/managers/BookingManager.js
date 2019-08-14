@@ -5,14 +5,14 @@ class BookingManager {
     this.userPrivateService = UserPrivateService;
   }
 
-  async acceptBookingAgent({ bookingId, priceEstimate, timeEstimate, agentAccepted }) {
+  async acceptBookingAgent({ bookingId, priceEstimate, timeEstimate, agentAccepted }, authHeaders) {
     try {
-      await this.bookingService.updatePriceEstimateAgentAcceptedById(bookingId, priceEstimate, timeEstimate, agentAccepted);
+      await this.bookingService.updatePriceEstimateAgentAcceptedById(bookingId, priceEstimate, timeEstimate, agentAccepted, authHeaders.agentId);
       // TODO: push notifications
       const bookingDocument = await this.bookingService.getBookingById(bookingId);
       return { status: 200, json: bookingDocument };
     } catch (error) {
-      return { status: 500, json: error };
+      return { status: 500, json: { error: error.toString() } };
     }
   }
 

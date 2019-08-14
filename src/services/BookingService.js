@@ -1,6 +1,22 @@
 const { BookingModel } = require("../models");
 
 class BookingService {
+  static isOwner(bookingId, agentId) {
+    return new Promise((resolve, reject) => {
+      BookingModel.findById(bookingId, (err, booking) => {
+        if (err) {
+          return reject(err);
+        }
+        if (!booking) {
+          return reject(new Error("Could not find booking"));
+        }
+        if (agentId.toString() !== booking.toObject().agent.toString()) {
+          resolve(false);
+        }
+        return resolve(true);
+      });
+    });
+  }
 
   constructor() {
     this.categoryPath = { path: "category", select: "_id name iconUrl" };
@@ -31,7 +47,11 @@ class BookingService {
     return newBooking.save();
   }
 
-  updatePriceEstimateAgentAcceptedById(_id, priceEstimate, timeEstimate, agentAccepted) {
+  async updatePriceEstimateAgentAcceptedById(bookingId, priceEstimate, timeEstimate, agentAccepted, agentId) {
+    const isOwner = await BookingService.isOwner(bookingId, agentId);
+    if (!isOwner) {
+      throw new Error("NICE TRY");
+    }
     return BookingModel.update({ _id }, { $set: { priceEstimate, timeEstimate, agentAccepted } });
   }
 
