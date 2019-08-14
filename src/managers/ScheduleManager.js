@@ -19,16 +19,16 @@ class ScheduleManager {
       return { status: 201, json: {} };
     } catch (error) {
       console.log(error);
-      return { status: 500, json: error };
+      return { status: 500, json: { error: error.toString() } };
     }
   }
 
-  async patchSchedule(schedule) {
+  async patchSchedule(schedule, authHeaders) {
     try {
-      const result = await this.scheduleService.updateSchedule(schedule);
+      const result = await this.scheduleService.updateSchedule(schedule, authHeaders.agentId);
       return { status: 200, json: result };
     } catch (error) {
-      return { status: 500, json: error };
+      return { status: 500, json: { error: error.toString() } };
     }
   }
 
@@ -37,7 +37,7 @@ class ScheduleManager {
       const result = await this.scheduleService.addBookingAndSort(scheduleId, booking);
       return { status: 200, json: result };
     } catch (error) {
-      return { status: 500, json: error };
+      return { status: 500, json: { error: error.toString() } };
     }
   }
 }

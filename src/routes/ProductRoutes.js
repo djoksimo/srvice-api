@@ -5,17 +5,28 @@ const { HttpUtils } = require("../utils");
 
 const router = Express.Router();
 const productManager = Bottle.ProductManager;
+const authenticationManager = Bottle.AuthenticationManager;
 
-router.post("/", async (req, res) => {
-  HttpUtils.sendResponse(res, await productManager.createProduct(req.body));
-});
+const isAuthenticated = (req, res, callback) => {
+  const authHeaders = HttpUtils.parseAuthHeaders(req);
+  authenticationManager.authenticateIdEmailToken(authHeaders).then(async () => {
+    callback();
+  }).catch(() => res.status(403).json({}));
+};
 
-router.patch("/", async (req, res) => {
-  HttpUtils.sendResponse(res, await productManager.patchProduct(req.body));
-});
+router.post("/", (req, res) => isAuthenticated(req, res, async () => {
+  const authHeaders = HttpUtils.parseAuthHeaders(req);
+  HttpUtils.sendResponse(res, await productManager.createProduct(req.body, authHeaders));
+}));
 
-router.delete("/", async (req, res) => {
-  HttpUtils.sendResponse(res, await productManager.deleteProduct(req.body));
-});
+router.patch("/", (req, res) => isAuthenticated(req, res, async () => {
+  const authHeaders = HttpUtils.parseAuthHeaders(req);
+  HttpUtils.sendResponse(res, await productManager.patchProduct(req.body, authHeaders));
+}));
+
+router.delete("/", (req, res) => isAuthenticated(req, res, async () => {
+  const authHeaders = HttpUtils.parseAuthHeaders(req);
+  HttpUtils.sendResponse(res, await productManager.deleteProduct(req.body, authHeaders));
+}));
 
 module.exports = router;

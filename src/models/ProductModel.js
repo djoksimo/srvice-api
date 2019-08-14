@@ -9,6 +9,7 @@ const productSchema = Schema({
   duration: { type: Number, required: true },
   price: { type: Number, required: true },
   description: { type: String, required: false },
+  agent: { type: ObjectId, ref: "Agent", required: true },
 }, { versionKey: false });
 
 const productModel = Mongoose.model("Product", productSchema);

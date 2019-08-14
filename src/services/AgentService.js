@@ -14,8 +14,14 @@ class AgentService {
           {
             path: "serviceRatings",
             populate: { path: "user" },
+            options: {
+              sort: { date: -1 },
+            },
           },
         ],
+        options: {
+          sort: { updatedAt: -1 },
+        },
       },
       {
         path: "schedule",
@@ -36,16 +42,19 @@ class AgentService {
           {
             path: "serviceRatings",
             populate: { path: "user" },
+            options: {
+              sort: { date: -1 },
+            },
           },
           { path: "products" },
         ],
+        options: {
+          sort: { updatedAt: -1 },
+        },
       },
       {
         path: "schedule",
-        populate: [
-          { path: "bookings.product" },
-          { path: "bookings.user" },
-        ],
+        select: "-bookings.user -bookings.product",
       },
     ]).exec();
   }
@@ -59,7 +68,7 @@ class AgentService {
   }
 
   updateAgent(agent) {
-    return AgentModel.update({ _id: agent._id }, { $set: agent }).exec();
+    return AgentModel.updateOne({ _id: agent._id }, { $set: agent }).exec();
   }
 
   addScheduleToAgent(agentId, scheduleId) {

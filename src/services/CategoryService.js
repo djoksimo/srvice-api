@@ -22,10 +22,6 @@ class CategoryService {
     return CategoryModel.findById(id).exec();
   }
 
-  async get() {
-    return CategoryModel.find().exec();
-  }
-
   async update(id, data) {
     return CategoryModel.update({ _id: id }, { $set: data }).exec();
   }

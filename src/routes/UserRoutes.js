@@ -5,6 +5,7 @@ const { HttpUtils } = require("../utils");
 
 const router = express.Router();
 const userManager = Bottle.UserManager;
+// TODO: secure this
 
 router.get("/:id", async (req, res) => {
   HttpUtils.sendResponse(res, await userManager.getUserById(req.params));
