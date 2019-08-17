@@ -22,7 +22,7 @@ class FileService {
       const blob = await bucket.file(fileName);
 
       const stream = blob.createWriteStream({
-        resumable: true,
+        resumable: false,
         contentType: file.mimetype,
         predefinedAcl: "publicRead",
       });
