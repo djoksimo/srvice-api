@@ -1,37 +1,45 @@
-const sharp = require("sharp");
-const fs = require("fs");
 const { Storage } = require("@google-cloud/storage");
 
 const { GoogleValues } = require("../values");
+const { UuidUtils, GoogleUtils } = require("../utils");
 
 class FileService {
+
   constructor() {
-    this.storage = new Storage();
-    this.bucketName = GoogleValues.BUCKET_NAME;
-
-    this.uploadOptions = {
-      gzip: true,
-      metadata: {
-        cacheControl: "public, max-age=31536000",
-      },
-    };
-  }
-
-  getSmallPngFromTemp(filename, filePath) {
-    return sharp(filePath).toFile(`tmp/${filename}.png`);
-  }
-
-  removeTempFile(filePath) {
-    return fs.unlink(filePath, (err) => {
-      if (err) {
-        return err;
-      }
-      return null;
+    this.gcsStorage = new Storage({
+      projectId: GoogleValues.GCP_PROJECT_ID,
+      keyFilename: "./src/values/google.json",
     });
   }
 
-  uploadToBucket(filePath) {
-    return this.storage.bucket(this.bucketName).upload(filePath, this.uploadOptions);
+  async getPublicUrlFromUpload(file) {
+    try {
+      if (!file) {
+        return new Error("File not defined");
+      }
+      const bucket = this.gcsStorage.bucket(GoogleValues.BUCKET_NAME);
+      const fileName = `${UuidUtils.generateUUID()}`;
+      const blob = await bucket.file(fileName);
+
+      const stream = blob.createWriteStream({
+        resumable: true,
+        contentType: file.mimetype,
+        predefinedAcl: "publicRead",
+      });
+
+      const uploadResult = new Promise((resolve, reject) => {
+        stream.on('finish', () => {
+          resolve(GoogleUtils.getPublicUrl(`${GoogleValues.BUCKET_NAME}/${fileName}`));
+        });
+        stream.on("error", (err) => {
+          reject(err);
+        });
+        stream.end(file.buffer);
+      });
+      return uploadResult;
+    } catch (error) {
+      return error;
+    }
   }
 }
 
