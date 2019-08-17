@@ -1,9 +1,10 @@
 const Express = require("express");
-const multer = require("multer");
+const Multer = require("multer");
+const path = require("path");
 
 const Bottle = require("../bottle");
 const { FileValues } = require("../values");
-const { HttpUtils, UuidUtils } = require("../utils");
+const { HttpUtils } = require("../utils");
 
 const router = Express.Router();
 const fileManager = Bottle.FileManager;
@@ -16,21 +17,23 @@ const isAuthenticated = (req, res, callback) => {
   }).catch(() => res.status(403).json({}));
 };
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "tmp/");
+const multer = Multer({
+  limits: {
+    fileSize: 10 * 1024 * 1024, // no larger than 10MB
   },
-  filename: (req, file, cb) => {
-    // Now that's secure 🔐
-    const secureFileName = `${UuidUtils.generateUUID()}`;
-    cb(null, secureFileName);
+  fileFilter: (req, file, cb) => {
+    const fileTypes = /jpeg|jpg|png|bmp|gif|webp|psd/;
+    const mimeType = fileTypes.test(file.mimetype);
+    const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
+
+    if (mimeType && extName) {
+      return cb(null, true);
+    }
+    cb(new Error(`Error: File upload only supports the following filetypes - ${fileTypes.toString()}`));
   },
 });
 
-// TODO: validate file type and size using multer fileFilter
-const multerUpload = multer({ storage });
-
-router.post("/upload/pictures/", multerUpload.array("pictures", FileValues.MAX_PICTURE_COUNT),
+router.post("/upload/pictures/", multer.array("pictures", FileValues.MAX_PICTURE_COUNT),
   (req, res) => isAuthenticated(req, res, async () => {
     HttpUtils.sendResponse(res, await fileManager.uploadPictures(req.files));
   }),

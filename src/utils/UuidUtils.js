@@ -2,7 +2,7 @@ const uuidv4 = require("uuid/v4");
 
 class UuidUtils {
   static generateUUID() {
-    return uuidv4();
+    return `${uuidv4()}${uuidv4()}`;
   }
 }
 
