@@ -24,7 +24,8 @@ const multer = Multer({
   fileFilter: (req, file, cb) => {
     const fileTypes = /jpeg|jpg|png|bmp|gif|webp|psd/;
     const mimeType = fileTypes.test(file.mimetype);
-    const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
+    const extName = fileTypes.test(path.extname(file.originalname)
+      .toLowerCase());
 
     if (mimeType && extName) {
       return cb(null, true);

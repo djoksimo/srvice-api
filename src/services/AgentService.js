@@ -18,6 +18,7 @@ class AgentService {
               sort: { date: -1 },
             },
           },
+          { path: "products" },
         ],
         options: {
           sort: { updatedAt: -1 },
