@@ -10,8 +10,10 @@ class ScheduleService {
         if (!schedule) {
           return reject(new Error("Could not find schedule"));
         }
-        if (agentId.toString() !== schedule.toObject().agent.toString()) {
-          resolve(false);
+        const scheduleDocument = schedule.toObject();
+        const { agent } = scheduleDocument;
+        if (agentId !== agent.toString()) {
+          return resolve(false);
         }
         return resolve(true);
       });

@@ -9,10 +9,14 @@ class ServiceService {
           return reject(err);
         }
         if (!service) {
-          return reject(new Error("Could not find service"));
+          return reject(Error("Could not find service"));
         }
-        if (agentId.toString() !== service.toObject().agent.toString()) {
-          resolve(false);
+        const productDocument = service.toObject();
+        const { agent } = productDocument;
+        console.log(agentId);
+        console.log(agent.toString());
+        if (agentId !== agent.toString()) {
+          return resolve(false);
         }
         return resolve(true); 
       });
@@ -98,7 +102,8 @@ class ServiceService {
   }
 
   async removeProductFromService(serviceId, productId, agentId) {
-    const isOwner = await ServiceService.isOwner(serviceId, agentId); 
+    const isOwner = await ServiceService.isOwner(serviceId, agentId);
+    console.log(isOwner);
     if (!isOwner) {
       throw new Error("NICE TRY");
     }
