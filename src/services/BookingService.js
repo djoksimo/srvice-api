@@ -10,8 +10,10 @@ class BookingService {
         if (!booking) {
           return reject(new Error("Could not find booking"));
         }
-        if (agentId.toString() !== booking.toObject().agent.toString()) {
-          resolve(false);
+        const bookingDocument = booking.toObject();
+        const { agent } = bookingDocument;
+        if (agentId !== agent.toString()) {
+          return resolve(false);
         }
         return resolve(true);
       });

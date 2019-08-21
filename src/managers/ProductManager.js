@@ -50,10 +50,11 @@ class ProductManager {
   async deleteProduct({ productId, serviceId }, authHeaders) {
     try {
       const productResult = await this.productService.removeProduct(productId, authHeaders.agentId);
-      const serviceResult = await this.serviceService.removeProductFromService(serviceId, productId);
+      const serviceResult = await this.serviceService.removeProductFromService(serviceId, productId, authHeaders.agentId);
       return { status: 200, json: { productResult, serviceResult } };
     } catch (error) {
-      return { status: 500, json: error };
+      console.log(error);
+      return { status: 500, json: error.toString() };
     }
   }
 }

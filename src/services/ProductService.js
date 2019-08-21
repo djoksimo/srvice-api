@@ -8,10 +8,12 @@ class ProductService {
           return reject(err);
         }
         if (!product) {
-          return reject(new Error("Could not find product"));
+          return reject(Error("Product does not exist"));
         }
-        if (agentId.toString() !== product.toObject().agent.toString()) {
-          resolve(false);
+        const productDocument = product.toObject();
+        const { agent } = productDocument;
+        if (agentId !== agent.toString()) {
+          return resolve(false);
         }
         return resolve(true);
       });
@@ -35,7 +37,7 @@ class ProductService {
     if (!isOwner) {
       throw new Error("NICE TRY");
     }
-    return ProductModel.deleteOne({ _id: id }).exec();
+    return ProductModel.deleteOne({ _id: productId }).exec();
   }
 }
 

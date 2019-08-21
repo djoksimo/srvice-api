@@ -10,8 +10,10 @@ class ServiceRatingService {
         if (!serviceRating) {
           return reject(new Error("Could not find service rating"));
         }
-        if (userId.toString() !== serviceRating.toObject().user.toString()) {
-          resolve(false);
+        const serviceRatingDocument = serviceRating.toObject();
+        const { user } = serviceRatingDocument;
+        if (userId !== user.toString()) {
+          return resolve(false);
         }
         return resolve(true);
       });
