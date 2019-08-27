@@ -7,7 +7,6 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const Bottle = require("./bottle");
-const { HttpUtils } = require("./utils");
 
 const {
   AuthenticationRoutes,
@@ -23,6 +22,7 @@ const {
   ProductRoutes,
   FileRoutes,
   ScheduleRoutes,
+  ChatRoutes,
 } = require("./routes");
 
 // prod
@@ -70,6 +70,7 @@ app.use("/booking", BookingRoutes);
 app.use("/product", ProductRoutes);
 app.use("/schedule", ScheduleRoutes);
 app.use("/file", FileRoutes);
+app.use("/chat", ChatRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Route not found");
