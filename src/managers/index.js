@@ -11,4 +11,5 @@ module.exports = {
   ProductManager: require("./ProductManager"),
   FileManager: require("./FileManager"),
   ScheduleManager: require("./ScheduleManager"),
+  ChatManager: require("./ChatManager"),
 };

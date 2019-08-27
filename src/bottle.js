@@ -15,6 +15,7 @@ const {
   ProductService,
   FileService,
   ScheduleService,
+  ChatService,
 } = require("./services");
 const {
   AuthenticationManager,
@@ -29,6 +30,7 @@ const {
   ProductManager,
   FileManager,
   ScheduleManager,
+  ChatManager,
 } = require("./managers");
 
 const bottle = new Bottle();
@@ -46,6 +48,7 @@ bottle.service("RequestService", RequestService);
 bottle.service("ServiceRatingService", ServiceRatingService);
 bottle.service("ProductService", ProductService);
 bottle.service("ScheduleService", ScheduleService);
+bottle.service("ChatService", ChatService);
 
 bottle.service("FileService", FileService);
 bottle.service("AuthenticationManager", AuthenticationManager, "CognitoService", "AgentService", "AgentPrivateService", "UserService", "UserPrivateService", "JwtService");
@@ -60,6 +63,7 @@ bottle.service("SendManager", SendManager, "AuthenticationManager");
 bottle.service("ProductManager", ProductManager, "ProductService", "ServiceService");
 bottle.service("FileManager", FileManager, "FileService");
 bottle.service("ScheduleManager", ScheduleManager, "ScheduleService", "AgentService");
+bottle.service("ChatManager", ChatManager, "ChatService");
 
 
 module.exports = bottle.container;
