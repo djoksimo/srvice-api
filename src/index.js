@@ -25,15 +25,24 @@ const {
   ChatRoutes,
 } = require("./routes");
 
-// prod
-// mongoose.connect(`mongodb://${process.env.DOMAIN || "localhost:27017"}/srvice`, { useNewUrlParser: true })
+const dbInst = process.env.NODE_ENV;
 
-// sandbox01
-mongoose.connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", { useNewUrlParser: true, useFindAndModify: false })
-  .catch(error => console.log(error));
+switch (dbInst) {
+  case "SANDBOX_01":
+    mongoose.connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", { useNewUrlParser: true })
+      .catch(error => console.log(error));
+    break;
+  case "TEST":
+    mongoose.connect("mongodb://danilo:BlackBerry123@ds117913.mlab.com:17913/srvice-test", { useNewUrlParser: true })
+      .catch(error => console.log(error));
+    break;
+  default:
+    // sandbox01
+    mongoose.connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", { useNewUrlParser: true, useFindAndModify: false })
+      .catch(error => console.log(error));
+}
 
 const app = express();
-const authenticationManager = Bottle.AuthenticationManager;
 
 const allowedOrigins = ['http://localhost:4200', 'http://192.168.0.116:4200', 'https://srvice.ca'];
 
@@ -92,3 +101,5 @@ app.set('port', port);
 const server = http.createServer(app);
 
 server.listen(port, () => console.log(`Srvice REST API listening on port: ${port}`));
+
+module.exports = server;
