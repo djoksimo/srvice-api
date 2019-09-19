@@ -5,7 +5,7 @@
   "description": "Srvice Api",
   "main": "src/index.js",
   "scripts": {
-    "test": "mocha src/test/*.js --timeout 10000",
+    "test": "mocha src/test/index.js --timeout 10000",
     "build": "webpack",
     "start": "nodemon",
     "lint": "npx eslint src/* --color --quiet"
