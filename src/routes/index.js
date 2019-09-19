@@ -12,4 +12,5 @@ module.exports = {
   ProductRoutes: require("./ProductRoutes"),
   FileRoutes: require("./FileRoutes"),
   ScheduleRoutes: require("./ScheduleRoutes"),
+  ChatRoutes: require("./ChatRoutes"),
 };

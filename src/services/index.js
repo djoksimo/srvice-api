@@ -13,4 +13,5 @@ module.exports = {
   ProductService: require("./ProductService"),
   FileService: require("./FileService"),
   ScheduleService: require("./ScheduleService"),
+  ChatService: require("./ChatService"),
 };
