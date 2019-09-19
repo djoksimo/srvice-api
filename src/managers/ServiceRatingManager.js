@@ -8,7 +8,17 @@ class ServiceRatingManager {
     this.serviceService = ServiceService;
   }
 
-  async createServiceRating({ userId: user, serviceId: service, overallRating, priceRating, punctualityRating, friendlinessRating, comment, date }) {
+  async createServiceRating({ 
+    userId: user, 
+    serviceId: service, 
+    overallRating, 
+    priceRating, 
+    punctualityRating, 
+    friendlinessRating, 
+    comment, 
+    date,
+    agentId, 
+  }) {
     const newServiceRating = new ServiceRatingModel({ user, service, overallRating, priceRating, punctualityRating, friendlinessRating, comment, date });
     try {
       const serviceRatingDocument = await this.serviceRatingService.saveServiceRating(newServiceRating);
@@ -19,11 +29,11 @@ class ServiceRatingManager {
       const overallRatings = serviceRatings.map(rating => rating.overallRating);
       serviceDocument.averageServiceRating = CalculationUtils.average(overallRatings, 0);
 
-      await this.serviceService.updateService(serviceDocument);
-
+      await this.serviceService.updateService(serviceDocument, agentId);
       return { status: 201, json: {} };
     } catch (error) {
-      return { status: 500, json: error };
+      console.log(error);
+      return { status: 500, json: error.toString() };
     }
   }
 
