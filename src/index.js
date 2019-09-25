@@ -27,17 +27,22 @@ const dbInst = process.env.NODE_ENV;
 
 switch (dbInst) {
   case "SANDBOX_01":
+    console.log("USING SANDBOX DB");
     mongoose.connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", { useNewUrlParser: true })
       .catch(error => console.log(error));
     break;
   case "TEST":
-    mongoose.connect("mongodb://danilo:BlackBerry123@ds117913.mlab.com:17913/srvice-test", { useNewUrlParser: true })
+    console.log("USING TEST DB");
+    mongoose.connect("mongodb+srv://danilo-admin:Password123@srvice-cluster-xxb6t.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true })
       .catch(error => console.log(error));
     break;
   default:
-    // sandbox01
-    mongoose.connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", { useNewUrlParser: true, useFindAndModify: false })
-      .catch(error => console.log(error));
+    console.log("\x1b[31m", `DB NOT SPECIFIED ⚠️  ⚠️  ⚠️\n\n`);
+    console.log("\x1b[36m", `To fix on Linux or Mac:\n`);
+    console.log("\x1b[37m", `export NODE_ENV="<ENVIRONMENT-NAME>" \n\n e.g. export NODE_ENV="TEST"\n\n`);
+    console.log("\x1b[36m", "To fix on Windows:\n");
+    console.log("\x1b[37m", `setx NODE_ENV "<ENVIRONMENT-NAME>" \n\n e.g. set NODE_ENV "TEST"`);
+    process.exit(1);
 }
 
 const app = express();
