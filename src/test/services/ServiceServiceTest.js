@@ -28,6 +28,12 @@ class ServiceServiceTest {
   }
 
   testSaveService() {
+    beforeEach((done) => {
+      ServiceModel.deleteMany({}, (err) => {
+        assert.ifError(err);
+        done();
+      });
+    });
     describe("#ServiceService.saveService()", () => {
       it("Should save service correctly", async () => {
         const mockService = new ServiceModel({
@@ -54,12 +60,19 @@ class ServiceServiceTest {
           products: [],
         });
 
-        try {
-          const res = await this.serviceService.saveService(mockService);
-          assert.ok(res);
-        } catch (error) {
-          // console.log(error);
-        }   
+        const res = await this.serviceService.saveService(mockService);
+
+        assert.ok(res);  
+      });
+      
+      it ("Should fail saving the service", async () => {
+        try { 
+          const badMockService = new ServiceModel({});
+          await this.serviceService.saveService(badMockService);
+        } catch (err) {
+          assert.ok(true);
+          console.log(typeof err);
+        }
       });
     });
   }
