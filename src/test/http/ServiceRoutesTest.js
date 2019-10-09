@@ -2,33 +2,34 @@ const { ServiceModel } = require("../../models/");
 const assert = require('assert');
 const chaiHttp = require('chai-http');
 const chai = require('chai');
-
+const mongodb =require("mongodb");
 const server = require("../../index");
-const { ServiceService } = require("../../bottle");
+const { ServiceManager } = require("../../bottle");
+
+const FAKE_JWT_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhaW1AY3JlZHVwLnJ1IiwiaWF0IjoxNTcwMTUxMTEyfQ.CyYwspIRCudpljDo7QLawom6AKizB-lYo8cj9VxrfMw";
 
 chai.use(chaiHttp);
 
-class ServiceServiceTest {
-  constructor() {
-    chai.request(server).get("/");
-    this.serviceService = ServiceService;
-  }
+class ServiceRoutesTest {
+  
   async start() {
-    this.testSaveService();
+    this.testPostService();
   }
 
-  testSaveService() {
+  testPostService() {
     beforeEach((done) => {
       ServiceModel.deleteMany({}, (err) => {
         assert.ifError(err);
         done();
       });
     });
-    describe("#ServiceService.saveService()", () => {
-      it("Should save service correctly", async () => {
-        const mockService = new ServiceModel({
-          agent: "5cdf5367cbc99526685bd64f",
-          category: "5d116f5d4c533b38dab4e0f0",
+
+
+    describe('/POST service', () => {
+      it('it should  POST a service', (done) => {
+        const mockService = {
+          agent: "5d969ab55e22efb586ab605f",
+          category: "5d969ec1365ddec148ee5b0b",
           title: "GOOOD GOOD Service",
           description: "ASFAS ASF ASF ASF ASF ASF ASF ASF ASF ASFASFASFASFJASF ASFAJSJASFJASJF ASFASFJSAFAS ASF ASFAS F ASF ASFASFASF AFSAS",
           pictureUrls: [
@@ -37,7 +38,7 @@ class ServiceServiceTest {
             "https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/baby_ja7a.svg"
           ],
           phone: "4161234567",
-          email: "mosss@gmail.com",
+          email: "haim@credup.ru",
           inCall: true,
           outCall: true,
           remoteCall: true,
@@ -47,25 +48,26 @@ class ServiceServiceTest {
           radius: 10,
           averageServiceRating: 0,
           serviceRatings: [],
-          products: [],
+          products: []
+        };
+        const host = "http://localhost:5000";
+        chai.request(host)
+          .post('/service')
+          .set('content-type', 'application/json')
+          .set('token', FAKE_JWT_TOKEN)
+          .set('agentId', '5d969ab55e22efb586ab605f')
+          .set('email', 'haim@credup.ru')
+          .send(mockService)
+          .end((err, res) => {     
+            assert.equal(201,res.status,"Fail: The status should be 201");
+            assert.ok(mongodb.ObjectID.isValid(res.body.serviceId),"Fail: MongoDB ID is not valid");
+            done();
+          });
         });
-
-        const res = await this.serviceService.saveService(mockService);
-
-        assert.ok(res);  
-      });
-      
-      it ("Should fail saving the service", async () => {
-        try { 
-          const badMockService = new ServiceModel({});
-          await this.serviceService.saveService(badMockService);
-        } catch (err) {
-          assert.ok(true);
-          console.log(typeof err);
-        }
-      });
     });
+
+
   }
 }
 
-module.exports = ServiceServiceTest;
+module.exports = ServiceRoutesTest;
