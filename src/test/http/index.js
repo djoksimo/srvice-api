@@ -1,4 +1,3 @@
 module.exports = {
-    ServiceRoutesTest: require("./ServiceRoutesTest"),
+  ServiceRoutesTest: require("./ServiceRoutesTest"),
 };
-  
