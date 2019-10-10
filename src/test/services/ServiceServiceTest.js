@@ -62,7 +62,6 @@ class ServiceServiceTest {
           await this.serviceService.saveService(badMockService);
         } catch (err) {
           assert.ok(true);
-          console.log(typeof err);
         }
       });
     });
