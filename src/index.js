@@ -28,12 +28,12 @@ const dbInst = process.env.NODE_ENV;
 switch (dbInst) {
   case "SANDBOX_01":
     console.log("USING SANDBOX DB");
-    mongoose.connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", { useNewUrlParser: true, useFindAndModify: false  })
+    mongoose.connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", { useNewUrlParser: true, useFindAndModify: false })
       .catch(error => console.log(error));
     break;
   case "TEST":
     console.log("USING TEST DB");
-    mongoose.connect("mongodb+srv://danilo-admin:Password123@srvice-cluster-xxb6t.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true, useFindAndModify: false  })
+    mongoose.connect("mongodb+srv://danilo-admin:Password123@srvice-cluster-xxb6t.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true, useFindAndModify: false })
       .catch(error => console.log(error));
     break;
   default:

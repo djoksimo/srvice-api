@@ -19,7 +19,6 @@ class ServiceManagerTest {
 
   async start() {
     this.testCreateService();
-    console.log(process.env.NODE_ENV);
   }
 
   testCreateService() {
@@ -30,7 +29,7 @@ class ServiceManagerTest {
       });
     });
 
-    describe("#ServiceManager.createService(payload)", () => {
+    describe("#ServiceManager.createService()", () => {
       it("Should create a service and return id", async () => {
         const mockService = {
           agent: "5cdf5367cbc99526685bd64f",
