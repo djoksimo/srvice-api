@@ -1,10 +1,11 @@
-const { ServiceModel } = require("../../models/");
-const assert = require('assert');
-const chaiHttp = require('chai-http');
-const chai = require('chai');
+const assert = require("assert");
+const chaiHttp = require("chai-http");
+const chai = require("chai");
+const { describe } = require("mocha");
 
 const server = require("../../index");
 const { ServiceService } = require("../../bottle");
+const { ServiceModel } = require("../../models/");
 
 chai.use(chaiHttp);
 
@@ -55,7 +56,7 @@ class ServiceServiceTest {
         assert.ok(res);  
       });
       
-      it ("Should fail saving the service", async () => {
+      it("Should fail saving the service", async () => {
         try { 
           const badMockService = new ServiceModel({});
           await this.serviceService.saveService(badMockService);
