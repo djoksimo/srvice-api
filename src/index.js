@@ -6,8 +6,6 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-const Bottle = require("./bottle");
-
 const {
   AuthenticationRoutes,
   AgentRoutes,
@@ -25,15 +23,29 @@ const {
   ChatRoutes,
 } = require("./routes");
 
-// prod
-// mongoose.connect(`mongodb://${process.env.DOMAIN || "localhost:27017"}/srvice`, { useNewUrlParser: true })
+const dbInst = process.env.NODE_ENV;
 
-// sandbox01
-mongoose.connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", { useNewUrlParser: true, useFindAndModify: false })
-  .catch(error => console.log(error));
+switch (dbInst) {
+  case "SANDBOX_01":
+    console.log("USING SANDBOX DB");
+    mongoose.connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", { useNewUrlParser: true, useFindAndModify: false  })
+      .catch(error => console.log(error));
+    break;
+  case "TEST":
+    console.log("USING TEST DB");
+    mongoose.connect("mongodb+srv://danilo-admin:Password123@srvice-cluster-xxb6t.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true, useFindAndModify: false  })
+      .catch(error => console.log(error));
+    break;
+  default:
+    console.log("\x1b[31m", `DB NOT SPECIFIED ⚠️  ⚠️  ⚠️\n\n`);
+    console.log("\x1b[36m", `To fix on Linux or Mac:\n`);
+    console.log("\x1b[37m", `export NODE_ENV="<ENVIRONMENT-NAME>" \n\n e.g. export NODE_ENV="TEST"\n\n`);
+    console.log("\x1b[36m", "To fix on Windows:\n");
+    console.log("\x1b[37m", `setx NODE_ENV "<ENVIRONMENT-NAME>" \n\n e.g. set NODE_ENV "TEST"`);
+    process.exit(1);
+}
 
 const app = express();
-const authenticationManager = Bottle.AuthenticationManager;
 
 const allowedOrigins = ['http://localhost:4200', 'http://192.168.0.116:4200', 'https://srvice.ca'];
 
@@ -92,3 +104,5 @@ app.set('port', port);
 const server = http.createServer(app);
 
 server.listen(port, () => console.log(`Srvice REST API listening on port: ${port}`));
+
+module.exports = server;
