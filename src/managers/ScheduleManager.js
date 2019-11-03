@@ -28,6 +28,7 @@ class ScheduleManager {
       const result = await this.scheduleService.updateSchedule(schedule, authHeaders.agentId);
       return { status: 200, json: result };
     } catch (error) {
+      console.log(error);
       return { status: 500, json: { error: error.toString() } };
     }
   }

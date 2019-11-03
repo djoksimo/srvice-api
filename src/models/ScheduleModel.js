@@ -7,8 +7,9 @@ const scheduleModel = Schema({
   _id: { type: ObjectId, auto: true, required: true },
   availability: {
     type: [{
-      start: { type: Date, required: true },
-      end: { type: Date, required: true },
+      weekday: { type: String, required: true },
+      start: { type: Number, required: true },
+      end: { type: Number, required: true },
     }],
     required: true,
   },
