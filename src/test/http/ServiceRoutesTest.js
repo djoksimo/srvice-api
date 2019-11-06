@@ -58,7 +58,7 @@ class ServiceRoutesTest {
       });
     });
 
-    describe('/GET/:id service', () => {
+    describe('/GET service', () => {
       it('it should GET a service by the given id', (done) => {
           let mockService = new ServiceModel(HealthyService);
           mockService.save((err, mockService) => {
@@ -77,11 +77,27 @@ class ServiceRoutesTest {
             });
           });
       });
+
+      it('it should GET all nearby services', (done) => {
+        let mockService = new ServiceModel(HealthyService);
+        let nearbyStr = "nearby?categoryId=" + mockService.category + "&lat=" + mockService.latitude + "&lng=" + mockService.longitude;
+        mockService.save((err, mockService) => {
+            chai.request(server)
+          .get('/service/' +nearbyStr )
+          .send(mockService)
+          .end((err, res) => {
+              if(res.body.services.length != 0){
+                assert.strictEqual(res.body.services[0].agent._id.toString(),mockService.agent.toString(),"Fail: Incorrect agent id returned");
+                assert.strictEqual(res.body.services[0].category._id.toString(),mockService.category.toString(),"Fail: Incorrect category id returned");
+              }else{
+                assert.ok(false,"Fail: Should return a list of services - no service returned");
+              }
+            done();
+          });
+        });
+      });
     });
-
   }
-
-
   
 }
 
