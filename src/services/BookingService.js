@@ -54,7 +54,7 @@ class BookingService {
     if (!isOwner) {
       throw new Error("NICE TRY");
     }
-    return BookingModel.update({ _id }, { $set: { priceEstimate, timeEstimate, agentAccepted } });
+    return BookingModel.updateOne({ _id: bookingId }, { $set: { priceEstimate, timeEstimate, agentAccepted } });
   }
 
   updateUserAcceptedById(_id, userAccepted) {
