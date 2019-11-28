@@ -112,5 +112,5 @@ class ServiceManagerTest {
 
 }
 
-module.exports = ServiceManagerTest;
+ module.exports = ServiceManagerTest;
 
