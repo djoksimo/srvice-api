@@ -63,7 +63,6 @@ class ServiceServiceTest {
         const mockService = new ServiceModel(HealthyService);
         await this.serviceService.saveService(mockService);
         const res = await this.serviceService.findServicesByCategoryId(mockService.category);
-        //console.log(res);
         assert.ok(res.length != 0,"Fail: Should not return an empty list");
         assert.strictEqual(res[0].category._id.toString(), mockService.category.toString(), "Fail: Should return services of the inputted category id");
       });
