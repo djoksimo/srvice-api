@@ -2,6 +2,7 @@ global.fetch = require("node-fetch");
 const http = require("http");
 const express = require("express");
 const morgan = require("morgan");
+const pino = require("express-pino-logger")();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -22,27 +23,28 @@ const {
   ScheduleRoutes,
   ChatRoutes,
 } = require("./routes");
+const { Environment, Warning } = require("./values");
 
-const dbInst = process.env.NODE_ENV;
+const env = Environment.getCurrentNodeEnv();
 
-switch (dbInst) {
-  case "SANDBOX_01":
-    console.log("USING SANDBOX DB");
+switch (env) {
+  case Environment.SANDBOX_01:
+    Warning.print().currentDB();
     mongoose.connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", { useNewUrlParser: true, useFindAndModify: false })
       .catch(error => console.log(error));
     break;
-  case "TEST":
-    console.log("USING TEST DB");
+  case Environment.PRODUCTION:
+    Warning.print().currentDB();
+    mongoose.connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", { useNewUrlParser: true, useFindAndModify: false })
+      .catch(error => console.log(error));
+    break;
+  case Environment.TEST:
+    Warning.print().currentDB();
     mongoose.connect("mongodb+srv://danilo-admin:Password123@srvice-cluster-xxb6t.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true, useFindAndModify: false })
       .catch(error => console.log(error));
     break;
   default:
-    console.log("\x1b[31m", `DB NOT SPECIFIED ⚠️  ⚠️  ⚠️\n\n`);
-    console.log("\x1b[36m", `To fix on Linux or Mac:\n`);
-    console.log("\x1b[37m", `export NODE_ENV="<ENVIRONMENT-NAME>" \n\n e.g. export NODE_ENV="TEST"\n\n`);
-    console.log("\x1b[36m", "To fix on Windows:\n");
-    console.log("\x1b[37m", `setx NODE_ENV "<ENVIRONMENT-NAME>" \n\n e.g. set NODE_ENV "TEST"`);
-    process.exit(1);
+    Warning.print().unspecifiedDB();
 }
 
 const app = express();
@@ -58,6 +60,10 @@ app.use(cors(corsOptions));
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+if (env === Environment.PRODUCTION) {
+  app.use(pino);
+}
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -95,11 +101,11 @@ app.use((error, req, res, next) => {
   res.json({
     message: `Error: ${error.message}`,
   });
+  next();
 });
 
-const port = process.env.PORT || '5000';
-
-app.set('port', port);
+const port = Environment.getGurrentPort();
+app.set("port", port);
 
 const server = http.createServer(app);
 

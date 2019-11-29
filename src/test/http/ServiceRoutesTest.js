@@ -27,6 +27,7 @@ class ServiceRoutesTest {
 
     describe("/POST service", () => {
       it("it should  POST a service", (done) => {
+        // TODO: temporarily put here as Filip's changes are in review
         const mockService = {
           agent: "5d969ab55e22efb586ab605f",
           category: "5d969ec1365ddec148ee5b0b",
@@ -50,6 +51,7 @@ class ServiceRoutesTest {
           serviceRatings: [],
           products: [],
         };
+        
         const host = "http://localhost:5000";
         chai.request(host)
           .post('/service')
