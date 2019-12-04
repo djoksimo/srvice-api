@@ -1,3 +1,3 @@
 module.exports = {
-    HealthyService: require("./HealthyService"),
-}
+  HealthyService: require("./HealthyService"),
+};
