@@ -63,13 +63,13 @@ class ServiceServiceTest {
         const mockService = new ServiceModel(HealthyService);
         await this.serviceService.saveService(mockService);
         const res = await this.serviceService.findServicesByCategoryId(mockService.category);
-        assert.ok(res.length != 0,"Fail: Should not return an empty list");
+        assert.ok(res.length !== 0, "Fail: Should not return an empty list");
         assert.strictEqual(res[0].category._id.toString(), mockService.category.toString(), "Fail: Should return services of the inputted category id");
       });
 
       it("Should return no services for unknown category id", async () => {
         const res = await this.serviceService.findServicesByCategoryId(fakeMongoID);
-        assert.ok(res.length == 0, "Fail: Should return an empty list");
+        assert.ok(res.length === 0, "Fail: Should return an empty list");
       });
     });
 
@@ -85,12 +85,12 @@ class ServiceServiceTest {
         const mockService = new ServiceModel(HealthyService);
         const res = await this.serviceService.saveService(mockService);
         const res2 = await this.serviceService.findSemiPopulatedAgentServiceById(res.id);
-        assert.strictEqual(res2._id.toString(),res.id.toString(),"Fail: Should return a service by the inputted service id");
+        assert.strictEqual(res2._id.toString(), res.id.toString(), "Fail: Should return a service by the inputted service id");
       });
 
       it("Should not return any service for unknown service id", async () => {
         const res = await this.serviceService.findServiceById(fakeMongoID);
-        assert.strictEqual(res,null,"Fail: Should return no services for unknown service id");
+        assert.strictEqual(res, null, "Fail: Should return no services for unknown service id");
       });
 
     });
@@ -107,12 +107,12 @@ class ServiceServiceTest {
         const mockService = new ServiceModel(HealthyService);
         const res = await this.serviceService.saveService(mockService);
         const res2 = await this.serviceService.findServiceById(res.id);
-        assert.strictEqual(res2._id.toString(),res.id.toString(),"Fail: Should return a service by the inputted service id");
+        assert.strictEqual(res2._id.toString(), res.id.toString(), "Fail: Should return a service by the inputted service id");
       });
 
       it("Should not return any service for unknown service id", async () => {
         const res = await this.serviceService.findServiceById(fakeMongoID);
-        assert.strictEqual(res,null,"Fail: Should return no services for unknown service id");
+        assert.strictEqual(res, null, "Fail: Should return no services for unknown service id");
       });
     });
   

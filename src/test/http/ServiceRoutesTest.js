@@ -60,40 +60,40 @@ class ServiceRoutesTest {
 
     describe('/GET service', () => {
       it('it should GET a service by the given id', (done) => {
-          let mockService = new ServiceModel(HealthyService);
-          mockService.save((err, mockService) => {
-              chai.request(server)
-            .get('/service/' + mockService.id)
-            .send(mockService)
-            .end((err, res) => {
-                for (var x in HealthyService){
-                  if (x in res.body){
-                    assert.strictEqual(JSON.stringify(res.body[x]),JSON.stringify(HealthyService[x]),"Fail: Returned wrong value for " + x);
-                  }else{
-                    assert.ok(false,"Fail: " + x + " should be in the body");
-                  }
+        const mockService = new ServiceModel(HealthyService);
+        mockService.save((err, service) => {
+          chai.request(server)
+            .get('/service/' + service.id)
+            .send(service)
+            .end((err2, res) => {
+              Object.keys(HealthyService).forEach((x) => {
+                if (x in res.body) {
+                  assert.strictEqual(JSON.stringify(res.body[x]), JSON.stringify(HealthyService[x]), "Fail: Returned wrong value for " + x);
+                } else {
+                  assert.ok(false, "Fail: " + x + " should be in the body");
                 }
+              });
               done();
             });
-          });
+        });
       });
 
       it('it should GET all nearby services', (done) => {
-        let mockService = new ServiceModel(HealthyService);
-        let nearbyStr = "nearby?categoryId=" + mockService.category + "&lat=" + mockService.latitude + "&lng=" + mockService.longitude;
-        mockService.save((err, mockService) => {
-            chai.request(server)
-          .get('/service/' +nearbyStr )
-          .send(mockService)
-          .end((err, res) => {
-              if(res.body.services.length != 0){
-                assert.strictEqual(res.body.services[0].agent._id.toString(),mockService.agent.toString(),"Fail: Incorrect agent id returned");
-                assert.strictEqual(res.body.services[0].category._id.toString(),mockService.category.toString(),"Fail: Incorrect category id returned");
-              }else{
-                assert.ok(false,"Fail: Should return a list of services - no service returned");
+        const mockService = new ServiceModel(HealthyService);
+        const nearbyStr = "nearby?categoryId=" + mockService.category + "&lat=" + mockService.latitude + "&lng=" + mockService.longitude;
+        mockService.save((err, service) => {
+          chai.request(server)
+            .get('/service/' + nearbyStr)
+            .send(service)
+            .end((err2, res) => {
+              if (res.body.services.length !== 0) {
+                assert.strictEqual(res.body.services[0].agent._id.toString(), service.agent.toString(), "Fail: Incorrect agent id returned");
+                assert.strictEqual(res.body.services[0].category._id.toString(), service.category.toString(), "Fail: Incorrect category id returned");
+              } else {
+                assert.ok(false, "Fail: Should return a list of services - no service returned");
               }
-            done();
-          });
+              done();
+            });
         });
       });
     });
