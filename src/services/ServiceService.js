@@ -33,14 +33,7 @@ class ServiceService {
     this.agentPath = {
       path: "agent",
       populate: [
-        {
-          path: "services",
-          populate: [
-            this.categoryPath,
-            this.ratingsPath,
-          ],
-        },
-        {
+        {  
           path: "schedule",
           populate: [
             { path: "product" },
@@ -62,7 +55,7 @@ class ServiceService {
   }
 
   findServicesByCategoryId(category) {
-    return ServiceModel.find({ category }).populate(this.servicePopulate).exec();
+    return ServiceModel.find({ category }).populate(this.servicePopulate).limit(30).exec();
   }
 
   findSemiPopulatedAgentServiceById(id) {
