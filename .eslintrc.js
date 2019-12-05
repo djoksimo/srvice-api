@@ -19,8 +19,9 @@ module.exports = {
     "comma-dangle": "warn",
     "max-len": "warn",
     "no-return-await": "warn",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "error",
     "consistent-return": "warn",
-    "no-param-reassign": "warn"
+    "no-param-reassign": "warn",
+    "eol-last": "warn"
   }
 };
