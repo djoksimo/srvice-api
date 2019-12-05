@@ -9,7 +9,7 @@
     "coverage": "nyc --reporter=lcov mocha src/test/index.js --timeout 10000 --exit",
     "build": "webpack",
     "start": "nodemon",
-    "lint": "npx eslint src/**/*.js --quiet --color"
+    "lint": "npx eslint src/*.js --quiet --color"
   },
   "nyc": {
     "all": true,
