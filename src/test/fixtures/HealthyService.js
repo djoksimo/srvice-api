@@ -1,4 +1,4 @@
-const mockService = {
+const HealthyService = {
   agent: "5d969ab55e22efb586ab605f",
   category: "5d969ec1365ddec148ee5b0b",
   title: "GOOOD GOOD Service",
@@ -22,5 +22,5 @@ const mockService = {
   products: [],
 };
 
-module.exports = mockService;
+module.exports = HealthyService;
 
