@@ -55,7 +55,7 @@ class ServiceService {
   }
 
   findServicesByCategoryId(category) {
-    return ServiceModel.find({ category }).populate(this.servicePopulate).limit(30).exec();
+    return ServiceModel.find({ category }).populate(this.servicePopulate).limit(500).exec();
   }
 
   findSemiPopulatedAgentServiceById(id) {
