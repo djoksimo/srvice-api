@@ -68,12 +68,10 @@ class ServiceManager {
   async getNearbyServicesByCategoryId({ categoryId, lat, lng }) {
     const categoryEntry = this.categoryToServiceMap[categoryId];
     if (!categoryEntry || Date.now() - categoryEntry.updatedAt >= ServiceManager.MAX_CATEGORY_ENTRY_AGE) {
-      const serviceDocuments= await this.serviceService.findServicesByCategoryId(categoryId);
+      const serviceDocuments = await this.serviceService.findServicesByCategoryId(categoryId);
       this.categoryToServiceMap[categoryId] = { services: serviceDocuments, updatedAt: Date.now() };
     }
-
     const parsedServices = JSON.parse(JSON.stringify(this.categoryToServiceMap[categoryId].services));
-
     const isValidService = (service) => {
           const { remoteCall, inCall, outCall, latitude, longitude, radius } = service;
           const distance = CalculationUtils.calculateCrowDistance(lat, lng, latitude, longitude);
@@ -95,8 +93,7 @@ class ServiceManager {
           return possible;
         }			
     ​
-    const filteredServices = Array.from(ArrayUtils.filterWithLimit(parsedServices, isValidService, 500));
-                              
+    const filteredServices = Array.from(ArrayUtils.filterWithLimit(parsedServices, isValidService, 500));               
     filteredServices.sort((a, b) => b.averageServiceRating - a.averageServiceRating);						
     return { status: 200, json: { services } };
   }
