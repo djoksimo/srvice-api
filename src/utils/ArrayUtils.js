@@ -1,4 +1,5 @@
-function *filterWithLimit(array, condition, maxSize) {
+class ArrayUtils {
+static *filterWithLimit(array, condition, maxSize) {
     if (!maxSize || maxSize > array.length) {
       maxSize = array.length;
     }
@@ -12,4 +13,5 @@ function *filterWithLimit(array, condition, maxSize) {
       i++;
     }
   }
-  
+}
+module.exports = ArrayUtils;
