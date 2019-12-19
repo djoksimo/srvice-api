@@ -1,5 +1,5 @@
 const { ServiceModel } = require("../models");
-const { CalculationUtils } = require("../utils");
+const { CalculationUtils, ArrayUtils } = require("../utils");
 
 const MAX_CATEGORY_ENTRY_AGE = 600000;
 const MAX_IN_CALL_DISTANCE = 50; // in kilometers
@@ -82,18 +82,14 @@ class ServiceManager {
         possible = true;
       }
       if (inCall && distance < ServiceManager.MAX_IN_CALL_DISTANCE) {
-        // eslint-disable-next-line no-param-reassign
         service.inCallDistance = distance;
         possible = true;
       }
       if (outCall && distance < radius) {
-        // eslint-disable-next-line no-param-reassign
         service.inCallDistance = distance;
-        // eslint-disable-next-line no-param-reassign
         service.outCallAvailable = true;
         possible = true;
       } else {
-        // eslint-disable-next-line no-param-reassign
         service.outCallAvailable = false;
       }
       return possible;
@@ -101,7 +97,7 @@ class ServiceManager {
     const filteredServices = 
     Array.from(ArrayUtils.filterWithLimit(parsedServices, isValidService, 500));               
     filteredServices.sort((a, b) => b.averageServiceRating - a.averageServiceRating);
-    return { status: 200, json: { services } };
+    return { status: 200, json: { filteredServices } };
   }
 
   async getServiceById({ id }) {
