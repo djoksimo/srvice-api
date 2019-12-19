@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "api",
   "private": true,
@@ -64,3 +65,71 @@
     "webpack-cli": "^2.1.4"
   }
 }
+=======
+{
+  "name": "api",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Srvice Api",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "nyc --reporter=text-summary mocha src/test/index.js --timeout 10000 --exit",
+    "coverage": "nyc --reporter=lcov mocha src/test/index.js --timeout 10000 --exit",
+    "build": "webpack",
+    "start": "nodemon",
+    "lint": "npx eslint src/* --color --quiet"
+  },
+  "nyc": {
+    "all": true,
+    "include": [
+      "src/*"
+    ],
+    "exclude": [
+      "src/models/*",
+      "src/routes/*",
+      "src/values/*"
+    ]
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/storage": "^3.0.2",
+    "@pusher/chatkit-server": "^2.1.0",
+    "amazon-cognito-identity-js": "^2.0.6",
+    "aws-sdk": "^2.344.0",
+    "body-parser": "^1.18.3",
+    "bottlejs": "^1.7.1",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "fs": "0.0.1-security",
+    "jsonwebtoken": "^8.3.0",
+    "kill-port": "^1.6.0",
+    "mocha": "^6.2.0",
+    "mongodb": "^3.3.2",
+    "mongoose": "^5.6.4",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.1",
+    "node-fetch": "^2.1.2",
+    "node-ses": "^2.1.0",
+    "nodemailer": "^4.6.8",
+    "nodemon": "^1.17.4",
+    "path": "^0.12.7",
+    "sharp": "^0.22.1",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "json-loader": "^0.5.7",
+    "supertest": "^4.0.2",
+    "nyc": "^14.1.1",
+    "webpack": "^2.7.0",
+    "webpack-cli": "^2.1.4"
+  }
+}
+>>>>>>> 5da63f4... Fixed lint errors

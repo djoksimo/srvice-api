@@ -1,0 +1,7 @@
+{
+    "eslint.options": {
+        "configFile": "C:\\Users\\jinba\\Desktop\\dev_srvce\\srvice-api\\.eslintrc.js"
+    },
+    "eslint.alwaysShowStatus": true,
+    "eslint.autoFixOnSave": true
+}

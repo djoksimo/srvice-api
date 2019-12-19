@@ -67,33 +67,40 @@ class ServiceManager {
 
   async getNearbyServicesByCategoryId({ categoryId, lat, lng }) {
     const categoryEntry = this.categoryToServiceMap[categoryId];
-    if (!categoryEntry || Date.now() - categoryEntry.updatedAt >= ServiceManager.MAX_CATEGORY_ENTRY_AGE) {
+    if (!categoryEntry || Date.now() - 
+    categoryEntry.updatedAt >= ServiceManager.MAX_CATEGORY_ENTRY_AGE) {
       const serviceDocuments = await this.serviceService.findServicesByCategoryId(categoryId);
       this.categoryToServiceMap[categoryId] = { services: serviceDocuments, updatedAt: Date.now() };
     }
-    const parsedServices = JSON.parse(JSON.stringify(this.categoryToServiceMap[categoryId].services));
+    const parsedServices = 
+    JSON.parse(JSON.stringify(this.categoryToServiceMap[categoryId].services));
     const isValidService = (service) => {
-          const { remoteCall, inCall, outCall, latitude, longitude, radius } = service;
-          const distance = CalculationUtils.calculateCrowDistance(lat, lng, latitude, longitude);
-          let possible = false;
-          if (remoteCall) {
-            possible = true;
-          }
-          if (inCall && distance < ServiceManager.MAX_IN_CALL_DISTANCE) {
-            service.inCallDistance = distance;
-            possible = true;
-          }
-          if (outCall && distance < radius) {
-            service.inCallDistance = distance;
-            service.outCallAvailable = true;
-            possible = true;
-          } else {
-            service.outCallAvailable = false;
-          }
-          return possible;
-        }			
-    const filteredServices = Array.from(ArrayUtils.filterWithLimit(parsedServices, isValidService, 500));               
-    filteredServices.sort((a, b) => b.averageServiceRating - a.averageServiceRating);						
+      const { remoteCall, inCall, outCall, latitude, longitude, radius } = service;
+      const distance = CalculationUtils.calculateCrowDistance(lat, lng, latitude, longitude);
+      let possible = false;
+      if (remoteCall) {
+        possible = true;
+      }
+      if (inCall && distance < ServiceManager.MAX_IN_CALL_DISTANCE) {
+        // eslint-disable-next-line no-param-reassign
+        service.inCallDistance = distance;
+        possible = true;
+      }
+      if (outCall && distance < radius) {
+        // eslint-disable-next-line no-param-reassign
+        service.inCallDistance = distance;
+        // eslint-disable-next-line no-param-reassign
+        service.outCallAvailable = true;
+        possible = true;
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        service.outCallAvailable = false;
+      }
+      return possible;
+    };
+    const filteredServices = 
+    Array.from(ArrayUtils.filterWithLimit(parsedServices, isValidService, 500));               
+    filteredServices.sort((a, b) => b.averageServiceRating - a.averageServiceRating);
     return { status: 200, json: { services } };
   }
 
