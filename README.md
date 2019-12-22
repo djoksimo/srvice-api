@@ -21,6 +21,6 @@ The Srvice Node/Express.js Back-End API
 
 ## Other Resources:
 
-[Engineering Docs](https://srivce.slite.com/)
-[Srvice StackOverflow](https://stackoverflow.com/c/srvice)
-[Google](google.com)
+* [Engineering Docs](https://srivce.slite.com/)
+* [Srvice StackOverflow](https://stackoverflow.com/c/srvice)
+* [Google](google.com)
