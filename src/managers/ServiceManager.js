@@ -97,7 +97,7 @@ class ServiceManager {
     const filteredServices = 
     Array.from(ArrayUtils.filterWithLimit(parsedServices, isValidService, 500));               
     filteredServices.sort((a, b) => b.averageServiceRating - a.averageServiceRating);
-    return { status: 200, json: { filteredServices } };
+    return { status: 200, json: { services: filteredServices } };
   }
 
   async getServiceById({ id }) {
