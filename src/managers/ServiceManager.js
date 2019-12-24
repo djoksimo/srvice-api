@@ -1,5 +1,5 @@
 const { ServiceModel } = require("../models");
-const { CalculationUtils } = require("../utils");
+const { CalculationUtils, ArrayUtils } = require("../utils");
 
 const MAX_CATEGORY_ENTRY_AGE = 600000;
 const MAX_IN_CALL_DISTANCE = 50; // in kilometers
@@ -67,11 +67,14 @@ class ServiceManager {
 
   async getNearbyServicesByCategoryId({ categoryId, lat, lng }) {
     const categoryEntry = this.categoryToServiceMap[categoryId];
-    if (!categoryEntry || Date.now() - categoryEntry.updatedAt >= ServiceManager.MAX_CATEGORY_ENTRY_AGE) {
+    if (!categoryEntry || Date.now() - 
+    categoryEntry.updatedAt >= ServiceManager.MAX_CATEGORY_ENTRY_AGE) {
       const serviceDocuments = await this.serviceService.findServicesByCategoryId(categoryId);
       this.categoryToServiceMap[categoryId] = { services: serviceDocuments, updatedAt: Date.now() };
     }
-    const services = JSON.parse(JSON.stringify(this.categoryToServiceMap[categoryId].services)).filter((service) => {
+    const parsedServices = 
+    JSON.parse(JSON.stringify(this.categoryToServiceMap[categoryId].services));
+    const isValidService = (service) => {
       const { remoteCall, inCall, outCall, latitude, longitude, radius } = service;
       const distance = CalculationUtils.calculateCrowDistance(lat, lng, latitude, longitude);
       let possible = false;
@@ -90,8 +93,11 @@ class ServiceManager {
         service.outCallAvailable = false;
       }
       return possible;
-    }).sort((a, b) => b.averageServiceRating - a.averageServiceRating);
-    return { status: 200, json: { services } };
+    };
+    const filteredServices = 
+    Array.from(ArrayUtils.filterWithLimit(parsedServices, isValidService, 500));               
+    filteredServices.sort((a, b) => b.averageServiceRating - a.averageServiceRating);
+    return { status: 200, json: { services: filteredServices } };
   }
 
   async getServiceById({ id }) {

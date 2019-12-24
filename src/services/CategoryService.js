@@ -7,7 +7,7 @@ class CategoryService {
   }
 
   getAllCategories() {
-    return CategoryModel.find().exec();
+    return CategoryModel.find().limit(30).exec();
   }
 
   getCategoryByIdWithoutServices(id) {
