@@ -2,6 +2,7 @@
 const inquirer = require("inquirer");
 const chaiHttp = require("chai-http");
 const chai = require("chai");
+const chalk = require("chalk");
 require("dotenv").config();
 
 const { Environment } = require("../values");
@@ -67,6 +68,7 @@ function callEndpoint(callCount, endpoint, payload, host) {
 
 (async () => {
   try {
+    console.log(chalk.white.bgBlue.bold("Starting Srvice mock data generation !!!"));
     let inputResponses = await inquirer.prompt([{
       name: "environment",
       message: "Which Srvice API environment would you like to use? ",
@@ -81,15 +83,13 @@ function callEndpoint(callCount, endpoint, payload, host) {
       type: "list",
     }]);
 
-    console.log(inputResponses);
-
     const { environment, endpoint } = inputResponses;
     process.env.NODE_ENV = environment;
 
     inputResponses = Object.assign(inputResponses, await inquirer.prompt({
       name: "count",
       message: `How many times would you like to call POST \
-"localhost:${Environment.getGurrentPort()}${endpoint}" in ENV: ${environment}?`,
+localhost:${Environment.getGurrentPort()}${endpoint} in ENV: ${environment}?`,
       type: "input",
     }));
 
