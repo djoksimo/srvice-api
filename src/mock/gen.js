@@ -10,7 +10,7 @@ const {
   PostServicePayload,
   FakeJWTToken,
 } = require("./fixtures");
-const { FileUtils } = require("../utils");
+const { FileUtils, OutputUtils } = require("../utils");
 
 chai.use(chaiHttp);
 
@@ -55,7 +55,8 @@ function callEndpoint(callCount, endpoint, payload, host) {
           }
           try {
             const fileName = `src/mock/srvice-mock-data-${(new Date()).getTime().toString()}.txt`;
-            FileUtils.writeToFile(fileName, JSON.stringify(res, null, 2));
+            const fileOutput = `${OutputUtils.getPrettyJSON(res)}\nresponse: ${OutputUtils.getPrettyJSON(res.body)}`;
+            FileUtils.writeToFile(fileName, fileOutput);
             console.log(`Logged results of calling POST ${host}${endpoint} ${callCount} times in ${fileName}`);
           } catch (fileErr) {
             console.log(fileErr);
