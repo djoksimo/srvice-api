@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const { ServiceManagerTest } = require("./managers");
 const { ServiceServiceTest } = require("./services");
 const { ServiceRoutesTest } = require("./http");

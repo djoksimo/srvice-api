@@ -6,7 +6,6 @@ const server = require("../../index");
 const { describe } = require("mocha");
 const { HealthyService } = require("../fixtures/");
 const { ServiceModel } = require("../../models/");
-const { ServiceService } = require("../../bottle");
 
 const FAKE_JWT_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhaW1AY3JlZHVwLnJ1IiwiaWF0IjoxNTcwMTUxMTEyfQ.CyYwspIRCudpljDo7QLawom6AKizB-lYo8cj9VxrfMw";
 
