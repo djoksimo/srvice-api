@@ -4,4 +4,6 @@ module.exports = {
   UuidUtils: require("./UuidUtils"),
   GoogleUtils: require("./GoogleUtils"),
   ArrayUtils: require("./ArrayUtils"),
+  FileUtils: require("./FileUtils"),
+  OutputUtils: require("./OutputUtils"),
 };
