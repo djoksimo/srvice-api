@@ -4,9 +4,8 @@ const HealthyService = {
   title: "GOOOD GOOD Service",
   description: "ASFAS ASF ASF ASF ASF ASF ASF ASF ASF ASFASFASFASFJASF ASFAJSJASFJASJF ASFASFJSAFAS ASF ASFAS F ASF ASFASFASF AFSAS",
   pictureUrls: [
-    "https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/baby_ja7a.svg",
-    "https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/baby_ja7a.svg",
-    "https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/baby_ja7a.svg",
+    "https://www.trilogyed.com/blog/wp-content/uploads/2018/05/columbia_coding_boot_camp2_brandon_colbert.jpg",
+    "https://www.trilogyed.com/blog/wp-content/uploads/2018/05/columbia_coding_boot_camp2_brandon_colbert.jpg",
   ],
   phone: "4161234567",
   email: "haim@credup.ru",
