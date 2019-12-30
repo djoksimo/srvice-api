@@ -3,7 +3,7 @@ const Mongoose = require("mongoose");
 const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
 
-const scheduleModel = Schema({
+const scheduleSchema = Schema({
   _id: { type: ObjectId, auto: true, required: true },
   availability: {
     type: [{
@@ -16,12 +16,12 @@ const scheduleModel = Schema({
   bookings: [{
     start: { type: Date, required: true },
     end: { type: Date, required: true },
-    product: { type: ObjectId, ref: "Product", required: true },
+    offering: { type: ObjectId, ref: "", required: true },
     user: { type: ObjectId, ref: "User", required: true },
   }],
   agent: { type: ObjectId, ref: "Agent", required: true },
 }, { versionKey: false, timestamps: true });
 
-const productModel = Mongoose.model("Schedule", scheduleModel);
+const scheduleModel = Mongoose.model("Schedule", scheduleSchema);
 
-module.exports = productModel;
+module.exports = scheduleModel;

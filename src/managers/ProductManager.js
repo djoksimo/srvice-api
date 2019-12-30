@@ -1,14 +1,14 @@
-const { ProductModel } = require("../models");
+const { OfferingModel } = require("../models");
 
-class ProductManager {
+class OfferingManager {
 
-  constructor(ProductService, ServiceService) {
-    this.productService = ProductService;
+  constructor(OfferingService, ServiceService) {
+    this.offeringService = OfferingService;
     this.serviceService = ServiceService;
   }
 
-  // TODO switch so that this creates a list of products - DANILO
-  async createProduct(payload, authHeaders) {
+  // TODO switch so that this creates a list of offerings - DANILO
+  async createOffering(payload, authHeaders) {
     const {
       serviceId,
       title,
@@ -18,7 +18,7 @@ class ProductManager {
       agent,
     } = payload;
 
-    const newProduct = new ProductModel({
+    const newOffering = new OfferingModel({
       title,
       duration,
       price,
@@ -27,31 +27,31 @@ class ProductManager {
     });
 
     try {
-      const productDocument = await this.productService.saveProduct(newProduct);
-      await this.serviceService.addProductToService(serviceId, productDocument.toObject()._id, authHeaders.agentId);
-      const productId = productDocument.toObject()._id;
+      const offeringDocument = await this.offeringService.saveOffering(newOffering);
+      await this.serviceService.addOfferingToService(serviceId, offeringDocument.toObject()._id, authHeaders.agentId);
+      const offeringId = offeringDocument.toObject()._id;
 
-      return { status: 201, json: { productId } };
+      return { status: 201, json: { offeringId } };
     } catch (error) {
       console.log(error);
       return { status: 500, json: error };
     }
   }
 
-  async patchProduct(product, authHeaders) {
+  async patchOffering(offering, authHeaders) {
     try {
-      const result = await this.productService.updateProduct(product, authHeaders.agentId);
+      const result = await this.offeringService.updateOffering(offering, authHeaders.agentId);
       return { status: 200, json: result };
     } catch (error) {
       return { status: 500, json: error };
     }
   }
 
-  async deleteProduct({ productId, serviceId }, authHeaders) {
+  async deleteOffering({ offeringId, serviceId }, authHeaders) {
     try {
-      const productResult = await this.productService.removeProduct(productId, authHeaders.agentId);
-      const serviceResult = await this.serviceService.removeProductFromService(serviceId, productId, authHeaders.agentId);
-      return { status: 200, json: { productResult, serviceResult } };
+      const offeringResult = await this.offeringService.removeOffering(offeringId, authHeaders.agentId);
+      const serviceResult = await this.serviceService.removeOfferingFromService(serviceId, offeringId, authHeaders.agentId);
+      return { status: 200, json: { offeringResult, serviceResult } };
     } catch (error) {
       console.log(error);
       return { status: 500, json: error.toString() };
@@ -59,4 +59,4 @@ class ProductManager {
   }
 }
 
-module.exports = ProductManager;
+module.exports = OfferingManager;
