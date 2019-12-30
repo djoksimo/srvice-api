@@ -11,8 +11,8 @@ class ServiceService {
         if (!service) {
           return reject(Error("Could not find service"));
         }
-        const productDocument = service.toObject();
-        const { agent } = productDocument;
+        const offeringDocument = service.toObject();
+        const { agent } = offeringDocument;
         console.log(agentId);
         console.log(agent.toString());
         if (agentId !== agent.toString()) {
@@ -29,14 +29,14 @@ class ServiceService {
       path: "serviceRatings",
       populate: { path: "user" },
     };
-    this.productsPath = { path: "products" };
+    this.offeringsPath = { path: "offerings" };
     this.agentPath = {
       path: "agent",
       populate: [
         {  
           path: "schedule",
           populate: [
-            { path: "product" },
+            { path: "offering" },
             { path: "user" },
           ],
         },
@@ -46,7 +46,7 @@ class ServiceService {
       this.agentPath,
       this.categoryPath,
       this.ratingsPath,
-      this.productsPath,
+      this.offeringsPath,
     ];
   }
 
@@ -86,21 +86,21 @@ class ServiceService {
     return ServiceModel.findByIdAndUpdate(serviceId, { $push: { serviceRatings: serviceRatingId } }).exec();
   }
 
-  async addProductToService(serviceId, productId, agentId) {
+  async addOfferingToService(serviceId, offeringId, agentId) {
     const isOwner = await ServiceService.isOwner(serviceId, agentId);
     if (!isOwner) {
       throw new Error("NICE TRY ;)");
     }
-    return ServiceModel.updateOne({ _id: serviceId }, { $push: { products: productId } }).exec();
+    return ServiceModel.updateOne({ _id: serviceId }, { $push: { offerings: offeringId } }).exec();
   }
 
-  async removeProductFromService(serviceId, productId, agentId) {
+  async removeOfferingFromService(serviceId, offeringId, agentId) {
     const isOwner = await ServiceService.isOwner(serviceId, agentId);
     console.log(isOwner);
     if (!isOwner) {
       throw new Error("NICE TRY");
     }
-    return ServiceModel.findByIdAndUpdate(serviceId, { $pull: { products: productId } }).exec();
+    return ServiceModel.findByIdAndUpdate(serviceId, { $pull: { offerings: offeringId } }).exec();
   }
 }
 

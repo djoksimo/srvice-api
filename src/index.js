@@ -19,7 +19,7 @@ const {
   ServiceRatingRoutes,
   AdminRoutes,
   SendRoutes,
-  ProductRoutes,
+  OfferingRoutes,
   FileRoutes,
   ScheduleRoutes,
   ChatRoutes,
@@ -86,7 +86,7 @@ app.use("/admin", AdminRoutes);
 app.use("/service-rating", ServiceRatingRoutes);
 app.use("/request", RequestRoutes);
 app.use("/booking", BookingRoutes);
-app.use("/product", ProductRoutes);
+app.use("/offering", OfferingRoutes);
 app.use("/schedule", ScheduleRoutes);
 app.use("/file", FileRoutes);
 app.use("/chat", ChatRoutes);

@@ -3,7 +3,7 @@ const Mongoose = require("mongoose");
 const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
 
-const productSchema = Schema({
+const offeringSchema = Schema({
   _id: { type: ObjectId, auto: true, required: true },
   title: { type: String, required: true },
   duration: { type: Number, required: true },
@@ -12,6 +12,6 @@ const productSchema = Schema({
   agent: { type: ObjectId, ref: "Agent", required: true },
 }, { versionKey: false });
 
-const productModel = Mongoose.model("Product", productSchema);
+const offeringModel = Mongoose.model("Offering", offeringSchema);
 
-module.exports = productModel;
+module.exports = offeringModel;

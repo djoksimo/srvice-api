@@ -20,7 +20,7 @@ const serviceSchema = Schema({
   radius: { type: Number, required: true },
   averageServiceRating: { type: Number, required: true },
   serviceRatings: { type: [{ type: ObjectId, ref: "ServiceRating" }], required: true },
-  products: { type: [{ type: ObjectId, ref: "Product" }], required: false },
+  offerings: { type: [{ type: ObjectId, ref: "Offering" }], required: false },
 }, { versionKey: false, timestamps: true });
 
 const serviceModel = Mongoose.model("Service", serviceSchema);

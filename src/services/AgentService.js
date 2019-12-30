@@ -18,7 +18,7 @@ class AgentService {
               sort: { date: -1 },
             },
           },
-          { path: "products" },
+          { path: "offerings" },
         ],
         options: {
           sort: { updatedAt: -1 },
@@ -27,7 +27,7 @@ class AgentService {
       {
         path: "schedule",
         populate: [
-          { path: "bookings.product" },
+          { path: "bookings.offering" },
           { path: "bookings.user" },
         ],
       },
@@ -47,7 +47,7 @@ class AgentService {
               sort: { date: -1 },
             },
           },
-          { path: "products" },
+          { path: "offerings" },
         ],
         options: {
           sort: { updatedAt: -1 },
@@ -55,7 +55,7 @@ class AgentService {
       },
       {
         path: "schedule",
-        select: "-bookings.user -bookings.product",
+        select: "-bookings.user -bookings.offering",
       },
     ]).exec();
   }

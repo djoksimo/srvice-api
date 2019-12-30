@@ -26,7 +26,7 @@ class AgentPrivateService {
                 path: "serviceRatings",
                 populate: { path: "user" },
               },
-              { path: "products" },
+              { path: "offerings" },
             ],
           },
         ],
