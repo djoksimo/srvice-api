@@ -13,8 +13,6 @@ class ServiceService {
         }
         const offeringDocument = service.toObject();
         const { agent } = offeringDocument;
-        console.log(agentId);
-        console.log(agent.toString());
         if (agentId !== agent.toString()) {
           return resolve(false);
         }
@@ -96,7 +94,6 @@ class ServiceService {
 
   async removeOfferingFromService(serviceId, offeringId, agentId) {
     const isOwner = await ServiceService.isOwner(serviceId, agentId);
-    console.log(isOwner);
     if (!isOwner) {
       throw new Error("NICE TRY");
     }
