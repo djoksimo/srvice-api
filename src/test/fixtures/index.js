@@ -5,4 +5,5 @@ module.exports = {
   HealthyService: require("./HealthyService"),
   HealthyOffering: require("./HealthyOffering"),
   MockAgentCredentials: require("./MockAgentCredentials"),
+  InvalidMongoID: require("./InvalidMongoID"),
 };

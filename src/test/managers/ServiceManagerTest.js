@@ -67,7 +67,7 @@ class ServiceManagerTest {
           done();
         });
       });
-      
+
       it("Should return service by id", async () => {
         const res = await this.serviceManager.createService(HealthyService);
         const resGetService = await this.serviceManager.getServiceById({ id: res.json.serviceId });
@@ -130,8 +130,6 @@ class ServiceManagerTest {
       });
     });
   }
-
 }
 
 module.exports = ServiceManagerTest;
-
