@@ -1,3 +1,5 @@
+process.env.NODE_ENV = "TEST";
+
 const assert = require("assert");
 const chaiHttp = require("chai-http");
 const chai = require("chai");

@@ -1,9 +1,14 @@
 require("dotenv").config();
 
-const { ServiceManagerTest } = require("./managers");
+const { 
+  ServiceManagerTest,
+  OfferingManagerTest,
+} = require("./managers");
 const { ServiceServiceTest } = require("./services");
 const { ServiceRoutesTest } = require("./http");
 const { Environment } = require("../values");
+
+process.env.NODE_ENV = "TEST";
 
 if (Environment.getCurrentNodeEnv() !== Environment.TEST) {
   console.log("YOU TRIED TO USE THE WRONG DB, SHAME ON YOU");
@@ -12,9 +17,13 @@ if (Environment.getCurrentNodeEnv() !== Environment.TEST) {
 }
 
 const tests = [
+  // Service Tests
   new ServiceManagerTest(),
   new ServiceServiceTest(),
   new ServiceRoutesTest(),
+
+  // Offering Tests
+  new OfferingManagerTest(),
 ];
 
 tests.forEach(async (test) => {
