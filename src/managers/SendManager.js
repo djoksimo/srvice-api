@@ -1,9 +1,9 @@
 const AWS = require("aws-sdk");
 
 AWS.config.update({
-  accessKeyId: 'AKIAIE7SYRFTIRXOUW4A',
-  secretAccessKey: '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',
-  region: 'us-east-1',
+  accessKeyId: "AKIAIE7SYRFTIRXOUW4A",
+  secretAccessKey: "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",
+  region: "us-east-1",
 });
 
 class SendManager {
