@@ -5,7 +5,7 @@ module.exports = {
   BookingManager: require("./BookingManager"),
   AgentManager: require("./AgentManager"),
   CategoryManager: require("./CategoryManager"),
-  ServiceManager: require("./OfferingManager"),
+  ServiceManager: require("./ServiceManager"),
   ServiceRatingManager: require("./ServiceRatingManager"),
   SendManager: require("./SendManager"),
   OfferingManager: require("./OfferingManager"),
