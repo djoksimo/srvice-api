@@ -10,7 +10,7 @@
     "build": "webpack",
     "start": "nodemon",
     "lint": "npx eslint src/* --color --quiet",
-    "gen": "node src/mock/gen.js"
+    "gen": "node src/mock/CLIGen.js"
   },
   "nyc": {
     "all": true,

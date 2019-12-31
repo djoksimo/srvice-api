@@ -1,4 +1,4 @@
 module.exports = {
   PostServicePayload: require("./PostServicePayload"),
-  FakeJWTToken: require("./FakeJWTToken"),
+  MockAgentCredentials: require("./MockAgentCredentials"),
 };
