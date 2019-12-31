@@ -5,7 +5,10 @@ const {
   OfferingManagerTest,
 } = require("./managers");
 const { ServiceServiceTest } = require("./services");
-const { ServiceRoutesTest } = require("./http");
+const { 
+  ServiceRoutesTest,
+  OfferingRoutesTest
+} = require("./http");
 const { Environment } = require("../values");
 
 process.env.NODE_ENV = "TEST";
@@ -24,6 +27,7 @@ const tests = [
 
   // Offering Tests
   new OfferingManagerTest(),
+  new OfferingRoutesTest(),
 ];
 
 tests.forEach(async (test) => {
