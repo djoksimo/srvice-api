@@ -10,7 +10,7 @@ module.exports = {
   BookingService: require("./BookingService"),
   RequestService: require("./RequestService"),
   ServiceRatingService: require("./ServiceRatingService"),
-  ProductService: require("./ProductService"),
+  OfferingService: require("./OfferingService"),
   FileService: require("./FileService"),
   ScheduleService: require("./ScheduleService"),
   ChatService: require("./ChatService"),

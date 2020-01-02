@@ -4,7 +4,7 @@ const Bottle = require("../bottle");
 const { HttpUtils } = require("../utils");
 
 const router = Express.Router();
-const productManager = Bottle.ProductManager;
+const offeringManager = Bottle.OfferingManager;
 const authenticationManager = Bottle.AuthenticationManager;
 
 const isAuthenticated = (req, res, callback) => {
@@ -16,17 +16,17 @@ const isAuthenticated = (req, res, callback) => {
 
 router.post("/", (req, res) => isAuthenticated(req, res, async () => {
   const authHeaders = HttpUtils.parseAuthHeaders(req);
-  HttpUtils.sendResponse(res, await productManager.createProduct(req.body, authHeaders));
+  HttpUtils.sendResponse(res, await offeringManager.createOffering(req.body, authHeaders));
 }));
 
 router.patch("/", (req, res) => isAuthenticated(req, res, async () => {
   const authHeaders = HttpUtils.parseAuthHeaders(req);
-  HttpUtils.sendResponse(res, await productManager.patchProduct(req.body, authHeaders));
+  HttpUtils.sendResponse(res, await offeringManager.patchOffering(req.body, authHeaders));
 }));
 
 router.delete("/", (req, res) => isAuthenticated(req, res, async () => {
   const authHeaders = HttpUtils.parseAuthHeaders(req);
-  HttpUtils.sendResponse(res, await productManager.deleteProduct(req.body, authHeaders));
+  HttpUtils.sendResponse(res, await offeringManager.deleteOffering(req.body, authHeaders));
 }));
 
 module.exports = router;

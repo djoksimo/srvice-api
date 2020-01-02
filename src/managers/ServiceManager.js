@@ -33,7 +33,7 @@ class ServiceManager {
       radius,
       averageServiceRating,
       serviceRatings,
-      products,
+      offerings,
     } = payload;
     const newService = new ServiceModel({
       agent,
@@ -52,7 +52,7 @@ class ServiceManager {
       radius,
       averageServiceRating,
       serviceRatings,
-      products,
+      offerings,
     });
 
     try {
@@ -124,7 +124,7 @@ class ServiceManager {
   async deleteService(serviceId, authHeaders) {
     try {
       const result = await this.serviceService.removeService(serviceId, authHeaders.agentId);
-      // TODO remove products and all other sub-documents in service (products, ratings, etc)
+      // TODO remove offerings and all other sub-documents in service (offerings, ratings, etc)
       return { status: 200, json: result };
     } catch (error) {
       return { status: 500, json: { error: error.toString() } };
