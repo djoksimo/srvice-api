@@ -9,6 +9,6 @@ module.exports = {
   UserModel: require("./UserModel"),
   UserPrivateModel: require("./UserPrivateModel"),
   UserRatingModel: require("./UserRatingModel"),
-  ProductModel: require("./ProductModel"),
+  OfferingModel: require("./OfferingModel"),
   ScheduleModel: require("./ScheduleModel"),
 };

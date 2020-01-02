@@ -24,5 +24,5 @@ module.exports = {
   radius: 3,
   averageServiceRating: 0,
   serviceRatings: [],
-  products: [],
+  offerings: [],
 };

@@ -18,7 +18,7 @@ const HealthyService = {
   radius: 10,
   averageServiceRating: 0,
   serviceRatings: [],
-  products: [],
+  offerings: [],
 };
 
 module.exports = HealthyService;

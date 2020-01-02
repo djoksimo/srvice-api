@@ -8,7 +8,7 @@ module.exports = {
   ServiceManager: require("./ServiceManager"),
   ServiceRatingManager: require("./ServiceRatingManager"),
   SendManager: require("./SendManager"),
-  ProductManager: require("./ProductManager"),
+  OfferingManager: require("./OfferingManager"),
   FileManager: require("./FileManager"),
   ScheduleManager: require("./ScheduleManager"),
   ChatManager: require("./ChatManager"),
