@@ -14,6 +14,19 @@ class MockGen {
     chai.request(server).get("/"); // initialize server
   }
 
+  static async writeResultsToFile(mockRequests, fileName, successMessage) {
+    try {
+      const results = await Promise.all(mockRequests);
+
+      await FileUtils.asyncWriteToFileOnce(fileName, results.join("\n"));
+      console.log(successMessage);
+      process.exit(0);
+    } catch (fileErr) {
+      console.log(fileErr);
+      process.exit(1);
+    }
+  }
+
   static getAuthenticatedChaiRequest(endpoint, HTTPVerb, host, authHeaders, payload) {
     if (!host) {
       host = "http://localhost:5000";
@@ -56,9 +69,10 @@ class MockGen {
   
   static async callEndpoint(callCount, endpoint, payload, host) {
     if (!callCount || callCount > 100) {
-      console.log("Call count that was specified was to risky, set to 100");
-      callCount = 100;
+      console.log("Call count that was specified was too risky, please try again with a smaller number");
+      process.exit(1);
     }
+
     if (!host) {
       host = "http://localhost:5000";
     }
@@ -75,7 +89,6 @@ class MockGen {
 
     const mockRequests = [];
 
-    let fileOutput = "RESULTS WILL BE OUT OF ORDER";
     // ensure that ids in payload reference valid objects
     // different environments reference different databases
     // eslint-disable-next-line no-plusplus
@@ -93,24 +106,20 @@ class MockGen {
             console.log(httpErr);
             process.exit(1);
           }
-          fileOutput += `~~~RESULT #${i + 1}~~~~:\n${OutputUtils.getPrettyJSON(res)}\nresponse: ${OutputUtils.getPrettyJSON(res.body)}`;
+          const fileOutput = "~~~RESULT #" + (i + 1) + "~~~~:\n" +
+              OutputUtils.getPrettyJSON(res) +
+              "\nresponse: " + OutputUtils.getPrettyJSON(res.body) + 
+              "\n~~~~~~~\n";
+
           resolve(fileOutput);
         });
       });
-
       mockRequests.push(endRequestPromise);      
     }
 
-    try {
-      const results = await Promise.all(mockRequests);
-
-      const fileName = `src/mock/srvice-mock-data-${(new Date()).getTime().toString()}.txt`;
-      FileUtils.writeToFile(fileName, results.join());
-      console.log(`Logged results of calling POST ${host}${endpoint} ${callCount} times in ${fileName}`);
-    } catch (fileErr) {
-      console.log(fileErr);
-      process.exit(1);
-    }
+    const fileName = `src/mock/srvice-mock-data-${(new Date()).getTime().toString()}.txt`;
+    const successMessage = `Logged results of calling POST ${host}${endpoint} ${callCount} times in ${fileName}`;
+    MockGen.writeResultsToFile(mockRequests, fileName, successMessage);
   }
 }
 
