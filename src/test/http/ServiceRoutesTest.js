@@ -36,7 +36,7 @@ class ServiceRoutesTest {
       it("it should POST a service successfully", (done) => {
         const host = "http://localhost:5000";
 
-        MockGen.getAuthenticatedChaiRequest(
+        MockGen.getChaiRequest(
           "/service", 
           HTTPVerbs.POST, 
           host,
@@ -65,7 +65,7 @@ class ServiceRoutesTest {
         const mockService = new ServiceModel(HealthyService);
         mockService.save((err, service) => {
           assert.ifError(err);
-          MockGen.getAuthenticatedChaiRequest(`/service/${service.id}`, HTTPVerbs.GET)
+          MockGen.getChaiRequest(`/service/${service.id}`, HTTPVerbs.GET)
             .end((getServiceError, getServiceResult) => {
               assert.ifError(getServiceError);
               Object.keys(HealthyService).forEach((x) => {
@@ -97,7 +97,7 @@ class ServiceRoutesTest {
         mockService.save((err, service) => {
           assert.ifError(err);
 
-          MockGen.getAuthenticatedChaiRequest(`/service/${nearbyStr}`, HTTPVerbs.GET)
+          MockGen.getChaiRequest(`/service/${nearbyStr}`, HTTPVerbs.GET)
             .end((getServiceError, getServiceResult) => {
               assert.ifError(getServiceError);
 

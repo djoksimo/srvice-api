@@ -45,7 +45,7 @@ class OfferingRoutesTest {
         const host = "http://localhost:5000";
 
         // generate service and attach service ID
-        MockGen.getAuthenticatedChaiRequest(
+        MockGen.getChaiRequest(
           "/service", 
           HTTPVerbs.POST, 
           host,
@@ -59,7 +59,7 @@ class OfferingRoutesTest {
 
           mockPostOfferingBody.serviceId = serviceId;
 
-          MockGen.getAuthenticatedChaiRequest(
+          MockGen.getChaiRequest(
             "/offering", 
             HTTPVerbs.POST,
             host,
@@ -93,7 +93,7 @@ class OfferingRoutesTest {
         const host = "http://localhost:5000";
 
         // generate service and attach service ID
-        MockGen.getAuthenticatedChaiRequest(
+        MockGen.getChaiRequest(
           "/service", 
           HTTPVerbs.POST, 
           host,
@@ -107,7 +107,7 @@ class OfferingRoutesTest {
 
           mockPostOfferingBody.serviceId = serviceId;
 
-          MockGen.getAuthenticatedChaiRequest(
+          MockGen.getChaiRequest(
             "/offering", 
             HTTPVerbs.POST, 
             host,
@@ -123,7 +123,7 @@ class OfferingRoutesTest {
               title: "New Title",
             };
             
-            MockGen.getAuthenticatedChaiRequest(
+            MockGen.getChaiRequest(
               "/offering", 
               HTTPVerbs.PATCH, 
               host,

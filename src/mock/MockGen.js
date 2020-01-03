@@ -27,7 +27,7 @@ class MockGen {
     }
   }
 
-  static getAuthenticatedChaiRequest(endpoint, HTTPVerb, host, authHeaders, payload) {
+  static getChaiRequest(endpoint, HTTPVerb, host, authHeaders, payload) {
     if (!host) {
       host = "http://localhost:5000";
     }
@@ -95,7 +95,7 @@ class MockGen {
     for (let i = 0; i < callCount; i++) {
       // eslint-disable-next-line no-loop-func
       const endRequestPromise = new Promise((resolve) => {
-        MockGen.getAuthenticatedChaiRequest(
+        MockGen.getChaiRequest(
           endpoint,
           HTTPVerbs.POST, 
           host, 
