@@ -67,7 +67,7 @@ class OfferingRoutesTest {
             mockPostOfferingBody, 
           ).end((offeringErr, offeringRes) => { 
             assert.ifError(offeringErr);    
-            assert.strictEqual(201, offeringRes.status, "Fail: The status should be 201");
+            assert.strictEqual(offeringRes.status, 201, "Fail: The status should be 201");
             assert.ok(mongodb.ObjectID.isValid(offeringRes.body.offeringId), "Fail: MongoDB ID is not valid");
             done();
           });
