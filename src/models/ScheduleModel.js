@@ -16,7 +16,7 @@ const scheduleSchema = Schema({
   bookings: [{
     start: { type: Date, required: true },
     end: { type: Date, required: true },
-    offering: { type: ObjectId, ref: "", required: true },
+    offering: { type: ObjectId, ref: "Offering", required: true },
     user: { type: ObjectId, ref: "User", required: true },
   }],
   agent: { type: ObjectId, ref: "Agent", required: true },
