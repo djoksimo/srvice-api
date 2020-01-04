@@ -7,7 +7,8 @@ const {
 const { ServiceServiceTest } = require("./services");
 const { 
   ServiceRoutesTest,
-  OfferingRoutesTest
+  OfferingRoutesTest,
+  AuthenticationRoutesTest,
 } = require("./http");
 const { Environment } = require("../values");
 
@@ -28,6 +29,9 @@ const tests = [
   // Offering Tests
   new OfferingManagerTest(),
   new OfferingRoutesTest(),
+
+  // Authentication Tests
+  new AuthenticationRoutesTest(),
 ];
 
 tests.forEach(async (test) => {
