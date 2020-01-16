@@ -1,28 +1,28 @@
+process.env.NODE_ENV = "TEST";
+
 const assert = require("assert");
-const chaiHttp = require("chai-http");
-const chai = require("chai");
 const { describe } = require("mocha");
 
-const server = require("../../index");
 const { ServiceService } = require("../../bottle");
-const { ServiceModel } = require("../../models/");
-const { HealthyService } = require("../fixtures/");
-
-const fakeMongoID = "5da9032e059b1ff6fdf43e13";
-chai.use(chaiHttp);
+const { ServiceModel } = require("../../models");
+const { HealthyService, InvalidMongoID } = require("../fixtures");
+const MockGen = require("../../mock/MockGen");
 
 class ServiceServiceTest {
   constructor() {
-    chai.request(server).get("/");
+    MockGen.startAPI();
     this.serviceService = ServiceService;
   }
   async start() {
-    this.testSaveService();
-    this.testFindService();
+    describe("ServiceService tests", () => {
+      this.testSaveService();
+      this.testFindServicesByCategoryId();
+      this.testFindSemiPopulatedAgentServiceById();
+      this.testFindServiceById();
+    });
   }
 
   testSaveService() {
-  
     describe("#ServiceService.saveService()", () => {
       beforeEach((done) => {
         ServiceModel.deleteMany({}, (err) => {
@@ -46,11 +46,9 @@ class ServiceServiceTest {
         }
       });
     });
-
   }
 
-  testFindService() {
-
+  testFindServicesByCategoryId() {
     describe("#ServiceService.findServicesByCategoryId()", () => {
       beforeEach((done) => {
         ServiceModel.deleteMany({}, (err) => {
@@ -68,33 +66,13 @@ class ServiceServiceTest {
       });
 
       it("Should return no services for unknown category id", async () => {
-        const res = await this.serviceService.findServicesByCategoryId(fakeMongoID);
+        const res = await this.serviceService.findServicesByCategoryId(InvalidMongoID);
         assert.ok(res.length === 0, "Fail: Should return an empty list");
       });
     });
+  }
 
-    describe("#ServiceService.findSemiPopulatedAgentServiceById()", () => {
-      beforeEach((done) => {
-        ServiceModel.deleteMany({}, (err) => {
-          assert.ifError(err);
-          done();
-        });
-      });
-
-      it("Should return a service by its id", async () => { 
-        const mockService = new ServiceModel(HealthyService);
-        const res = await this.serviceService.saveService(mockService);
-        const res2 = await this.serviceService.findSemiPopulatedAgentServiceById(res.id);
-        assert.strictEqual(res2._id.toString(), res.id.toString(), "Fail: Should return a service by the inputted service id");
-      });
-
-      it("Should not return any service for unknown service id", async () => {
-        const res = await this.serviceService.findServiceById(fakeMongoID);
-        assert.strictEqual(res, null, "Fail: Should return no services for unknown service id");
-      });
-
-    });
-
+  testFindServiceById() {
     describe("#ServiceService.findServiceById()", () => {  
       beforeEach((done) => {
         ServiceModel.deleteMany({}, (err) => {
@@ -103,21 +81,41 @@ class ServiceServiceTest {
         });
       });
 
-      it("Should return a service by its id", async () => { 
+      it("Should return a non-populated service by its id", async () => { 
         const mockService = new ServiceModel(HealthyService);
-        const res = await this.serviceService.saveService(mockService);
-        const res2 = await this.serviceService.findServiceById(res.id);
-        assert.strictEqual(res2._id.toString(), res.id.toString(), "Fail: Should return a service by the inputted service id");
+        const saveServiceRes = await this.serviceService.saveService(mockService);
+        const findServiceRes = await this.serviceService.findServiceById(saveServiceRes.id);
+        assert.strictEqual(
+          findServiceRes._id.toString(), 
+          saveServiceRes.id.toString(), 
+          "Fail: Should return a service by the inputted service id",
+        );
       });
 
-      it("Should not return any service for unknown service id", async () => {
-        const res = await this.serviceService.findServiceById(fakeMongoID);
+      it("Should not return any non-populated service for unknown service id", async () => {
+        const res = await this.serviceService.findServiceById(InvalidMongoID);
         assert.strictEqual(res, null, "Fail: Should return no services for unknown service id");
       });
     });
-  
   }
 
+  testFindSemiPopulatedAgentServiceById() {
+    describe("#ServiceService.findSemiPopulatedAgentServiceById()", () => {
+      beforeEach((done) => {
+        ServiceModel.deleteMany({}, (err) => {
+          assert.ifError(err);
+          done();
+        });
+      });
+
+      it("Should return a semi-populated service by its id", async () => { 
+        const mockService = new ServiceModel(HealthyService);
+        const saveServiceRes = await this.serviceService.saveService(mockService);
+        const findServiceRes = await this.serviceService.findSemiPopulatedAgentServiceById(saveServiceRes.id);
+        assert.strictEqual(findServiceRes._id.toString(), saveServiceRes.id.toString(), "Fail: Should return a service by the inputted service id");
+      });
+    });
+  }
 }
 
 module.exports = ServiceServiceTest;

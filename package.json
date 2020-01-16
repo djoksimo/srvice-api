@@ -10,7 +10,7 @@
     "build": "webpack",
     "start": "nodemon",
     "lint": "npx eslint src/* --color --quiet",
-    "gen": "node src/mock/gen.js"
+    "gen": "node src/mock/CLIGen.js"
   },
   "nyc": {
     "all": true,
@@ -51,6 +51,7 @@
     "nodemon": "^1.17.4",
     "path": "^0.12.7",
     "sharp": "^0.22.1",
+    "sinon": "^8.0.2",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

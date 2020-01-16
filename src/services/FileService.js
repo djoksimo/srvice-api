@@ -28,7 +28,7 @@ class FileService {
       });
 
       const uploadResult = new Promise((resolve, reject) => {
-        stream.on('finish', () => {
+        stream.on("finish", () => {
           resolve(GoogleUtils.getPublicUrl(`${GoogleValues.BUCKET_NAME}/${fileName}`));
         });
         stream.on("error", (err) => {

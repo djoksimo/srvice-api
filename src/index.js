@@ -50,7 +50,7 @@ switch (env) {
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:4200', 'http://192.168.0.116:4200', 'https://srvice.ca'];
+const allowedOrigins = ["http://localhost:4200", "http://192.168.0.116:4200", "https://srvice.ca"];
 
 const corsOptions = {
   origin: allowedOrigins,

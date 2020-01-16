@@ -3,7 +3,7 @@ module.exports = {
   "extends": "airbnb-base",
   "rules": {
     "no-undef": "off",
-    "quotes": "off",
+    "quotes": [2, "double"],
     "no-console": "off",
     "no-trailing-spaces": "off",
     "linebreak-style": "off",
