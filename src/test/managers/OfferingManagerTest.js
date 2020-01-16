@@ -32,29 +32,25 @@ class OfferingManagerTest {
   testCreateOffering() {
     describe("#OfferingManager.createOffering()", () => {
       beforeEach((done) => {
-        ServiceModel.deleteMany({}, (err) => {
-          assert.ifError(err);
-        });     
-  
-        OfferingModel.deleteMany({}, (err) => {
-          assert.ifError(err);
-          done();
-        });
+        ServiceModel.deleteMany({}, (serviceError) => {
+          assert.ifError(serviceError);
+
+          OfferingModel.deleteMany({}, (offeringError) => {
+            assert.ifError(offeringError);
+            done();
+          });
+        });      
       });
   
       afterEach((done) => {
-        ServiceModel.deleteMany({}, (err) => {
-          assert.ifError(err);
-        });     
-  
-        OfferingModel.deleteMany({}, (err) => {
-          assert.ifError(err);
-          done();
-        });
-      });
-  
-      after((done) => {
-        done();
+        ServiceModel.deleteMany({}, (serviceError) => {
+          assert.ifError(serviceError);
+
+          OfferingModel.deleteMany({}, (offeringError) => {
+            assert.ifError(offeringError);
+            done();
+          });
+        });             
       });
 
       it("Should create an offering and return id", async () => {
