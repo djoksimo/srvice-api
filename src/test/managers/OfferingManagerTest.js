@@ -53,7 +53,7 @@ class OfferingManagerTest {
         });             
       });
 
-      it('Should create an offering and return id', async () => {
+      it("Should create an offering and return id", async () => {
         // TODO: make this test independent of this.serviceManager.createService(HealthyService);
         // by replacing with mock generation tool
         const serviceRes = await this.serviceManager.createService(HealthyService);
