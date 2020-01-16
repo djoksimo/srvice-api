@@ -2,27 +2,11 @@ const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
 const AWS = require("aws-sdk");
 
 const { AgentModel, AgentPrivateModel, UserModel, UserPrivateModel } = require("../models/");
+const { AWSValues } = require("../values/");
 
-// TODO: Move this shit to src/values
-// prod
-// const poolData = {
-//   UserPoolId: "us-east-1_5LnENujLz",
-//   ClientId: "7stqncgt58t6tk6sokoa57ajbd",
-// };
+AWS.config = new AWS.Config(AWSValues.config);
 
-// sandbox 01
-const poolData = {
-  UserPoolId: "us-east-1_PQ6pkrE6F",
-  ClientId: "674mh87fc0bg8m588r8sslf87q",
-};
-
-AWS.config = new AWS.Config({
-  region: "us-east-1",
-  accessKeyId: "AKIAJX7UB3Q56ZXUKHRQ",
-  secretAccessKey: "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",
-});
-
-const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+const userPool = new AmazonCognitoIdentity.CognitoUserPool(AWSValues.cognito.sandbox);
 
 class AuthenticationManager {
 
@@ -142,6 +126,23 @@ class AuthenticationManager {
       return { status: 201, json: {} };
     } catch (error) {
       return { status: 500, json: error };
+    }
+  }
+
+  async adminConfirmUser({ email }) {
+    try {
+      const adminConfirmationResult = await this.cognitoService.adminConfirmAccount(email);
+      const successMessage = "Confirmed account successfully";
+
+      return { 
+        status: 200, 
+        json: { 
+          message: successMessage, 
+          cognitoRes: adminConfirmationResult, 
+        }, 
+      };
+    } catch (error) {
+      return { status: 500, json: error.toString() };
     }
   }
 

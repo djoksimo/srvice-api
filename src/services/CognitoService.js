@@ -1,18 +1,13 @@
 const AWS = require("aws-sdk");
 const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
 
+const { AWSValues } = require("../values");
+
 class CognitoService {
 
   constructor() {
-    AWS.config = new AWS.Config({
-      region: "us-east-1",
-      accessKeyId: "AKIAJX7UB3Q56ZXUKHRQ",
-      secretAccessKey: "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",
-    });
-    this.userPool = new AmazonCognitoIdentity.CognitoUserPool({
-      UserPoolId: "us-east-1_PQ6pkrE6F",
-      ClientId: "674mh87fc0bg8m588r8sslf87q",
-    });
+    AWS.config = new AWS.Config(AWSValues.config);
+    this.userPool = new AmazonCognitoIdentity.CognitoUserPool(AWSValues.cognito.sandbox);
   }
 
   createAccount(firstName, lastName, email, password) {
@@ -44,6 +39,24 @@ class CognitoService {
         resolve(cognitoResult);
       });
     });
+  }
+
+  adminConfirmAccount(email) {
+    const cognitoServiceProvider = new AWS.CognitoIdentityServiceProvider();
+
+    const confirmParams = {
+      UserPoolId: AWSValues.cognito.sandbox.UserPoolId,
+      Username: email,
+    };
+
+    return new Promise((resolve, reject) => {
+      cognitoServiceProvider.adminConfirmSignUp(confirmParams, (error, cognitoResult) => {
+        if (error) {
+          reject(error);
+        } 
+        resolve(cognitoResult);
+      });
+    }); 
   }
 
   loginAccount(email, password) {
