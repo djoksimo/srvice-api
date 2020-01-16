@@ -69,15 +69,7 @@ class OfferingManagerTest {
       });
 
       it("Should fail creating the offering without serviceId and return an error", async () => {
-        TestUtils.disableLogs("log");
-
-        // TODO: make this test independent of this.serviceManager.createService(HealthyService);
-        // by replacing with mock generation tool
-        const serviceRes = await this.serviceManager.createService(HealthyService);
-        
-        // attach serviceId to offering
-        const offeringBody = HealthyOffering;
-        offeringBody.serviceId = serviceRes.json.serviceId;     
+        TestUtils.disableLogs("log");  
 
         const badOfferingBody = HealthyOffering;
         const res = await this.offeringManager.createOffering(badOfferingBody, MockAgentCredentials);
