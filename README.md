@@ -3,9 +3,10 @@ The Srvice Node/Express.js Back-End API
 
 ## [Engineering Docs](https://srivce.slite.com/)
 
+**NOTE: the Srvice API is only stable for node versions 12.x**
 ## Getting Started:
 
-1. Make sure you have Node.JS v8 installed
+1. Make sure you have Node.JS v12+ installed
 2. ```npm install``` in api folder
 3. ```npm start```
 
