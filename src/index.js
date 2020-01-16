@@ -6,6 +6,9 @@ const pino = require("express-pino-logger")();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const compression = require("compression");
+const helmet = require("helmet");
+
 require("dotenv").config();
 
 const {
@@ -49,6 +52,9 @@ switch (env) {
 }
 
 const app = express();
+
+app.use(helmet());
+app.use(compression()); 
 
 const allowedOrigins = ["http://localhost:4200", "http://192.168.0.116:4200", "https://srvice.ca"];
 
