@@ -14,7 +14,7 @@
     "lint": "npx eslint src/* --color --quiet",
     "postlint": "echo no lint errors! 🎉",
     "gen": "node src/mock/CLIGen.js",
-    "postgen": "Srvice Mockgen tool ran successfully 🎉",
+    "postgen": "Srvice Mockgen tool ran successfully 🎉"
   },
   "nyc": {
     "all": true,
