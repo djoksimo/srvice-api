@@ -1,6 +1,8 @@
 # Srvice RESTful API
 The Srvice Node/Express.js Back-End API
 
+## [Engineering Docs](https://srivce.slite.com/)
+
 ## Getting Started:
 
 1. Make sure you have Node.JS v8 installed
@@ -9,7 +11,7 @@ The Srvice Node/Express.js Back-End API
 
 ## Testing:
 
-* ```npm install --save-dev mocha chai```
+* ```npm test```
 
 1. [Getting Started](https://github.com/srvice/srvice-api/wiki/Getting-Started)
 2. [File/Folder Structure](https://github.com/srvice/srvice-api/wiki/File-&-Folder-Structure-Explanation)
