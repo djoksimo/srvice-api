@@ -6,11 +6,15 @@
   "main": "src/index.js",
   "scripts": {
     "test": "nyc --reporter=text-summary mocha src/test/index.js --timeout 10000 --exit",
+    "posttest": "Srvice API passed all tests 🎉",
     "coverage": "nyc --reporter=lcov mocha src/test/index.js --timeout 10000 --exit",
     "build": "pm2 start src/index.js",
+    "postbuild": "Ran Srvice API with PM2 successfully",
     "start": "nodemon",
     "lint": "npx eslint src/* --color --quiet",
-    "gen": "node src/mock/CLIGen.js"
+    "postlint": "echo no lint errors! 🎉",
+    "gen": "node src/mock/CLIGen.js",
+    "postgen": "Srvice Mockgen tool ran successfully 🎉",
   },
   "nyc": {
     "all": true,
