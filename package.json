@@ -6,11 +6,15 @@
   "main": "src/index.js",
   "scripts": {
     "test": "nyc --reporter=text-summary mocha src/test/index.js --timeout 10000 --exit",
+    "posttest": "echo Srvice API passed all tests 🎉",
     "coverage": "nyc --reporter=lcov mocha src/test/index.js --timeout 10000 --exit",
-    "build": "webpack",
+    "build": "pm2 start src/index.js",
+    "postbuild": "echo Ran Srvice API with PM2 successfully",
     "start": "nodemon",
     "lint": "npx eslint src/* --color --quiet",
-    "gen": "node src/mock/CLIGen.js"
+    "postlint": "echo No lint errors! 🎉",
+    "gen": "node src/mock/CLIGen.js",
+    "postgen": "echo Srvice Mockgen tool ran successfully 🎉"
   },
   "nyc": {
     "all": true,
@@ -64,8 +68,7 @@
     "inquirer": "^7.0.1",
     "json-loader": "^0.5.7",
     "nyc": "^14.1.1",
-    "supertest": "^4.0.2",
-    "webpack": "^2.7.0",
-    "webpack-cli": "^3.3.10"
+    "pm2": "^4.2.1",
+    "supertest": "^4.0.2"
   }
 }
