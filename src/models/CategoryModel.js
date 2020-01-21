@@ -6,6 +6,7 @@ const { ObjectId } = Schema.Types;
 const categorySchema = Schema(
   {
     _id: { type: ObjectId, auto: true, required: true },
+    placeholderInputServiceTitle: { type: "String", required: true },
     name: { type: "String", required: true },
     iconUrl: { type: "String", required: true },
   },

@@ -6,18 +6,16 @@ class AgentService {
   }
 
   getAgentByEmail(email) {
-    return AgentModel.findOne({ email })
-      .populate([
-        {
-          path: "services",
-          populate: [
-            { path: "category", select: "_id name iconUrl" },
-            {
-              path: "serviceRatings",
-              populate: { path: "user" },
-              options: {
-                sort: { date: -1 },
-              },
+    return AgentModel.findOne({ email }).populate([
+      {
+        path: "services",
+        populate: [
+          { path: "category", select: "_id placeholderInputServiceTitle name iconUrl" },
+          {
+            path: "serviceRatings",
+            populate: { path: "user" },
+            options: {
+              sort: { date: -1 },
             },
             { path: "offerings" },
           ],
@@ -34,18 +32,16 @@ class AgentService {
   }
 
   getAgentById(id) {
-    return AgentModel.findById(id)
-      .populate([
-        {
-          path: "services",
-          populate: [
-            { path: "category", select: "_id name iconUrl" },
-            {
-              path: "serviceRatings",
-              populate: { path: "user" },
-              options: {
-                sort: { date: -1 },
-              },
+    return AgentModel.findById(id).populate([
+      {
+        path: "services",
+        populate: [
+          { path: "category", select: "_id placeholderInputServiceTitle name iconUrl" },
+          {
+            path: "serviceRatings",
+            populate: { path: "user" },
+            options: {
+              sort: { date: -1 },
             },
             { path: "offerings" },
           ],
