@@ -6,7 +6,7 @@ class CategoryManager {
   }
 
   async createCategory({ name, iconUrl }) {
-    const newCategory = new CategoryModel({ name, iconUrl });
+    const newCategory = new CategoryModel({ placeholderInputServiceTitle, name, iconUrl });
     try {
       const result = await this.categoryService.createCategory(newCategory);
       return { status: 201, json: result };
@@ -46,6 +46,16 @@ class CategoryManager {
       );
       const categoryDocuments = await Promise.all(categoryDocumentsPromise);
       return { status: 200, json: categoryDocuments };
+    } catch (error) {
+      return { status: 500, json: error };
+    }
+  }
+
+  async patchCategory({ id, placeholderInputServiceTitle, name, iconUrl }) {
+    const newCategory = new CategoryModel({ id, placeholderInputServiceTitle, name, iconUrl });
+    try {
+      const result = await this.categoryService.update(newCategory);
+      return { status: 200, json: result };
     } catch (error) {
       return { status: 500, json: error };
     }

@@ -27,4 +27,8 @@ router.delete("/category", async (req, res) => {
   HttpUtils.sendResponse(res, await categoryManager.deleteCategory(req.body));
 });
 
-module.exports = router;
+router.patch("/category", (req, res) => isAuthenticated(req, res, async () => {
+  HttpUtils.sendResponse(res, await categoryManager.patchCategory(req.body));
+}));
+
+module.exports = router; 
