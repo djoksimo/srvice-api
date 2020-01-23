@@ -51,10 +51,9 @@ class CategoryManager {
     }
   }
 
-  async patchCategory({ id, placeholderInputServiceTitle, name, iconUrl }) {
-    const newCategory = new CategoryModel({ id, placeholderInputServiceTitle, name, iconUrl });
+  async patchCategory({ category }) {
     try {
-      const result = await this.categoryService.update(newCategory);
+      const result = await this.categoryService.updateCategory(category);
       return { status: 200, json: result };
     } catch (error) {
       return { status: 500, json: error };
