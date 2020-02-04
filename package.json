@@ -14,7 +14,8 @@
     "lint": "npx eslint src/* --color --quiet",
     "postlint": "echo No lint errors! 🎉",
     "gen": "node src/mock/CLIGen.js",
-    "postgen": "echo Srvice Mockgen tool ran successfully 🎉"
+    "postgen": "echo Srvice Mockgen tool ran successfully 🎉",
+    "prettier": "prettier --check \"./src/**/{*.js,*.json}\""
   },
   "nyc": {
     "all": true,
@@ -71,6 +72,15 @@
     "json-loader": "^0.5.7",
     "nyc": "^14.1.1",
     "pm2": "^4.2.1",
+    "prettier": "1.19.1",
     "supertest": "^4.0.2"
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "singleQuote": false,
+    "bracketSpacing": true,
+    "trailingComma": "all",
+    "printWidth": 120,
+    "jsxBracketSameLine": false
   }
 }
