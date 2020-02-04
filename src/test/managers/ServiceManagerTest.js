@@ -29,15 +29,15 @@ class ServiceManagerTest {
 
   testCreateService() {
     describe("#ServiceManager.createService()", () => {
-      beforeEach(done => {
-        ServiceModel.deleteMany({}, err => {
+      beforeEach((done) => {
+        ServiceModel.deleteMany({}, (err) => {
           assert.ifError(err);
           done();
         });
       });
 
-      afterEach(done => {
-        ServiceModel.deleteMany({}, err => {
+      afterEach((done) => {
+        ServiceModel.deleteMany({}, (err) => {
           assert.ifError(err);
           done();
         });
@@ -61,8 +61,8 @@ class ServiceManagerTest {
 
   testGetServiceById() {
     describe("#ServiceManager.getServiceById()", () => {
-      beforeEach(done => {
-        ServiceModel.deleteMany({}, err => {
+      beforeEach((done) => {
+        ServiceModel.deleteMany({}, (err) => {
           assert.ifError(err);
           done();
         });
@@ -78,7 +78,7 @@ class ServiceManagerTest {
           res.json.serviceId.toString(),
           "Fail: Returned incorrect service",
         );
-        Object.keys(HealthyService).forEach(x => {
+        Object.keys(HealthyService).forEach((x) => {
           if (x in resGetService.json) {
             assert.strictEqual(
               JSON.stringify(resGetService.json[x]),
@@ -112,8 +112,8 @@ class ServiceManagerTest {
 
   testGetNearbyServicesByCategoryId() {
     describe("#ServiceManager.getNearbyServicesByCategoryId()", () => {
-      beforeEach(done => {
-        ServiceModel.deleteMany({}, err => {
+      beforeEach((done) => {
+        ServiceModel.deleteMany({}, (err) => {
           assert.ifError(err);
           done();
         });

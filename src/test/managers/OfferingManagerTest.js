@@ -31,22 +31,22 @@ class OfferingManagerTest {
 
   testCreateOffering() {
     describe("#OfferingManager.createOffering()", () => {
-      beforeEach(done => {
-        ServiceModel.deleteMany({}, serviceError => {
+      beforeEach((done) => {
+        ServiceModel.deleteMany({}, (serviceError) => {
           assert.ifError(serviceError);
 
-          OfferingModel.deleteMany({}, offeringError => {
+          OfferingModel.deleteMany({}, (offeringError) => {
             assert.ifError(offeringError);
             done();
           });
         });
       });
 
-      afterEach(done => {
-        ServiceModel.deleteMany({}, serviceError => {
+      afterEach((done) => {
+        ServiceModel.deleteMany({}, (serviceError) => {
           assert.ifError(serviceError);
 
-          OfferingModel.deleteMany({}, offeringError => {
+          OfferingModel.deleteMany({}, (offeringError) => {
             assert.ifError(offeringError);
             done();
           });
@@ -78,6 +78,7 @@ class OfferingManagerTest {
         assert.strictEqual(
           res.json.message,
           "Could not find service",
+          // eslint-disable-next-line quotes
           'Fail: should return "Could not find service" issue',
         );
       });
@@ -103,23 +104,23 @@ class OfferingManagerTest {
 
   testPatchOffering() {
     describe("#OfferingManager.patchOffering()", () => {
-      beforeEach(done => {
-        ServiceModel.deleteMany({}, err => {
+      beforeEach((done) => {
+        ServiceModel.deleteMany({}, (err) => {
           assert.ifError(err);
         });
 
-        OfferingModel.deleteMany({}, err => {
+        OfferingModel.deleteMany({}, (err) => {
           assert.ifError(err);
           done();
         });
       });
 
-      afterEach(done => {
-        ServiceModel.deleteMany({}, err => {
+      afterEach((done) => {
+        ServiceModel.deleteMany({}, (err) => {
           assert.ifError(err);
         });
 
-        OfferingModel.deleteMany({}, err => {
+        OfferingModel.deleteMany({}, (err) => {
           assert.ifError(err);
           done();
         });
@@ -159,23 +160,23 @@ class OfferingManagerTest {
 
   testDeleteOffering() {
     describe("#OfferingManager.deleteOffering()", () => {
-      beforeEach(done => {
-        ServiceModel.deleteMany({}, err => {
+      beforeEach((done) => {
+        ServiceModel.deleteMany({}, (err) => {
           assert.ifError(err);
         });
 
-        OfferingModel.deleteMany({}, err => {
+        OfferingModel.deleteMany({}, (err) => {
           assert.ifError(err);
           done();
         });
       });
 
-      afterEach(done => {
-        ServiceModel.deleteMany({}, err => {
+      afterEach((done) => {
+        ServiceModel.deleteMany({}, (err) => {
           assert.ifError(err);
         });
 
-        OfferingModel.deleteMany({}, err => {
+        OfferingModel.deleteMany({}, (err) => {
           assert.ifError(err);
           done();
         });

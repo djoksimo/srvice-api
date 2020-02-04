@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-operators */
 class CalculationUtils {
   static calculateCrowDistance(lat1, lon1, lat2, lon2) {
     const R = 6371;
@@ -19,7 +20,7 @@ class CalculationUtils {
   static average(numbers, numDecimalPlaces) {
     if (numbers.length !== 0) {
       let sum = 0;
-      numbers.forEach(num => (sum += num));
+      numbers.forEach((num) => (sum += num));
       const average = sum / numbers.length;
       return Math.round(average * 10 ** numDecimalPlaces) / 10 ** numDecimalPlaces;
     }

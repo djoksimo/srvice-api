@@ -9,7 +9,7 @@ class FileManager {
         publicPictureUrls: [],
       };
       resp.publicPictureUrls = await Promise.all(
-        files.map(async file => this.fileService.getPublicUrlFromUpload(file)),
+        files.map(async (file) => this.fileService.getPublicUrlFromUpload(file)),
       );
       return { status: 200, json: resp };
     } catch (error) {

@@ -24,8 +24,8 @@ class ServiceServiceTest {
 
   testSaveService() {
     describe("#ServiceService.saveService()", () => {
-      beforeEach(done => {
-        ServiceModel.deleteMany({}, err => {
+      beforeEach((done) => {
+        ServiceModel.deleteMany({}, (err) => {
           assert.ifError(err);
           done();
         });
@@ -50,8 +50,8 @@ class ServiceServiceTest {
 
   testFindServicesByCategoryId() {
     describe("#ServiceService.findServicesByCategoryId()", () => {
-      beforeEach(done => {
-        ServiceModel.deleteMany({}, err => {
+      beforeEach((done) => {
+        ServiceModel.deleteMany({}, (err) => {
           assert.ifError(err);
           done();
         });
@@ -78,8 +78,8 @@ class ServiceServiceTest {
 
   testFindServiceById() {
     describe("#ServiceService.findServiceById()", () => {
-      beforeEach(done => {
-        ServiceModel.deleteMany({}, err => {
+      beforeEach((done) => {
+        ServiceModel.deleteMany({}, (err) => {
           assert.ifError(err);
           done();
         });
@@ -105,8 +105,8 @@ class ServiceServiceTest {
 
   testFindSemiPopulatedAgentServiceById() {
     describe("#ServiceService.findSemiPopulatedAgentServiceById()", () => {
-      beforeEach(done => {
-        ServiceModel.deleteMany({}, err => {
+      beforeEach((done) => {
+        ServiceModel.deleteMany({}, (err) => {
           assert.ifError(err);
           done();
         });

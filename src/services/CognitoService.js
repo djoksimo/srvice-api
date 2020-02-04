@@ -65,10 +65,10 @@ class CognitoService {
     const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
     return new Promise((resolve, reject) => {
       cognitoUser.authenticateUser(authenticationDetails, {
-        onSuccess: result => {
+        onSuccess: (result) => {
           resolve(result);
         },
-        onFailure: error => {
+        onFailure: (error) => {
           reject(error);
         },
       });

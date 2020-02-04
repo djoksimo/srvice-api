@@ -9,7 +9,7 @@ class JwtService {
   }
 
   createTokenFromEmail(email) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       jwt.sign({ email }, JwtService.SECRET_JWT_KEY, (error, token) => {
         resolve(token);
       });

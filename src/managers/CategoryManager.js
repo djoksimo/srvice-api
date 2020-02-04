@@ -42,7 +42,7 @@ class CategoryManager {
     ];
     try {
       const categoryDocumentsPromise = categoryIds.map(
-        async id => await this.categoryService.getCategoryByIdWithoutServices(id),
+        async (id) => await this.categoryService.getCategoryByIdWithoutServices(id),
       );
       const categoryDocuments = await Promise.all(categoryDocumentsPromise);
       return { status: 200, json: categoryDocuments };

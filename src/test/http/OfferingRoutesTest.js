@@ -25,19 +25,19 @@ class OfferingRoutesTest {
   }
 
   testPostOffering() {
-    before(done => {
-      ServiceModel.deleteMany({}, err => {
+    before((done) => {
+      ServiceModel.deleteMany({}, (err) => {
         assert.ifError(err);
       });
 
-      OfferingModel.deleteMany({}, err => {
+      OfferingModel.deleteMany({}, (err) => {
         assert.ifError(err);
         done();
       });
     });
 
     describe("/POST offering", () => {
-      it("it should POST an offering successfully", done => {
+      it("it should POST an offering successfully", (done) => {
         const host = "http://localhost:5000";
 
         // generate service and attach service ID
@@ -65,19 +65,19 @@ class OfferingRoutesTest {
   }
 
   testPatchOffering() {
-    before(done => {
-      ServiceModel.deleteMany({}, err => {
+    before((done) => {
+      ServiceModel.deleteMany({}, (err) => {
         assert.ifError(err);
       });
 
-      OfferingModel.deleteMany({}, err => {
+      OfferingModel.deleteMany({}, (err) => {
         assert.ifError(err);
         done();
       });
     });
 
     describe("/PATCH offering", () => {
-      it("it should PATCH an offering successfully", done => {
+      it("it should PATCH an offering successfully", (done) => {
         const host = "http://localhost:5000";
 
         // generate service and attach service ID
