@@ -15,7 +15,7 @@ class RequestManager {
     try {
       const requestId = Mongoose.Types.ObjectId();
       const bookings = await Promise.all(
-        serviceIds.map(async service => {
+        serviceIds.map(async (service) => {
           const serviceDocument = await this.serviceService.findSemiPopulatedAgentServiceById(service);
           const { agent } = serviceDocument;
           const newBooking = new BookingModel({

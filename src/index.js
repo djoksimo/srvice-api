@@ -39,7 +39,7 @@ switch (env) {
         useNewUrlParser: true,
         useFindAndModify: false,
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
     break;
   case Environment.PRODUCTION:
     Warning.print().currentDB();
@@ -48,7 +48,7 @@ switch (env) {
         useNewUrlParser: true,
         useFindAndModify: false,
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
     break;
   case Environment.TEST:
     Warning.print().currentDB();
@@ -57,7 +57,7 @@ switch (env) {
         "mongodb+srv://danilo-admin:Password123@srvice-cluster-xxb6t.mongodb.net/test?retryWrites=true&w=majority",
         { useNewUrlParser: true, useFindAndModify: false },
       )
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
     break;
   default:
     Warning.print().unspecifiedDB();

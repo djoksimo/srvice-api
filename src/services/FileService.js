@@ -30,7 +30,7 @@ class FileService {
         stream.on("finish", () => {
           resolve(GoogleUtils.getPublicUrl(`${GoogleValues.BUCKET_NAME}/${fileName}`));
         });
-        stream.on("error", err => {
+        stream.on("error", (err) => {
           reject(err);
         });
         stream.end(file.buffer);

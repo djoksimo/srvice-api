@@ -75,7 +75,7 @@ class ServiceManager {
       this.categoryToServiceMap[categoryId] = { services: serviceDocuments, updatedAt: Date.now() };
     }
     const parsedServices = JSON.parse(JSON.stringify(this.categoryToServiceMap[categoryId].services));
-    const isValidService = service => {
+    const isValidService = (service) => {
       const { remoteCall, inCall, outCall, latitude, longitude, radius } = service;
       const distance = CalculationUtils.calculateCrowDistance(lat, lng, latitude, longitude);
       let possible = false;

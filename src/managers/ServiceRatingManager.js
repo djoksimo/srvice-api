@@ -34,7 +34,7 @@ class ServiceRatingManager {
       const serviceDocument = await this.serviceService.findServiceById(service);
 
       const { serviceRatings } = serviceDocument;
-      const overallRatings = serviceRatings.map(rating => rating.overallRating);
+      const overallRatings = serviceRatings.map((rating) => rating.overallRating);
       serviceDocument.averageServiceRating = CalculationUtils.average(overallRatings, 0);
 
       await this.serviceService.updateService(serviceDocument, agentId);

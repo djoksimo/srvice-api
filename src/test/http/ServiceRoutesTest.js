@@ -26,14 +26,14 @@ class ServiceRoutesTest {
 
   testPostService() {
     describe("POST /service", () => {
-      beforeEach(done => {
-        ServiceModel.deleteMany({}, err => {
+      beforeEach((done) => {
+        ServiceModel.deleteMany({}, (err) => {
           assert.ifError(err);
           done();
         });
       });
 
-      it("it should POST a service successfully", done => {
+      it("it should POST a service successfully", (done) => {
         const host = "http://localhost:5000";
 
         MockGen.getChaiRequest("/service", HTTPVerbs.POST, host, MockAgentCredentials, HealthyService).end(
@@ -50,20 +50,20 @@ class ServiceRoutesTest {
 
   testGetService() {
     describe("GET /service:id", () => {
-      before(done => {
-        ServiceModel.deleteMany({}, err => {
+      before((done) => {
+        ServiceModel.deleteMany({}, (err) => {
           assert.ifError(err);
           done();
         });
       });
 
-      it("it should GET a service by the given id successfully", done => {
+      it("it should GET a service by the given id successfully", (done) => {
         const mockService = new ServiceModel(HealthyService);
         mockService.save((err, service) => {
           assert.ifError(err);
           MockGen.getChaiRequest(`/service/${service.id}`, HTTPVerbs.GET).end((getServiceError, getServiceResult) => {
             assert.ifError(getServiceError);
-            Object.keys(HealthyService).forEach(x => {
+            Object.keys(HealthyService).forEach((x) => {
               if (x in getServiceResult.body) {
                 assert.strictEqual(
                   JSON.stringify(getServiceResult.body[x]),
@@ -83,14 +83,14 @@ class ServiceRoutesTest {
 
   testGetNearbyServices() {
     describe("GET /service/nearby?", () => {
-      before(done => {
-        ServiceModel.deleteMany({}, err => {
+      before((done) => {
+        ServiceModel.deleteMany({}, (err) => {
           assert.ifError(err);
           done();
         });
       });
 
-      it("it should GET all nearby services successfully", done => {
+      it("it should GET all nearby services successfully", (done) => {
         const mockService = new ServiceModel(HealthyService);
         const nearbyStr = `nearby?categoryId=${mockService.category}&lat=${mockService.latitude}&lng=${mockService.longitude}`;
         mockService.save((err, service) => {

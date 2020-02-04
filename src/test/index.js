@@ -27,7 +27,7 @@ const tests = [
   new AuthenticationRoutesTest(),
 ];
 
-tests.forEach(async test => {
+tests.forEach(async (test) => {
   try {
     await test.start();
   } catch (error) {

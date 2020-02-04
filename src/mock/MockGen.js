@@ -89,7 +89,7 @@ class MockGen {
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < callCount; i++) {
       // eslint-disable-next-line no-loop-func
-      const endRequestPromise = new Promise(resolve => {
+      const endRequestPromise = new Promise((resolve) => {
         MockGen.getChaiRequest(endpoint, HTTPVerbs.POST, host, MockAgentCredentials, payload).end((httpErr, res) => {
           if (httpErr) {
             console.log(httpErr);
