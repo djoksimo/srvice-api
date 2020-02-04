@@ -1,7 +1,6 @@
 const { ServiceModel } = require("../models");
 
 class ServiceService {
-
   static isOwner(serviceId, agentId) {
     return new Promise((resolve, reject) => {
       ServiceModel.findById(serviceId, (err, service) => {
@@ -16,7 +15,7 @@ class ServiceService {
         if (agentId !== agent.toString()) {
           return resolve(false);
         }
-        return resolve(true); 
+        return resolve(true);
       });
     });
   }
@@ -31,21 +30,13 @@ class ServiceService {
     this.agentPath = {
       path: "agent",
       populate: [
-        {  
+        {
           path: "schedule",
-          populate: [
-            { path: "offering" },
-            { path: "user" },
-          ],
+          populate: [{ path: "offering" }, { path: "user" }],
         },
       ],
     };
-    this.servicePopulate = [
-      this.agentPath,
-      this.categoryPath,
-      this.ratingsPath,
-      this.offeringsPath,
-    ];
+    this.servicePopulate = [this.agentPath, this.categoryPath, this.ratingsPath, this.offeringsPath];
   }
 
   saveService(newService) {
@@ -53,15 +44,22 @@ class ServiceService {
   }
 
   findServicesByCategoryId(category) {
-    return ServiceModel.find({ category }).populate(this.servicePopulate).limit(500).exec();
+    return ServiceModel.find({ category })
+      .populate(this.servicePopulate)
+      .limit(500)
+      .exec();
   }
 
   findSemiPopulatedAgentServiceById(id) {
-    return ServiceModel.findById(id).populate("agent").exec();
+    return ServiceModel.findById(id)
+      .populate("agent")
+      .exec();
   }
 
   findServiceById(id) {
-    return ServiceModel.findById(id).populate("serviceRatings").exec();
+    return ServiceModel.findById(id)
+      .populate("serviceRatings")
+      .exec();
   }
 
   async updateService(service, agentId) {
@@ -73,7 +71,7 @@ class ServiceService {
   }
 
   async removeService(serviceId, agentId) {
-    const isOwner = await ServiceService.isOwner(serviceId, agentId); 
+    const isOwner = await ServiceService.isOwner(serviceId, agentId);
     if (!isOwner) {
       throw new Error("NICE TRY");
     }

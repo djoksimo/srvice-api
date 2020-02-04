@@ -24,8 +24,8 @@ class ServiceServiceTest {
 
   testSaveService() {
     describe("#ServiceService.saveService()", () => {
-      beforeEach((done) => {
-        ServiceModel.deleteMany({}, (err) => {
+      beforeEach(done => {
+        ServiceModel.deleteMany({}, err => {
           assert.ifError(err);
           done();
         });
@@ -34,11 +34,11 @@ class ServiceServiceTest {
       it("Should save service correctly", async () => {
         const mockService = new ServiceModel(HealthyService);
         const res = await this.serviceService.saveService(mockService);
-        assert.ok(res);  
+        assert.ok(res);
       });
-      
+
       it("Should fail saving the service", async () => {
-        try { 
+        try {
           const badMockService = new ServiceModel({});
           await this.serviceService.saveService(badMockService);
         } catch (err) {
@@ -50,8 +50,8 @@ class ServiceServiceTest {
 
   testFindServicesByCategoryId() {
     describe("#ServiceService.findServicesByCategoryId()", () => {
-      beforeEach((done) => {
-        ServiceModel.deleteMany({}, (err) => {
+      beforeEach(done => {
+        ServiceModel.deleteMany({}, err => {
           assert.ifError(err);
           done();
         });
@@ -62,7 +62,11 @@ class ServiceServiceTest {
         await this.serviceService.saveService(mockService);
         const res = await this.serviceService.findServicesByCategoryId(mockService.category);
         assert.ok(res.length !== 0, "Fail: Should not return an empty list");
-        assert.strictEqual(res[0].category._id.toString(), mockService.category.toString(), "Fail: Should return services of the inputted category id");
+        assert.strictEqual(
+          res[0].category._id.toString(),
+          mockService.category.toString(),
+          "Fail: Should return services of the inputted category id",
+        );
       });
 
       it("Should return no services for unknown category id", async () => {
@@ -73,21 +77,21 @@ class ServiceServiceTest {
   }
 
   testFindServiceById() {
-    describe("#ServiceService.findServiceById()", () => {  
-      beforeEach((done) => {
-        ServiceModel.deleteMany({}, (err) => {
+    describe("#ServiceService.findServiceById()", () => {
+      beforeEach(done => {
+        ServiceModel.deleteMany({}, err => {
           assert.ifError(err);
           done();
         });
       });
 
-      it("Should return a non-populated service by its id", async () => { 
+      it("Should return a non-populated service by its id", async () => {
         const mockService = new ServiceModel(HealthyService);
         const saveServiceRes = await this.serviceService.saveService(mockService);
         const findServiceRes = await this.serviceService.findServiceById(saveServiceRes.id);
         assert.strictEqual(
-          findServiceRes._id.toString(), 
-          saveServiceRes.id.toString(), 
+          findServiceRes._id.toString(),
+          saveServiceRes.id.toString(),
           "Fail: Should return a service by the inputted service id",
         );
       });
@@ -101,18 +105,22 @@ class ServiceServiceTest {
 
   testFindSemiPopulatedAgentServiceById() {
     describe("#ServiceService.findSemiPopulatedAgentServiceById()", () => {
-      beforeEach((done) => {
-        ServiceModel.deleteMany({}, (err) => {
+      beforeEach(done => {
+        ServiceModel.deleteMany({}, err => {
           assert.ifError(err);
           done();
         });
       });
 
-      it("Should return a semi-populated service by its id", async () => { 
+      it("Should return a semi-populated service by its id", async () => {
         const mockService = new ServiceModel(HealthyService);
         const saveServiceRes = await this.serviceService.saveService(mockService);
         const findServiceRes = await this.serviceService.findSemiPopulatedAgentServiceById(saveServiceRes.id);
-        assert.strictEqual(findServiceRes._id.toString(), saveServiceRes.id.toString(), "Fail: Should return a service by the inputted service id");
+        assert.strictEqual(
+          findServiceRes._id.toString(),
+          saveServiceRes.id.toString(),
+          "Fail: Should return a service by the inputted service id",
+        );
       });
     });
   }

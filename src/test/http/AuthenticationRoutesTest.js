@@ -20,7 +20,7 @@ class AuthenticationRoutesTest {
 
   testAdminConfirmAccount() {
     describe("/POST auth/admin/confirm", () => {
-      it("should fail to confirm an account due to invalid authentication", (done) => {
+      it("should fail to confirm an account due to invalid authentication", done => {
         const host = "http://localhost:5000";
 
         const body = {

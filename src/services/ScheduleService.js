@@ -33,14 +33,17 @@ class ScheduleService {
   }
 
   addBookingAndSort(scheduleId, booking) {
-    return ScheduleModel.updateOne({ _id: scheduleId }, {
-      $push: {
-        bookings: {
-          $each: [booking],
-          $sort: { end: 1 },
+    return ScheduleModel.updateOne(
+      { _id: scheduleId },
+      {
+        $push: {
+          bookings: {
+            $each: [booking],
+            $sort: { end: 1 },
+          },
         },
       },
-    }).exec();
+    ).exec();
   }
 }
 

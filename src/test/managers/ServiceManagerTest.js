@@ -29,15 +29,15 @@ class ServiceManagerTest {
 
   testCreateService() {
     describe("#ServiceManager.createService()", () => {
-      beforeEach((done) => {
-        ServiceModel.deleteMany({}, (err) => {
+      beforeEach(done => {
+        ServiceModel.deleteMany({}, err => {
           assert.ifError(err);
           done();
         });
       });
 
-      afterEach((done) => {
-        ServiceModel.deleteMany({}, (err) => {
+      afterEach(done => {
+        ServiceModel.deleteMany({}, err => {
           assert.ifError(err);
           done();
         });
@@ -52,17 +52,17 @@ class ServiceManagerTest {
       it("Should fail creating the service and return error", async () => {
         const badMockService = { title: 3 };
         const res = await this.serviceManager.createService(badMockService);
-        
+
         assert.strictEqual(res.status, 500, "Fail: Status code should be 500");
         assert.strictEqual(res.json.name, "ValidationError", "Fail: Json should return ValidationError");
-      });    
+      });
     });
-  } 
+  }
 
   testGetServiceById() {
     describe("#ServiceManager.getServiceById()", () => {
-      beforeEach((done) => {
-        ServiceModel.deleteMany({}, (err) => {
+      beforeEach(done => {
+        ServiceModel.deleteMany({}, err => {
           assert.ifError(err);
           done();
         });
@@ -73,10 +73,18 @@ class ServiceManagerTest {
         const resGetService = await this.serviceManager.getServiceById({ id: res.json.serviceId });
 
         assert.strictEqual(resGetService.status, 200, "Fail: Status should be 200");
-        assert.strictEqual(resGetService.json._id.toString(), res.json.serviceId.toString(), "Fail: Returned incorrect service");
-        Object.keys(HealthyService).forEach((x) => {
+        assert.strictEqual(
+          resGetService.json._id.toString(),
+          res.json.serviceId.toString(),
+          "Fail: Returned incorrect service",
+        );
+        Object.keys(HealthyService).forEach(x => {
           if (x in resGetService.json) {
-            assert.strictEqual(JSON.stringify(resGetService.json[x]), JSON.stringify(HealthyService[x]), "Fail: Returned wrong value for " + x);
+            assert.strictEqual(
+              JSON.stringify(resGetService.json[x]),
+              JSON.stringify(HealthyService[x]),
+              "Fail: Returned wrong value for " + x,
+            );
           } else {
             assert.ok(false, "Fail: " + x + " should be in the body");
           }
@@ -99,13 +107,13 @@ class ServiceManagerTest {
         const err = resGetServiceError.json;
         assert.ok(err instanceof Error, "Fail: Should return an error");
       });
-    });   
+    });
   }
 
   testGetNearbyServicesByCategoryId() {
     describe("#ServiceManager.getNearbyServicesByCategoryId()", () => {
-      beforeEach((done) => {
-        ServiceModel.deleteMany({}, (err) => {
+      beforeEach(done => {
+        ServiceModel.deleteMany({}, err => {
           assert.ifError(err);
           done();
         });
@@ -116,17 +124,25 @@ class ServiceManagerTest {
         const serviceTwo = HealthyService;
         serviceTwo.averageServiceRating = 5;
         const resTwo = await this.serviceManager.createService(serviceTwo);
-        
+
         const { category, latitude, longitude } = HealthyService;
-        const resGetNearby = await this.serviceManager.getNearbyServicesByCategoryId({ 
-          categoryId: category, 
-          lat: latitude, 
+        const resGetNearby = await this.serviceManager.getNearbyServicesByCategoryId({
+          categoryId: category,
+          lat: latitude,
           long: longitude,
         });
-        
+
         assert.strictEqual(resGetNearby.status, 200, "Fail: Status should be 200");
-        assert.strictEqual(resGetNearby.json.services[0]._id.toString(), resTwo.json.serviceId.toString(), "Fail: Highest service rating should be at the start of the list");
-        assert.strictEqual(resGetNearby.json.services[1]._id.toString(), resOne.json.serviceId.toString(), "Fail: Lowest service rating should be at the bottom of the list");
+        assert.strictEqual(
+          resGetNearby.json.services[0]._id.toString(),
+          resTwo.json.serviceId.toString(),
+          "Fail: Highest service rating should be at the start of the list",
+        );
+        assert.strictEqual(
+          resGetNearby.json.services[1]._id.toString(),
+          resOne.json.serviceId.toString(),
+          "Fail: Lowest service rating should be at the bottom of the list",
+        );
       });
     });
   }
