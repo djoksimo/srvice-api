@@ -1,0 +1,11 @@
+
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "EditorConfig.editorconfig",
+    "prettier.prettier-vscode",
+    "eamodio.gitlens",
+    "eg2.vscode-npm-script",
+    "waderyan.nodejs-extension-pack"
+  ]
+}
