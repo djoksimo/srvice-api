@@ -1,5 +1,4 @@
 class UserManager {
-
   constructor(userService) {
     this.userService = userService;
   }

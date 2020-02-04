@@ -4,7 +4,6 @@ const { PusherValues } = require("../values");
 const { UuidUtils } = require("../utils");
 
 class ChatService {
-
   constructor() {
     // eslint-disable-next-line new-cap
     this.chatkit = new Chatkit.default({

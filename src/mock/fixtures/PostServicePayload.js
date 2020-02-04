@@ -2,7 +2,8 @@ module.exports = {
   agent: "5cdf5367cbc99526685bd64f",
   category: "5d116f5d4c533b38dab4e0f0",
   title: "Mock Service",
-  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
+  description:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
     " sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut " +
     "enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip" +
     " ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit" +

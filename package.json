@@ -15,7 +15,8 @@
     "postlint": "echo No lint errors! 🎉",
     "gen": "node src/mock/CLIGen.js",
     "postgen": "echo Srvice Mockgen tool ran successfully 🎉",
-    "prettier": "prettier --check \"./src/**/{*.js,*.json}\""
+    "prettier": "prettier --check \"./src/**/{*.js,*.json}\"",
+    "postprettier": "echo No formatting errors! 🎉"
   },
   "nyc": {
     "all": true,

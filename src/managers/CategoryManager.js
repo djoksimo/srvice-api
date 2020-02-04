@@ -1,7 +1,6 @@
 const { CategoryModel } = require("../models");
 
 class CategoryManager {
-
   constructor(CategoryService) {
     this.categoryService = CategoryService;
   }
@@ -42,8 +41,8 @@ class CategoryManager {
       "5d116f5d4c533b38dab4e0f0",
     ];
     try {
-      const categoryDocumentsPromise = categoryIds.map(async id =>
-        await this.categoryService.getCategoryByIdWithoutServices(id)
+      const categoryDocumentsPromise = categoryIds.map(
+        async id => await this.categoryService.getCategoryByIdWithoutServices(id),
       );
       const categoryDocuments = await Promise.all(categoryDocumentsPromise);
       return { status: 200, json: categoryDocuments };

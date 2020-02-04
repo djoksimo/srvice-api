@@ -7,36 +7,25 @@ AWS.config.update({
 });
 
 class SendManager {
-
   constructor(AuthenticationManager) {
     this._authenticationManager = AuthenticationManager;
   }
 
   async sendMail(data) {
-    const {
-      fromEmail,
-      toEmail,
-      name,
-      message,
-      email,
-      token
-    } = data;
-
+    const { fromEmail, toEmail, name, message, email, token } = data;
 
     const verificationBody = await this._authenticationManager.verifyToken(token);
     if (verificationBody.status === 403) {
       return {
         status: 403,
-        json: verificationBody
+        json: verificationBody,
       };
     }
 
     const ses = new AWS.SES({ apiVersion: "2012-10-17" });
     const params = {
       Destination: {
-        ToAddresses: [
-          toEmail,
-        ],
+        ToAddresses: [toEmail],
       },
       Message: {
         Body: {
