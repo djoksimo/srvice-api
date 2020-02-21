@@ -69,7 +69,7 @@ class ServiceService {
     if (!isOwner) {
       throw new Error("NICE TRY");
     }
-    return ServiceModel.updateOne({ _id: service._id }, { $set: service }).exec();
+    return ServiceModel.findByIdAndUpdate(service._id, service, { new: true }).exec();
   }
 
   async removeService(serviceId, agentId) {
