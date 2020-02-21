@@ -25,8 +25,8 @@ class CategoryService {
     return CategoryModel.findById(id).exec();
   }
 
-  async updateCategory(category) {
-    return CategoryModel.findByIdAndUpdate({ _id: category._id }, { $set: category }).exec();
+  async updateCategory(partialCategory) {
+    return CategoryModel.findByIdAndUpdate(partialCategory._id, { $set: partialCategory }).exec();
   }
 }
 
