@@ -51,7 +51,6 @@ class CategoryManager {
     }
   }
 
-
   async patchCategory(newPartialCategoryData) {
     try {
       const result = await this.categoryService.updateCategory(newPartialCategoryData);
