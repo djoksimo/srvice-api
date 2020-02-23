@@ -16,7 +16,9 @@
     "gen": "node src/mock/CLIGen.js",
     "postgen": "echo Srvice Mockgen tool ran successfully 🎉",
     "prettier": "prettier --check \"./src/**/{*.js,*.json}\"",
-    "postprettier": "echo No formatting errors! 🎉"
+    "postprettier": "echo No formatting errors! 🎉",
+    "check-prettier": "prettier ./src/**/*.js --config .prettierrc --check",
+    "autofix": "prettier ./src/**/*.js --config .prettierrc --write ; eslint src/**/*.js --color --quiet --fix"
   },
   "nyc": {
     "all": true,

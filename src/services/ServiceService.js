@@ -26,11 +26,11 @@ class ServiceService {
       path: "serviceRatings",
       populate: { path: "user" },
     };
-    this.offeringsPath = { 
+    this.offeringsPath = {
       path: "offerings",
       options: {
         sort: { updatedAt: -1, createdAt: -1 },
-      } 
+      },
     };
     this.agentPath = {
       path: "agent",
@@ -93,15 +93,16 @@ class ServiceService {
       throw new Error("NICE TRY ;)");
     }
     return ServiceModel.updateOne(
-      { _id: serviceId }, 
-      { 
-        $push: { 
-          offerings: { 
+      { _id: serviceId },
+      {
+        $push: {
+          offerings: {
             $each: [offeringId],
             $sort: { createdAt: -1, updatedAt: -1 },
           },
         },
-      }).exec();
+      },
+    ).exec();
   }
 
   async removeOfferingFromService(serviceId, offeringId, agentId) {
