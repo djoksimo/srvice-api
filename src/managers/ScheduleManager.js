@@ -14,6 +14,10 @@ class ScheduleManager {
     });
 
     try {
+      const agentDocument = await this.agentService.getNonPopulatedAgentById(agentId);
+      if (agentDocument && agentDocument.schedule) {
+        throw new Error("Agent already has schedule");
+      }
       const scheduleDocument = await this.scheduleService.saveSchedule(newSchedule);
       await this.agentService.addScheduleToAgent(agentId, scheduleDocument.toObject()._id);
       return { status: 201, json: {} };
