@@ -4,7 +4,6 @@ const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
 const { AWSValues } = require("../values");
 
 class CognitoService {
-
   constructor() {
     AWS.config = new AWS.Config(AWSValues.config);
     this.userPool = new AmazonCognitoIdentity.CognitoUserPool(AWSValues.cognito.sandbox);
@@ -53,10 +52,10 @@ class CognitoService {
       cognitoServiceProvider.adminConfirmSignUp(confirmParams, (error, cognitoResult) => {
         if (error) {
           reject(error);
-        } 
+        }
         resolve(cognitoResult);
       });
-    }); 
+    });
   }
 
   loginAccount(email, password) {

@@ -1,7 +1,6 @@
 const { ScheduleModel } = require("../models");
 
 class ScheduleManager {
-
   constructor(scheduleService, agentService) {
     this.scheduleService = scheduleService;
     this.agentService = agentService;

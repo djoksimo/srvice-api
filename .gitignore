@@ -63,7 +63,6 @@ typings/
 # other
 .idea/
 yarn.lock
-.vscode/
 
 # env variable file
 .env

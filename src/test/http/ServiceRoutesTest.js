@@ -36,18 +36,14 @@ class ServiceRoutesTest {
       it("it should POST a service successfully", (done) => {
         const host = "http://localhost:5000";
 
-        MockGen.getChaiRequest(
-          "/service", 
-          HTTPVerbs.POST, 
-          host,
-          MockAgentCredentials, 
-          HealthyService, 
-        ).end((err, res) => { 
-          assert.ifError(err);    
-          assert.strictEqual(res.status, 201, "Fail: The status should be 201");
-          assert.ok(mongodb.ObjectID.isValid(res.body.serviceId), "Fail: MongoDB ID is not valid");
-          done();
-        });
+        MockGen.getChaiRequest("/service", HTTPVerbs.POST, host, MockAgentCredentials, HealthyService).end(
+          (err, res) => {
+            assert.ifError(err);
+            assert.strictEqual(res.status, 201, "Fail: The status should be 201");
+            assert.ok(mongodb.ObjectID.isValid(res.body.serviceId), "Fail: MongoDB ID is not valid");
+            done();
+          },
+        );
       });
     });
   }
@@ -65,22 +61,25 @@ class ServiceRoutesTest {
         const mockService = new ServiceModel(HealthyService);
         mockService.save((err, service) => {
           assert.ifError(err);
-          MockGen.getChaiRequest(`/service/${service.id}`, HTTPVerbs.GET)
-            .end((getServiceError, getServiceResult) => {
-              assert.ifError(getServiceError);
-              Object.keys(HealthyService).forEach((x) => {
-                if (x in getServiceResult.body) {
-                  assert.strictEqual(JSON.stringify(getServiceResult.body[x]), JSON.stringify(HealthyService[x]), "Fail: Returned wrong value for " + x);
-                } else {
-                  assert.ok(false, "Fail: " + x + " should be in the body");
-                }
-              });
-              done();
+          MockGen.getChaiRequest(`/service/${service.id}`, HTTPVerbs.GET).end((getServiceError, getServiceResult) => {
+            assert.ifError(getServiceError);
+            Object.keys(HealthyService).forEach((x) => {
+              if (x in getServiceResult.body) {
+                assert.strictEqual(
+                  JSON.stringify(getServiceResult.body[x]),
+                  JSON.stringify(HealthyService[x]),
+                  "Fail: Returned wrong value for " + x,
+                );
+              } else {
+                assert.ok(false, "Fail: " + x + " should be in the body");
+              }
             });
+            done();
+          });
         });
       });
     });
-  } 
+  }
 
   testGetNearbyServices() {
     describe("GET /service/nearby?", () => {
@@ -97,18 +96,25 @@ class ServiceRoutesTest {
         mockService.save((err, service) => {
           assert.ifError(err);
 
-          MockGen.getChaiRequest(`/service/${nearbyStr}`, HTTPVerbs.GET)
-            .end((getServiceError, getServiceResult) => {
-              assert.ifError(getServiceError);
+          MockGen.getChaiRequest(`/service/${nearbyStr}`, HTTPVerbs.GET).end((getServiceError, getServiceResult) => {
+            assert.ifError(getServiceError);
 
-              if (getServiceResult.body.services.length !== 0) {
-                assert.strictEqual(getServiceResult.body.services[0].agent._id.toString(), service.agent.toString(), "Fail: Incorrect agent id returned");
-                assert.strictEqual(getServiceResult.body.services[0].category._id.toString(), service.category.toString(), "Fail: Incorrect category id returned");
-              } else {
-                assert.ok(false, "Fail: Should return a list of services - no service returned");
-              }
-              done();
-            });
+            if (getServiceResult.body.services.length !== 0) {
+              assert.strictEqual(
+                getServiceResult.body.services[0].agent._id.toString(),
+                service.agent.toString(),
+                "Fail: Incorrect agent id returned",
+              );
+              assert.strictEqual(
+                getServiceResult.body.services[0].category._id.toString(),
+                service.category.toString(),
+                "Fail: Incorrect category id returned",
+              );
+            } else {
+              assert.ok(false, "Fail: Should return a list of services - no service returned");
+            }
+            done();
+          });
         });
       });
     });

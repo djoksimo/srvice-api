@@ -1,15 +1,8 @@
 require("dotenv").config();
 
-const { 
-  ServiceManagerTest,
-  OfferingManagerTest,
-} = require("./managers");
+const { ServiceManagerTest, OfferingManagerTest } = require("./managers");
 const { ServiceServiceTest } = require("./services");
-const { 
-  ServiceRoutesTest,
-  OfferingRoutesTest,
-  AuthenticationRoutesTest,
-} = require("./http");
+const { ServiceRoutesTest, OfferingRoutesTest, AuthenticationRoutesTest } = require("./http");
 const { Environment } = require("../values");
 
 process.env.NODE_ENV = "TEST";

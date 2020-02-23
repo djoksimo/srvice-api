@@ -9,7 +9,6 @@ AWS.config = new AWS.Config(AWSValues.config);
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(AWSValues.cognito.sandbox);
 
 class AuthenticationManager {
-
   constructor(CognitoService, AgentService, AgentPrivateService, UserService, UserPrivateService, JwtService) {
     this.cognitoService = CognitoService;
     this.agentService = AgentService;
@@ -58,9 +57,24 @@ class AuthenticationManager {
         certifications,
         skills,
       });
-      const newAgentPrivate = new AgentPrivateModel({ email, phone, governmentIdUrl, secondaryIdUrl, selfieUrl, givenRatings, bookings });
+      const newAgentPrivate = new AgentPrivateModel({
+        email,
+        phone,
+        governmentIdUrl,
+        secondaryIdUrl,
+        selfieUrl,
+        givenRatings,
+        bookings,
+      });
       const newUser = new UserModel({ email, firstName, lastName, dateJoined, profilePictureUrl });
-      const newUserPrivate = new UserPrivateModel({ email, phone, savedServices: [], givenRatings: [], requests: [], bookings: [] });
+      const newUserPrivate = new UserPrivateModel({
+        email,
+        phone,
+        savedServices: [],
+        givenRatings: [],
+        requests: [],
+        bookings: [],
+      });
       await this.agentService.createAgent(newAgent);
       await this.agentPrivateService.createAgentPrivate(newAgentPrivate);
       await this.userService.createUser(newUser);
@@ -116,7 +130,19 @@ class AuthenticationManager {
     }
   }
 
-  async signupUser({ email, firstName, lastName, password, dateJoined, profilePictureUrl, phone, savedServices, givenRatings, requests, bookings }) {
+  async signupUser({
+    email,
+    firstName,
+    lastName,
+    password,
+    dateJoined,
+    profilePictureUrl,
+    phone,
+    savedServices,
+    givenRatings,
+    requests,
+    bookings,
+  }) {
     try {
       await this.cognitoService.createAccount(firstName, lastName, email, password);
       const newUser = new UserModel({ email, firstName, lastName, dateJoined, profilePictureUrl });
@@ -134,12 +160,12 @@ class AuthenticationManager {
       const adminConfirmationResult = await this.cognitoService.adminConfirmAccount(email);
       const successMessage = "Confirmed account successfully";
 
-      return { 
-        status: 200, 
-        json: { 
-          message: successMessage, 
-          cognitoRes: adminConfirmationResult, 
-        }, 
+      return {
+        status: 200,
+        json: {
+          message: successMessage,
+          cognitoRes: adminConfirmationResult,
+        },
       };
     } catch (error) {
       return { status: 500, json: error.toString() };

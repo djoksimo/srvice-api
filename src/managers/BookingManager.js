@@ -1,5 +1,4 @@
 class BookingManager {
-
   constructor(BookingService, UserPrivateService) {
     this.bookingService = BookingService;
     this.userPrivateService = UserPrivateService;
@@ -7,7 +6,13 @@ class BookingManager {
 
   async acceptBookingAgent({ bookingId, priceEstimate, timeEstimate, agentAccepted }, authHeaders) {
     try {
-      await this.bookingService.updatePriceEstimateAgentAcceptedById(bookingId, priceEstimate, timeEstimate, agentAccepted, authHeaders.agentId);
+      await this.bookingService.updatePriceEstimateAgentAcceptedById(
+        bookingId,
+        priceEstimate,
+        timeEstimate,
+        agentAccepted,
+        authHeaders.agentId,
+      );
       // TODO: push notifications
       const bookingDocument = await this.bookingService.getBookingById(bookingId);
       return { status: 200, json: bookingDocument };
