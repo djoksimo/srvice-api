@@ -34,18 +34,30 @@ const env = Environment.getCurrentNodeEnv();
 switch (env) {
   case Environment.SANDBOX_01:
     Warning.print().currentDB();
-    mongoose.connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", { useNewUrlParser: true, useFindAndModify: false })
-      .catch(error => console.log(error));
+    mongoose
+      .connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", {
+        useNewUrlParser: true,
+        useFindAndModify: false,
+      })
+      .catch((error) => console.log(error));
     break;
   case Environment.PRODUCTION:
     Warning.print().currentDB();
-    mongoose.connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", { useNewUrlParser: true, useFindAndModify: false })
-      .catch(error => console.log(error));
+    mongoose
+      .connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", {
+        useNewUrlParser: true,
+        useFindAndModify: false,
+      })
+      .catch((error) => console.log(error));
     break;
   case Environment.TEST:
     Warning.print().currentDB();
-    mongoose.connect("mongodb+srv://danilo-admin:Password123@srvice-cluster-xxb6t.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true, useFindAndModify: false })
-      .catch(error => console.log(error));
+    mongoose
+      .connect(
+        "mongodb+srv://danilo-admin:Password123@srvice-cluster-xxb6t.mongodb.net/test?retryWrites=true&w=majority",
+        { useNewUrlParser: true, useFindAndModify: false },
+      )
+      .catch((error) => console.log(error));
     break;
   default:
     Warning.print().unspecifiedDB();
@@ -54,7 +66,7 @@ switch (env) {
 const app = express();
 
 app.use(helmet());
-app.use(compression()); 
+app.use(compression());
 
 const allowedOrigins = ["http://localhost:4200", "http://192.168.0.116:4200", "https://srvice.ca"];
 

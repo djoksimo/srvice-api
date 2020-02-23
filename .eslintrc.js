@@ -1,9 +1,9 @@
 module.exports = {
-  "parser": "babel-eslint",
-  "extends": "airbnb-base",
-  "rules": {
+  parser: "babel-eslint",
+  extends: "airbnb-base",
+  rules: {
     "no-undef": "off",
-    "quotes": [2, "double"],
+    quotes: [2, "double"],
     "no-console": "off",
     "no-trailing-spaces": "off",
     "linebreak-style": "off",
@@ -22,6 +22,9 @@ module.exports = {
     "no-unused-vars": "error",
     "consistent-return": "warn",
     "no-param-reassign": "warn",
-    "eol-last": "warn"
-  }
+    "eol-last": "warn",
+    "generator-star-spacing": "off",
+    "arrow-parens": "off",
+    "wrap-iife": "off",
+  },
 };

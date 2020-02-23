@@ -1,7 +1,6 @@
 const { UserPrivateModel } = require("../models");
 
 class UserPrivateService {
-
   constructor() {
     this.categoryPath = { path: "category", select: "_id name iconUrl" };
     this.ratingsPath = {
@@ -12,17 +11,10 @@ class UserPrivateService {
       path: "agent",
       populate: {
         path: "services",
-        populate: [
-          this.categoryPath,
-          this.ratingsPath,
-        ]
+        populate: [this.categoryPath, this.ratingsPath],
       },
     };
-    this.servicePopulate = [
-      this.agentPath,
-      this.categoryPath,
-      this.ratingsPath,
-    ];
+    this.servicePopulate = [this.agentPath, this.categoryPath, this.ratingsPath];
     this.bookingsPath = {
       path: "bookings",
       populate: [
@@ -40,24 +32,26 @@ class UserPrivateService {
   }
 
   getUserPrivateByEmail(email) {
-    return UserPrivateModel.findOne({ email }).populate([
-      {
-        path: "savedServices",
-        populate: this.servicePopulate,
-      },
-      {
-        path: "givenRatings",
-        populate: {
-          path: "service",
+    return UserPrivateModel.findOne({ email })
+      .populate([
+        {
+          path: "savedServices",
           populate: this.servicePopulate,
         },
-      },
-      {
-        path: "requests",
-        populate: this.bookingsPath,
-      },
-      this.bookingsPath,
-    ]).exec();
+        {
+          path: "givenRatings",
+          populate: {
+            path: "service",
+            populate: this.servicePopulate,
+          },
+        },
+        {
+          path: "requests",
+          populate: this.bookingsPath,
+        },
+        this.bookingsPath,
+      ])
+      .exec();
   }
 
   addRequestToUserPrivate(email, requestId) {

@@ -5,11 +5,7 @@ const chai = require("chai");
 const { describe } = require("mocha");
 
 const server = require("../../index");
-const { 
-  HealthyService, 
-  MockAgentCredentials, 
-  HealthyOffering,
-} = require("../fixtures/");
+const { HealthyService, MockAgentCredentials, HealthyOffering } = require("../fixtures/");
 const { ServiceModel, OfferingModel } = require("../../models/");
 const MockGen = require("../../mock/MockGen");
 const { HTTPVerbs } = require("../../enums");
@@ -45,33 +41,25 @@ class OfferingRoutesTest {
         const host = "http://localhost:5000";
 
         // generate service and attach service ID
-        MockGen.getChaiRequest(
-          "/service", 
-          HTTPVerbs.POST, 
-          host,
-          MockAgentCredentials, 
-          HealthyService, 
-        ).end((serviceErr, serviceRes) => {
-          assert.ifError(serviceErr);    
-          const { serviceId } = serviceRes.body;
+        MockGen.getChaiRequest("/service", HTTPVerbs.POST, host, MockAgentCredentials, HealthyService).end(
+          (serviceErr, serviceRes) => {
+            assert.ifError(serviceErr);
+            const { serviceId } = serviceRes.body;
 
-          const mockPostOfferingBody = HealthyOffering;
+            const mockPostOfferingBody = HealthyOffering;
 
-          mockPostOfferingBody.serviceId = serviceId;
+            mockPostOfferingBody.serviceId = serviceId;
 
-          MockGen.getChaiRequest(
-            "/offering", 
-            HTTPVerbs.POST,
-            host,
-            MockAgentCredentials, 
-            mockPostOfferingBody, 
-          ).end((offeringErr, offeringRes) => { 
-            assert.ifError(offeringErr);    
-            assert.strictEqual(offeringRes.status, 201, "Fail: The status should be 201");
-            assert.ok(mongodb.ObjectID.isValid(offeringRes.body.offeringId), "Fail: MongoDB ID is not valid");
-            done();
-          });
-        });
+            MockGen.getChaiRequest("/offering", HTTPVerbs.POST, host, MockAgentCredentials, mockPostOfferingBody).end(
+              (offeringErr, offeringRes) => {
+                assert.ifError(offeringErr);
+                assert.strictEqual(offeringRes.status, 201, "Fail: The status should be 201");
+                assert.ok(mongodb.ObjectID.isValid(offeringRes.body.offeringId), "Fail: MongoDB ID is not valid");
+                done();
+              },
+            );
+          },
+        );
       });
     });
   }
@@ -93,50 +81,38 @@ class OfferingRoutesTest {
         const host = "http://localhost:5000";
 
         // generate service and attach service ID
-        MockGen.getChaiRequest(
-          "/service", 
-          HTTPVerbs.POST, 
-          host,
-          MockAgentCredentials, 
-          HealthyService, 
-        ).end((serviceErr, serviceRes) => {
-          assert.ifError(serviceErr);    
-          const { serviceId } = serviceRes.body;
+        MockGen.getChaiRequest("/service", HTTPVerbs.POST, host, MockAgentCredentials, HealthyService).end(
+          (serviceErr, serviceRes) => {
+            assert.ifError(serviceErr);
+            const { serviceId } = serviceRes.body;
 
-          const mockPostOfferingBody = HealthyOffering;
+            const mockPostOfferingBody = HealthyOffering;
 
-          mockPostOfferingBody.serviceId = serviceId;
+            mockPostOfferingBody.serviceId = serviceId;
 
-          MockGen.getChaiRequest(
-            "/offering", 
-            HTTPVerbs.POST, 
-            host,
-            MockAgentCredentials, 
-            mockPostOfferingBody, 
-          ).end((postOfferingErr, postOfferingRes) => { 
-            assert.ifError(postOfferingErr);   
+            MockGen.getChaiRequest("/offering", HTTPVerbs.POST, host, MockAgentCredentials, mockPostOfferingBody).end(
+              (postOfferingErr, postOfferingRes) => {
+                assert.ifError(postOfferingErr);
 
-            const { offeringId } = postOfferingRes.body;
+                const { offeringId } = postOfferingRes.body;
 
-            const patchOfferingBody = {
-              _id: offeringId,
-              title: "New Title",
-            };
-            
-            MockGen.getChaiRequest(
-              "/offering", 
-              HTTPVerbs.PATCH, 
-              host,
-              MockAgentCredentials, 
-              patchOfferingBody, 
-            ).end((patchOfferingError, patchOfferingRes) => { 
-              assert.ifError(patchOfferingError);   
-              assert.strictEqual(200, patchOfferingRes.status, "Fail: The status should be 200");
-              
-              done();
-            }); 
-          });
-        });
+                const patchOfferingBody = {
+                  _id: offeringId,
+                  title: "New Title",
+                };
+
+                MockGen.getChaiRequest("/offering", HTTPVerbs.PATCH, host, MockAgentCredentials, patchOfferingBody).end(
+                  (patchOfferingError, patchOfferingRes) => {
+                    assert.ifError(patchOfferingError);
+                    assert.strictEqual(200, patchOfferingRes.status, "Fail: The status should be 200");
+
+                    done();
+                  },
+                );
+              },
+            );
+          },
+        );
       });
     });
   }

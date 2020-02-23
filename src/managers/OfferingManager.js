@@ -1,7 +1,6 @@
 const { OfferingModel } = require("../models");
 
 class OfferingManager {
-
   constructor(OfferingService, ServiceService) {
     this.offeringService = OfferingService;
     this.serviceService = ServiceService;
@@ -9,14 +8,7 @@ class OfferingManager {
 
   // TODO switch so that this creates a list of offerings - DANILO
   async createOffering(payload, authHeaders) {
-    const {
-      serviceId,
-      title,
-      duration,
-      price,
-      description,
-      agent,
-    } = payload;
+    const { serviceId, title, duration, price, description, agent } = payload;
 
     const newOffering = new OfferingModel({
       title,
@@ -50,7 +42,11 @@ class OfferingManager {
   async deleteOffering({ offeringId, serviceId }, authHeaders) {
     try {
       const offeringResult = await this.offeringService.removeOffering(offeringId, authHeaders.agentId);
-      const serviceResult = await this.serviceService.removeOfferingFromService(serviceId, offeringId, authHeaders.agentId);
+      const serviceResult = await this.serviceService.removeOfferingFromService(
+        serviceId,
+        offeringId,
+        authHeaders.agentId,
+      );
       return { status: 200, json: { offeringResult, serviceResult } };
     } catch (error) {
       console.log(error);

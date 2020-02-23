@@ -4,8 +4,9 @@ const jwt = require("jsonwebtoken");
 const SECRET_JWT_KEY = "8xStlNM+DbJTIQ0zOk+3X00gngEB9JOEKiVMYWAVWfc";
 
 class JwtService {
-
-  static get SECRET_JWT_KEY() { return SECRET_JWT_KEY; }
+  static get SECRET_JWT_KEY() {
+    return SECRET_JWT_KEY;
+  }
 
   createTokenFromEmail(email) {
     return new Promise((resolve) => {

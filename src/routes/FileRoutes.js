@@ -12,9 +12,12 @@ const authenticationManager = Bottle.AuthenticationManager;
 
 const isAuthenticated = (req, res, callback) => {
   const authHeaders = HttpUtils.parseAuthHeaders(req);
-  authenticationManager.authenticateIdEmailToken(authHeaders).then(async () => {
-    callback();
-  }).catch(() => res.status(403).json({}));
+  authenticationManager
+    .authenticateIdEmailToken(authHeaders)
+    .then(async () => {
+      callback();
+    })
+    .catch(() => res.status(403).json({}));
 };
 
 const multer = Multer({
@@ -24,8 +27,7 @@ const multer = Multer({
   fileFilter: (req, file, cb) => {
     const fileTypes = /jpeg|jpg|png|bmp|gif|webp|psd/;
     const mimeType = fileTypes.test(file.mimetype);
-    const extName = fileTypes.test(path.extname(file.originalname)
-      .toLowerCase());
+    const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
 
     if (mimeType && extName) {
       return cb(null, true);
@@ -34,8 +36,8 @@ const multer = Multer({
   },
 });
 
-router.post("/upload/pictures/", multer.array("pictures", FileValues.MAX_PICTURE_COUNT),
-  (req, res) => isAuthenticated(req, res, async () => {
+router.post("/upload/pictures/", multer.array("pictures", FileValues.MAX_PICTURE_COUNT), (req, res) =>
+  isAuthenticated(req, res, async () => {
     HttpUtils.sendResponse(res, await fileManager.uploadPictures(req.files));
   }),
 );

@@ -4,7 +4,6 @@ const { GoogleValues } = require("../values");
 const { UuidUtils, GoogleUtils } = require("../utils");
 
 class FileService {
-
   constructor() {
     this.gcsStorage = new Storage({
       projectId: GoogleValues.GCP_PROJECT_ID,

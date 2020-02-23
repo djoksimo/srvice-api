@@ -1,17 +1,20 @@
 const { CategoryModel } = require("../models/");
 
 class CategoryService {
-
   createCategory(newCategory) {
     return newCategory.save();
   }
 
   getAllCategories() {
-    return CategoryModel.find().limit(30).exec();
+    return CategoryModel.find()
+      .limit(30)
+      .exec();
   }
 
   getCategoryByIdWithoutServices(id) {
-    return CategoryModel.findById(id).select("-services").exec();
+    return CategoryModel.findById(id)
+      .select("-services")
+      .exec();
   }
 
   deleteCategory(id) {

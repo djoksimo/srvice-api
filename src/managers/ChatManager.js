@@ -14,7 +14,12 @@ class ChatManager {
 
   async startConversation({ senderId, recipientId, recipientFirstName, senderFirstName }) {
     try {
-      const creationResult = await this.chatService.createPusherPrivateRoom(senderId, recipientId, recipientFirstName, senderFirstName);
+      const creationResult = await this.chatService.createPusherPrivateRoom(
+        senderId,
+        recipientId,
+        recipientFirstName,
+        senderFirstName,
+      );
       return { status: 201, json: creationResult };
     } catch (error) {
       return { status: error.status, json: error };
@@ -23,7 +28,7 @@ class ChatManager {
 
   async updateUser({ id, ...data }) {
     try {
-      const updateResult = await this.chatService.updatePusherUser(id, data); 
+      const updateResult = await this.chatService.updatePusherUser(id, data);
       return { status: 200, json: updateResult };
     } catch (error) {
       return { status: error.status, json: error };
@@ -40,7 +45,6 @@ class ChatManager {
       return { status: error.status, json: error };
     }
   }
-
 }
 
 module.exports = ChatManager;

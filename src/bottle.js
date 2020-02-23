@@ -51,12 +51,29 @@ bottle.service("ScheduleService", ScheduleService);
 bottle.service("ChatService", ChatService);
 
 bottle.service("FileService", FileService);
-bottle.service("AuthenticationManager", AuthenticationManager, "CognitoService", "AgentService", "AgentPrivateService", "UserService", "UserPrivateService", "JwtService");
+bottle.service(
+  "AuthenticationManager",
+  AuthenticationManager,
+  "CognitoService",
+  "AgentService",
+  "AgentPrivateService",
+  "UserService",
+  "UserPrivateService",
+  "JwtService",
+);
 bottle.service("AgentManager", AgentManager, "AgentService");
 bottle.service("UserManager", UserManager, "UserService");
 bottle.service("CategoryManager", CategoryManager, "CategoryService", "ServiceService");
 bottle.service("ServiceManager", ServiceManager, "ServiceService", "AgentService");
-bottle.service("RequestManager", RequestManager, "ServiceService", "BookingService", "AgentPrivateService", "RequestService", "UserPrivateService");
+bottle.service(
+  "RequestManager",
+  RequestManager,
+  "ServiceService",
+  "BookingService",
+  "AgentPrivateService",
+  "RequestService",
+  "UserPrivateService",
+);
 bottle.service("BookingManager", BookingManager, "BookingService", "UserPrivateService");
 bottle.service("ServiceRatingManager", ServiceRatingManager, "ServiceRatingService", "ServiceService");
 bottle.service("SendManager", SendManager, "AuthenticationManager");
@@ -64,6 +81,5 @@ bottle.service("OfferingManager", OfferingManager, "OfferingService", "ServiceSe
 bottle.service("FileManager", FileManager, "FileService");
 bottle.service("ScheduleManager", ScheduleManager, "ScheduleService", "AgentService");
 bottle.service("ChatManager", ChatManager, "ChatService");
-
 
 module.exports = bottle.container;

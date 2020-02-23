@@ -1,7 +1,6 @@
 const { RequestModel } = require("../models");
 
 class RequestService {
-
   constructor() {
     this.categoryPath = { path: "category", select: "_id name iconUrl" };
     this.ratingsPath = {
@@ -12,25 +11,16 @@ class RequestService {
       path: "agent",
       populate: {
         path: "services",
-        populate: [
-          this.categoryPath,
-          this.ratingsPath,
-        ]
+        populate: [this.categoryPath, this.ratingsPath],
       },
     };
     this.servicePath = {
       path: "service",
-      populate: [
-        this.categoryPath,
-        this.ratingsPath,
-      ],
+      populate: [this.categoryPath, this.ratingsPath],
     };
     this.bookingsPath = {
       path: "bookings",
-      populate: [
-        this.agentPath,
-        this.servicePath,
-      ],
+      populate: [this.agentPath, this.servicePath],
     };
   }
 
@@ -39,7 +29,9 @@ class RequestService {
   }
 
   getRequestById(id) {
-    return RequestModel.findById(id).populate(this.bookingsPath).exec();
+    return RequestModel.findById(id)
+      .populate(this.bookingsPath)
+      .exec();
   }
 }
 

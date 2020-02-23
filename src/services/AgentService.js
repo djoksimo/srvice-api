@@ -6,58 +6,59 @@ class AgentService {
   }
 
   getAgentByEmail(email) {
-    return AgentModel.findOne({ email }).populate([
-      {
-        path: "services",
-        populate: [
-          { path: "category", select: "_id name iconUrl" },
-          {
-            path: "serviceRatings",
-            populate: { path: "user" },
-            options: {
-              sort: { date: -1 },
+    return AgentModel.findOne({ email })
+      .populate([
+        {
+          path: "services",
+          populate: [
+            { path: "category", select: "_id name iconUrl" },
+            {
+              path: "serviceRatings",
+              populate: { path: "user" },
+              options: {
+                sort: { date: -1 },
+              },
             },
+            { path: "offerings" },
+          ],
+          options: {
+            sort: { updatedAt: -1 },
           },
-          { path: "offerings" },
-        ],
-        options: {
-          sort: { updatedAt: -1 },
         },
-      },
-      {
-        path: "schedule",
-        populate: [
-          { path: "bookings.offering" },
-          { path: "bookings.user" },
-        ],
-      },
-    ]).exec();
+        {
+          path: "schedule",
+          populate: [{ path: "bookings.offering" }, { path: "bookings.user" }],
+        },
+      ])
+      .exec();
   }
 
   getAgentById(id) {
-    return AgentModel.findById(id).populate([
-      {
-        path: "services",
-        populate: [
-          { path: "category", select: "_id name iconUrl" },
-          {
-            path: "serviceRatings",
-            populate: { path: "user" },
-            options: {
-              sort: { date: -1 },
+    return AgentModel.findById(id)
+      .populate([
+        {
+          path: "services",
+          populate: [
+            { path: "category", select: "_id name iconUrl" },
+            {
+              path: "serviceRatings",
+              populate: { path: "user" },
+              options: {
+                sort: { date: -1 },
+              },
             },
+            { path: "offerings" },
+          ],
+          options: {
+            sort: { updatedAt: -1 },
           },
-          { path: "offerings" },
-        ],
-        options: {
-          sort: { updatedAt: -1 },
         },
-      },
-      {
-        path: "schedule",
-        select: "-bookings.user -bookings.offering",
-      },
-    ]).exec();
+        {
+          path: "schedule",
+          select: "-bookings.user -bookings.offering",
+        },
+      ])
+      .exec();
   }
 
   getNonPopulatedAgentById(id) {

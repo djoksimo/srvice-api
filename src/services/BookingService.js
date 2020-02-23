@@ -30,18 +30,12 @@ class BookingService {
       path: "agent",
       populate: {
         path: "services",
-        populate: [
-          this.categoryPath,
-          this.ratingsPath,
-        ],
+        populate: [this.categoryPath, this.ratingsPath],
       },
     };
     this.servicePath = {
       path: "service",
-      populate: [
-        this.categoryPath,
-        this.ratingsPath,
-      ],
+      populate: [this.categoryPath, this.ratingsPath],
     };
   }
 
@@ -62,10 +56,9 @@ class BookingService {
   }
 
   getBookingById(id) {
-    return BookingModel.findById(id).populate([
-      this.agentPath,
-      this.servicePath,
-    ]).exec();
+    return BookingModel.findById(id)
+      .populate([this.agentPath, this.servicePath])
+      .exec();
   }
 }
 

@@ -1,6 +1,5 @@
 class ArrayUtils {
-
-  static* filterWithLimit(array, condition, maxSize) {
+  static *filterWithLimit(array, condition, maxSize) {
     if (!maxSize || maxSize > array.length) {
       // eslint-disable-next-line no-param-reassign
       maxSize = array.length;

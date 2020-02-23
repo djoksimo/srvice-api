@@ -1,5 +1,4 @@
 class AgentManager {
-
   constructor(AgentService) {
     this.agentService = AgentService;
   }

@@ -1,0 +1,33 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "build": true
+  },
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveTimeout": 2000,
+  "editor.suggestSelection": "first",
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.git": true,
+    "**/.project": true,
+    "**/.DS_Store": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  },
+  "editor.tabSize": 2,
+  "editor.minimap.enabled": false,
+  "eslint.format.enable": true,
+  "eslint.packageManager": "yarn",
+  "eslint.quiet": true,
+  "eslint.run": "onSave",
+  "eslint.options": {
+    "configFile": ".eslintrc.js"
+  }
+}
