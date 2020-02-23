@@ -19,7 +19,12 @@ class AgentService {
                 sort: { date: -1 },
               },
             },
-            { path: "offerings" },
+            {
+              path: "offerings",
+              options: {
+                sort: { updatedAt: -1 },
+              },
+            },
           ],
           options: {
             sort: { updatedAt: -1 },

@@ -12,7 +12,7 @@ const offeringSchema = Schema(
     description: { type: String, required: false },
     agent: { type: ObjectId, ref: "Agent", required: true },
   },
-  { versionKey: false },
+  { versionKey: false, timestamps: true },
 );
 
 const offeringModel = Mongoose.model("Offering", offeringSchema);

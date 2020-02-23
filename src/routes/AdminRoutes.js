@@ -5,7 +5,8 @@ const { HttpUtils } = require("../utils");
 
 const router = Express.Router();
 const categoryManager = Bottle.CategoryManager;
-const ADMIN_PASSWORD = "iakd8k98qogbb8eku1nwzmxdhyhyogxbpn22rub473499rkbpu0hvux4ne6ifjxqqxgvabsxukf0f88904lqxtlf9";
+const ADMIN_PASSWORD =
+  "iakd8k98qogbb8eku1nwzmxdhyhyogxbpn22rub473499rkbpu0hvux4ne6ifjxqqxgvabsxukf0f88904lqxtlf9";
 
 router.use((req, res, next) => {
   const { headers } = req;
