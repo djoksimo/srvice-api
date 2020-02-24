@@ -114,6 +114,10 @@ class ServiceManager {
     }
   }
 
+  async updateViewCountById(serviceId) {
+    this.serviceService.updateViewCount(serviceId);
+  }
+
   async patchService(service, authHeaders) {
     try {
       const result = await this.serviceService.updateService(service, authHeaders.agentId);
