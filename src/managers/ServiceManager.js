@@ -37,7 +37,7 @@ class ServiceManager {
       averageServiceRating,
       serviceRatings,
       offerings,
-      viewCount
+      viewCount,
     } = payload;
     const newService = new ServiceModel({
       agent,
@@ -57,7 +57,7 @@ class ServiceManager {
       averageServiceRating,
       serviceRatings,
       offerings,
-      viewCount
+      viewCount,
     });
 
     try {
