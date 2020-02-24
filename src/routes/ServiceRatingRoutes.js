@@ -23,9 +23,11 @@ router.post("/", (req, res) =>
   }),
 );
 
-router.patch("/", (req, res) => isAuthenticated(req, res, async () => {
-  const authHeaders = HttpUtils.parseAuthHeaders(req);
-  HttpUtils.sendResponse(res, await serviceRatingManager.patchServiceRating(req.body, authHeaders));
-}));
+router.patch("/", (req, res) =>
+  isAuthenticated(req, res, async () => {
+    const authHeaders = HttpUtils.parseAuthHeaders(req);
+    HttpUtils.sendResponse(res, await serviceRatingManager.patchServiceRating(req.body, authHeaders));
+  }),
+);
 
 module.exports = router;
