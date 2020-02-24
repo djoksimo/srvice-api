@@ -25,7 +25,6 @@ router.post("/", (req, res) =>
 
 router.patch("/", (req, res) => isAuthenticated(req, res, async () => {
   const authHeaders = HttpUtils.parseAuthHeaders(req);
-  //console.log(req.body);
   HttpUtils.sendResponse(res, await serviceRatingManager.patchServiceRating(req.body, authHeaders));
 }));
 
