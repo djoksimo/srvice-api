@@ -28,6 +28,7 @@ router.get("/nearby", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
+  serviceManager.updateViewCountById(req.params.id);
   HttpUtils.sendResponse(res, await serviceManager.getServiceById(req.params));
 });
 

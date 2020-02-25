@@ -37,6 +37,7 @@ class ServiceManager {
       averageServiceRating,
       serviceRatings,
       offerings,
+      viewCount,
     } = payload;
     const newService = new ServiceModel({
       agent,
@@ -56,6 +57,7 @@ class ServiceManager {
       averageServiceRating,
       serviceRatings,
       offerings,
+      viewCount,
     });
 
     try {
@@ -110,6 +112,10 @@ class ServiceManager {
     } catch (error) {
       return { status: 500, json: error };
     }
+  }
+
+  async updateViewCountById(serviceId) {
+    this.serviceService.updateViewCount(serviceId);
   }
 
   async patchService(service, authHeaders) {

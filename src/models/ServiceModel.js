@@ -22,6 +22,7 @@ const serviceSchema = Schema(
     averageServiceRating: { type: Number, required: true },
     serviceRatings: { type: [{ type: ObjectId, ref: "ServiceRating" }], required: true },
     offerings: { type: [{ type: ObjectId, ref: "Offering" }], required: false },
+    viewCount: { type: Number, required: true, default: 0 },
   },
   { versionKey: false, timestamps: true },
 );

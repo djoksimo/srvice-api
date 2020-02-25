@@ -62,6 +62,10 @@ class ServiceService {
       .exec();
   }
 
+  updateViewCount(serviceId) {
+    return ServiceModel.findByIdAndUpdate(serviceId, { $inc: { viewCount: 1 } }).exec();
+  }
+
   async updateService(service, agentId) {
     const isOwner = await ServiceService.isOwner(service._id, agentId);
     if (!isOwner) {
