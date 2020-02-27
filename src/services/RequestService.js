@@ -2,7 +2,10 @@ const { RequestModel } = require("../models");
 
 class RequestService {
   constructor() {
-    this.categoryPath = { path: "category", select: "_id placeholderInputServiceTitle name iconUrl" };
+    this.categoryPath = {
+      path: "category",
+      select: "_id name iconUrl",
+    };
     this.ratingsPath = {
       path: "serviceRatings",
       populate: { path: "user" },

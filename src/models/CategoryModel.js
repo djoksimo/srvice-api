@@ -3,13 +3,19 @@ const Mongoose = require("mongoose");
 const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
 
+const getDefaultInputFieldTitle = (field) => `Descriptive and short ${field}`;
+
 const categorySchema = Schema(
   {
     _id: { type: ObjectId, auto: true, required: true },
-    placeholderInputServiceTitle: { type: "String", default: "Descriptive and short service title", required: true },
+    placeholderInputServiceTitle: {
+      type: "String",
+      default: getDefaultInputFieldTitle("service title"),
+      required: true,
+    },
     placeholderInputServiceDescription: {
       type: "String",
-      default: "Descriptive and short service description",
+      default: getDefaultInputFieldTitle("service description"),
       required: true,
     },
     name: { type: "String", required: true },

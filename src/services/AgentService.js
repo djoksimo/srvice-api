@@ -10,7 +10,7 @@ class AgentService {
       {
         path: "services",
         populate: [
-          { path: "category", select: "_id placeholderInputServiceTitle name iconUrl" },
+          { path: "category", select: "_id placeholderInputServiceTitle placeholderInputServiceDescription name iconUrl" },
           {
             path: "serviceRatings",
             populate: { path: "user" },
@@ -36,7 +36,7 @@ class AgentService {
       {
         path: "services",
         populate: [
-          { path: "category", select: "_id placeholderInputServiceTitle name iconUrl" },
+          { path: "category", select: "_id placeholderInputServiceTitle placeholderInputServiceDescription name iconUrl" },
           {
             path: "serviceRatings",
             populate: { path: "user" },

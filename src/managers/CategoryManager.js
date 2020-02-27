@@ -5,8 +5,13 @@ class CategoryManager {
     this.categoryService = CategoryService;
   }
 
-  async createCategory({ name, iconUrl, placeholderInputServiceTitle }) {
-    const newCategory = new CategoryModel({ placeholderInputServiceTitle, name, iconUrl });
+  async createCategory({ name, iconUrl, placeholderInputServiceTitle, placeholderInputServiceDescription }) {
+    const newCategory = new CategoryModel({
+      placeholderInputServiceTitle,
+      placeholderInputServiceDescription,
+      name,
+      iconUrl,
+    });
     try {
       const result = await this.categoryService.createCategory(newCategory);
       return { status: 201, json: result };
