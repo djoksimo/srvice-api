@@ -6,22 +6,31 @@ class AgentService {
   }
 
   getAgentByEmail(email) {
-    return AgentModel.findOne({ email }).populate([
-      {
-        path: "services",
-        populate: [
-          { path: "category", select: "_id placeholderInputServiceTitle placeholderInputServiceDescription name iconUrl" },
-          {
-            path: "serviceRatings",
-            populate: { path: "user" },
-            options: {
-              sort: { date: -1 },
+    return AgentModel.findOne({ email })
+      .populate([
+        {
+          path: "services",
+          populate: [
+            {
+              path: "category",
+              select: "_id placeholderInputServiceTitle placeholderInputServiceDescription name iconUrl",
             },
-            { path: "offerings" },
+            {
+              path: "serviceRatings",
+              populate: { path: "user" },
+              options: {
+                sort: { date: -1 },
+              },
+            },
+            {
+              path: "offerings",
+              options: {
+                sort: {
+                  updatedAt: -1,
+                },
+              },
+            },
           ],
-          options: {
-            sort: { updatedAt: -1 },
-          },
         },
         {
           path: "schedule",
@@ -32,22 +41,29 @@ class AgentService {
   }
 
   getAgentById(id) {
-    return AgentModel.findById(id).populate([
-      {
-        path: "services",
-        populate: [
-          { path: "category", select: "_id placeholderInputServiceTitle placeholderInputServiceDescription name iconUrl" },
-          {
-            path: "serviceRatings",
-            populate: { path: "user" },
-            options: {
-              sort: { date: -1 },
+    return AgentModel.findById(id)
+      .populate([
+        {
+          path: "services",
+          populate: [
+            {
+              path: "category",
+              select: "_id placeholderInputServiceTitle placeholderInputServiceDescription name iconUrl",
             },
-            { path: "offerings" },
+            {
+              path: "serviceRatings",
+              populate: { path: "user" },
+              options: {
+                sort: { date: -1 },
+              },
+            },
+            {
+              path: "offerings",
+              options: {
+                sort: { updatedAt: -1 },
+              },
+            },
           ],
-          options: {
-            sort: { updatedAt: -1 },
-          },
         },
         {
           path: "schedule",
