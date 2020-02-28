@@ -5,8 +5,13 @@ class CategoryManager {
     this.categoryService = CategoryService;
   }
 
-  async createCategory({ name, iconUrl }) {
-    const newCategory = new CategoryModel({ name, iconUrl });
+  async createCategory({ name, iconUrl, placeholderInputServiceTitle, placeholderInputServiceDescription }) {
+    const newCategory = new CategoryModel({
+      placeholderInputServiceTitle,
+      placeholderInputServiceDescription,
+      name,
+      iconUrl,
+    });
     try {
       const result = await this.categoryService.createCategory(newCategory);
       return { status: 201, json: result };
@@ -46,6 +51,15 @@ class CategoryManager {
       );
       const categoryDocuments = await Promise.all(categoryDocumentsPromise);
       return { status: 200, json: categoryDocuments };
+    } catch (error) {
+      return { status: 500, json: error };
+    }
+  }
+
+  async patchCategory(newPartialCategoryData) {
+    try {
+      const result = await this.categoryService.updateCategory(newPartialCategoryData);
+      return { status: 200, json: result };
     } catch (error) {
       return { status: 500, json: error };
     }

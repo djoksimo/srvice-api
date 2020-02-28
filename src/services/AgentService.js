@@ -11,7 +11,10 @@ class AgentService {
         {
           path: "services",
           populate: [
-            { path: "category", select: "_id name iconUrl" },
+            {
+              path: "category",
+              select: "_id placeholderInputServiceTitle placeholderInputServiceDescription name iconUrl",
+            },
             {
               path: "serviceRatings",
               populate: { path: "user" },
@@ -19,11 +22,15 @@ class AgentService {
                 sort: { date: -1 },
               },
             },
-            { path: "offerings" },
+            {
+              path: "offerings",
+              options: {
+                sort: {
+                  updatedAt: -1,
+                },
+              },
+            },
           ],
-          options: {
-            sort: { updatedAt: -1 },
-          },
         },
         {
           path: "schedule",
@@ -39,7 +46,10 @@ class AgentService {
         {
           path: "services",
           populate: [
-            { path: "category", select: "_id name iconUrl" },
+            {
+              path: "category",
+              select: "_id placeholderInputServiceTitle placeholderInputServiceDescription name iconUrl",
+            },
             {
               path: "serviceRatings",
               populate: { path: "user" },
@@ -47,11 +57,13 @@ class AgentService {
                 sort: { date: -1 },
               },
             },
-            { path: "offerings" },
+            {
+              path: "offerings",
+              options: {
+                sort: { updatedAt: -1 },
+              },
+            },
           ],
-          options: {
-            sort: { updatedAt: -1 },
-          },
         },
         {
           path: "schedule",

@@ -27,4 +27,8 @@ router.delete("/category", async (req, res) => {
   HttpUtils.sendResponse(res, await categoryManager.deleteCategory(req.body));
 });
 
+router.patch("/category", async (req, res) => {
+  HttpUtils.sendResponse(res, await categoryManager.patchCategory(req.body));
+});
+
 module.exports = router;
