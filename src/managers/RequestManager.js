@@ -3,12 +3,12 @@ const Mongoose = require("mongoose");
 const { BookingModel, RequestModel } = require("../models");
 
 class RequestManager {
-  constructor(ServiceService, BookingService, AgentPrivateService, RequestService, UserPrivateService) {
-    this.serviceService = ServiceService;
-    this.bookingService = BookingService;
-    this.agentPrivateService = AgentPrivateService;
-    this.requestService = RequestService;
-    this.userPrivateService = UserPrivateService;
+  constructor(serviceService, bookingService, agentPrivateService, requestService, userPrivateService) {
+    this.serviceService = serviceService;
+    this.bookingService = bookingService;
+    this.agentPrivateService = agentPrivateService;
+    this.requestService = requestService;
+    this.userPrivateService = userPrivateService;
   }
 
   async createRequest({ email, userId: user, description, pictureUrls, serviceIds, booked }) {

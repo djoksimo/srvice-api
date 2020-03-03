@@ -1,10 +1,9 @@
 const Express = require("express");
 
-const Bottle = require("../bottle");
 const { HttpUtils } = require("../utils");
+const { cradle: categoryManager } = require("../container");
 
 const router = Express.Router();
-const categoryManager = Bottle.CategoryManager;
 const ADMIN_PASSWORD = "iakd8k98qogbb8eku1nwzmxdhyhyogxbpn22rub473499rkbpu0hvux4ne6ifjxqqxgvabsxukf0f88904lqxtlf9";
 
 router.use((req, res, next) => {

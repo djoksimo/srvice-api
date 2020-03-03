@@ -1,11 +1,12 @@
 const express = require("express");
 
-const Bottle = require("../bottle");
+const {
+  cradle: { authenticationManager },
+} = require("../container");
 const { HttpUtils } = require("../utils");
 const { AdminCredentials } = require("../values");
 
 const router = express.Router();
-const authenticationManager = Bottle.AuthenticationManager;
 
 router.post("/agent/signup", async (req, res) => {
   HttpUtils.sendResponse(res, await authenticationManager.signupAgent(req.body));
@@ -17,6 +18,7 @@ router.post("/agent/confirm", async (req, res) => {
 
 router.post("/agent/login", async (req, res) => {
   HttpUtils.sendResponse(res, await authenticationManager.loginAgent(req.body));
+  console.log("memoryUsage: ", process.memoryUsage());
 });
 
 router.post("/agent/token", async (req, res) => {

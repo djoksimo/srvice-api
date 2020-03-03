@@ -1,9 +1,9 @@
 const { OfferingModel } = require("../models");
 
 class OfferingManager {
-  constructor(OfferingService, ServiceService) {
-    this.offeringService = OfferingService;
-    this.serviceService = ServiceService;
+  constructor(offeringService, serviceService) {
+    this.offeringService = offeringService;
+    this.serviceService = serviceService;
   }
 
   // TODO switch so that this creates a list of offerings - DANILO
