@@ -130,6 +130,4 @@ const server = http.createServer(app);
 
 server.listen(port, () => console.log(`Srvice REST API listening on port: ${port}`));
 
-console.log("memoryUsage: ", process.memoryUsage());
-
 module.exports = server;

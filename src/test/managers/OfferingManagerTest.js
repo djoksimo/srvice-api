@@ -7,7 +7,10 @@ const { describe } = require("mocha");
 const mongodb = require("mongodb");
 
 const server = require("../../index");
-const { OfferingManager, ServiceManager } = require("../../bottle");
+const {
+  cradle: { offeringManager, serviceManager },
+} = require("../../container");
+
 const { OfferingModel, ServiceModel } = require("../../models/");
 const { HealthyOffering, HealthyService, MockAgentCredentials } = require("../fixtures/");
 const TestUtils = require("../TestUtils");
@@ -17,8 +20,8 @@ chai.use(chaiHttp);
 class OfferingManagerTest {
   constructor() {
     chai.request(server).get("/");
-    this.offeringManager = OfferingManager;
-    this.serviceManager = ServiceManager;
+    this.offeringManager = offeringManager;
+    this.serviceManager = serviceManager;
   }
 
   async start() {

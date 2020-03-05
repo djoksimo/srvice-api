@@ -18,7 +18,6 @@ router.post("/agent/confirm", async (req, res) => {
 
 router.post("/agent/login", async (req, res) => {
   HttpUtils.sendResponse(res, await authenticationManager.loginAgent(req.body));
-  console.log("memoryUsage: ", process.memoryUsage());
 });
 
 router.post("/agent/token", async (req, res) => {
