@@ -40,7 +40,6 @@
     "awilix": "^4.2.5",
     "aws-sdk": "^2.344.0",
     "body-parser": "^1.18.3",
-    "bottlejs": "^1.7.1",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "compression": "^1.7.4",
