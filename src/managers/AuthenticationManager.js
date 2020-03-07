@@ -9,13 +9,13 @@ AWS.config = new AWS.Config(AWSValues.config);
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(AWSValues.cognito.sandbox);
 
 class AuthenticationManager {
-  constructor(CognitoService, AgentService, AgentPrivateService, UserService, UserPrivateService, JwtService) {
-    this.cognitoService = CognitoService;
-    this.agentService = AgentService;
-    this.agentPrivateService = AgentPrivateService;
-    this.userService = UserService;
-    this.userPrivateService = UserPrivateService;
-    this.jwtService = JwtService;
+  constructor(cognitoService, agentService, agentPrivateService, userService, userPrivateService, jwtService) {
+    this.cognitoService = cognitoService;
+    this.agentService = agentService;
+    this.agentPrivateService = agentPrivateService;
+    this.userService = userService;
+    this.userPrivateService = userPrivateService;
+    this.jwtService = jwtService;
   }
 
   async signupAgent(agent) {

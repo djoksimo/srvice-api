@@ -1,6 +1,6 @@
 class FileManager {
-  constructor(FileService) {
-    this.fileService = FileService;
+  constructor(fileService) {
+    this.fileService = fileService;
   }
 
   async uploadPictures(files) {

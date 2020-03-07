@@ -1,8 +1,8 @@
 const { CategoryModel } = require("../models");
 
 class CategoryManager {
-  constructor(CategoryService) {
-    this.categoryService = CategoryService;
+  constructor(categoryService) {
+    this.categoryService = categoryService;
   }
 
   async createCategory({ name, iconUrl, placeholderInputServiceTitle, placeholderInputServiceDescription }) {

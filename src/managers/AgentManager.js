@@ -1,6 +1,6 @@
 class AgentManager {
-  constructor(AgentService) {
-    this.agentService = AgentService;
+  constructor(agentService) {
+    this.agentService = agentService;
   }
 
   async getAgentById({ id }) {

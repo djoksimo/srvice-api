@@ -1,7 +1,7 @@
 class BookingManager {
-  constructor(BookingService, UserPrivateService) {
-    this.bookingService = BookingService;
-    this.userPrivateService = UserPrivateService;
+  constructor(bookingService, userPrivateService) {
+    this.bookingService = bookingService;
+    this.userPrivateService = userPrivateService;
   }
 
   async acceptBookingAgent({ bookingId, priceEstimate, timeEstimate, agentAccepted }, authHeaders) {

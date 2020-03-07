@@ -2,9 +2,9 @@ const { ServiceRatingModel } = require("../models/");
 const { CalculationUtils } = require("../utils");
 
 class ServiceRatingManager {
-  constructor(ServiceRatingService, ServiceService) {
-    this.serviceRatingService = ServiceRatingService;
-    this.serviceService = ServiceService;
+  constructor(serviceRatingService, serviceService) {
+    this.serviceRatingService = serviceRatingService;
+    this.serviceService = serviceService;
   }
 
   async createServiceRating({

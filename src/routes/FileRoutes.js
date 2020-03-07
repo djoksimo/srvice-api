@@ -2,13 +2,14 @@ const Express = require("express");
 const Multer = require("multer");
 const path = require("path");
 
-const Bottle = require("../bottle");
+const {
+  cradle: { fileManager, authenticationManager },
+} = require("../container");
+
 const { FileValues } = require("../values");
 const { HttpUtils } = require("../utils");
 
 const router = Express.Router();
-const fileManager = Bottle.FileManager;
-const authenticationManager = Bottle.AuthenticationManager;
 
 const isAuthenticated = (req, res, callback) => {
   const authHeaders = HttpUtils.parseAuthHeaders(req);

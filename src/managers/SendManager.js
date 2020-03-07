@@ -7,8 +7,8 @@ AWS.config.update({
 });
 
 class SendManager {
-  constructor(AuthenticationManager) {
-    this._authenticationManager = AuthenticationManager;
+  constructor(authenticationManager) {
+    this._authenticationManager = authenticationManager;
   }
 
   async sendMail(data) {

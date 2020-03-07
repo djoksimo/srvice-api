@@ -1,11 +1,11 @@
 const Express = require("express");
 
 const { HttpUtils } = require("../utils");
-const bottle = require("../bottle");
+const {
+  cradle: { serviceRatingManager, authenticationManager },
+} = require("../container");
 
 const router = Express.Router();
-const serviceRatingManager = bottle.ServiceRatingManager;
-const authenticationManager = bottle.AuthenticationManager;
 
 const isAuthenticated = (req, res, callback) => {
   const authHeaders = HttpUtils.parseAuthHeaders(req);

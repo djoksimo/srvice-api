@@ -12,9 +12,9 @@ class ServiceManager {
     return MAX_IN_CALL_DISTANCE;
   }
 
-  constructor(ServiceService, AgentService) {
-    this.serviceService = ServiceService;
-    this.agentService = AgentService;
+  constructor(serviceService, agentService) {
+    this.serviceService = serviceService;
+    this.agentService = agentService;
     this.categoryToServiceMap = {};
   }
 
