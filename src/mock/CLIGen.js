@@ -8,6 +8,7 @@ require("dotenv").config();
 const { Environment } = require("../values");
 const { PostServicePayload } = require("./fixtures");
 const MockGen = require("./MockGen");
+const server = require("../index");
 
 chai.use(chaiHttp);
 
@@ -45,7 +46,7 @@ localhost:${Environment.getGurrentPort()}${endpoint} in ENV: ${environment}?`,
 
     const { count } = inputResponses;
 
-    MockGen.startAPI();
+    MockGen.startAPI(server());
     MockGen.callEndpoint(count, endpoint, PostServicePayload);
   } catch (err) {
     console.log(err);

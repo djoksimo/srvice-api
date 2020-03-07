@@ -3,7 +3,9 @@ require("dotenv").config();
 const { ServiceManagerTest, OfferingManagerTest } = require("./managers");
 const { ServiceServiceTest } = require("./services");
 const { ServiceRoutesTest, OfferingRoutesTest, AuthenticationRoutesTest } = require("./http");
-const { Environment } = require("../values");
+const { Environment } = require("../src/values");
+
+const server = require("../src/index");
 
 process.env.NODE_ENV = "TEST";
 
@@ -12,6 +14,8 @@ if (Environment.getCurrentNodeEnv() !== Environment.TEST) {
   console.log("Set your NODE_ENV as TEST");
   process.exit(1);
 }
+
+server(5001);
 
 const tests = [
   // Service Tests
