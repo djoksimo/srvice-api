@@ -58,7 +58,21 @@ class ServiceService {
 
   findServiceById(id) {
     return ServiceModel.findById(id)
-      .populate(["serviceRatings", "offerings"])
+      .populate([
+        {
+          path: "serviceRatings",
+        },
+        {
+          path: "agent",
+          select: "firstName lastName averageServiceRating pictureUrls",
+          populate: [
+            {
+              path: "services",
+              select: "title averageServiceRating inCall outCall remoteCall",
+            },
+          ],
+        },
+      ])
       .exec();
   }
 
