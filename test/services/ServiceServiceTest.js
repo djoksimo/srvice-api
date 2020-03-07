@@ -8,11 +8,9 @@ const {
 } = require("../../src/container");
 const { ServiceModel } = require("../../src/models");
 const { HealthyService, InvalidMongoID } = require("../fixtures");
-const MockGen = require("../../src/mock/MockGen");
 
 class ServiceServiceTest {
   constructor() {
-    MockGen.startAPI();
     this.serviceService = serviceService;
   }
   async start() {

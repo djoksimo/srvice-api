@@ -6,16 +6,12 @@ const { describe } = require("mocha");
 
 const { HealthyService, MockAgentCredentials } = require("../fixtures");
 const { ServiceModel } = require("../../src/models");
-const MockGen = require("../../src/mock/MockGen");
+const MockGen = require("../../mock/MockGen");
 const { HTTPVerbs } = require("../../src/enums");
 
 chai.use(chaiHttp);
 
 class ServiceRoutesTest {
-  constructor() {
-    MockGen.startAPI();
-  }
-
   async start() {
     describe("/service route tests", () => {
       this.testPostService();
