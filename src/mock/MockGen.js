@@ -6,9 +6,12 @@ const { FileUtils, OutputUtils } = require("../utils");
 const { HTTPVerbs } = require("../enums");
 
 class MockGen {
-  static startAPI() {
-    const server = require("../index");
-    chai.request(server).get("/"); // initialize server
+  static startAPI(server) {
+    if (server) {
+      chai.request(server).get("/"); // initialize server
+    } else {
+      console.error("No server provided");
+    }
   }
 
   static async writeResultsToFile(mockRequests, fileName, successMessage) {

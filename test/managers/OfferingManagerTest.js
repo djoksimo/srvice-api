@@ -6,12 +6,11 @@ const chai = require("chai");
 const { describe } = require("mocha");
 const mongodb = require("mongodb");
 
-const server = require("../../index");
 const {
   cradle: { offeringManager, serviceManager },
-} = require("../../container");
+} = require("../../src/container");
 
-const { OfferingModel, ServiceModel } = require("../../models/");
+const { OfferingModel, ServiceModel } = require("../../src/models/");
 const { HealthyOffering, HealthyService, MockAgentCredentials } = require("../fixtures/");
 const TestUtils = require("../TestUtils");
 
@@ -19,7 +18,6 @@ chai.use(chaiHttp);
 
 class OfferingManagerTest {
   constructor() {
-    chai.request(server).get("/");
     this.offeringManager = offeringManager;
     this.serviceManager = serviceManager;
   }

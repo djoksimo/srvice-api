@@ -1,5 +1,4 @@
 global.fetch = require("node-fetch");
-const http = require("http");
 const express = require("express");
 const morgan = require("morgan");
 const pino = require("express-pino-logger")();
@@ -28,6 +27,7 @@ const {
   ChatRoutes,
 } = require("./routes");
 const { Environment, Warning } = require("./values");
+const { createServer } = require("./utils");
 
 const env = Environment.getCurrentNodeEnv();
 
@@ -123,11 +123,10 @@ app.use((error, req, res, next) => {
   next();
 });
 
-const port = Environment.getGurrentPort();
-app.set("port", port);
+if (Environment.getCurrentNodeEnv() !== Environment.TEST) {
+  const defaultPort = Environment.getGurrentPort();
+  app.set("port", defaultPort);
+  createServer(app, defaultPort);
+}
 
-const server = http.createServer(app);
-
-server.listen(port, () => console.log(`Srvice REST API listening on port: ${port}`));
-
-module.exports = server;
+module.exports = (customPort = defaultPort) => createServer(app, customPort);
