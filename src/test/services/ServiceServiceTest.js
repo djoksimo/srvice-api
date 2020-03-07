@@ -3,7 +3,9 @@ process.env.NODE_ENV = "TEST";
 const assert = require("assert");
 const { describe } = require("mocha");
 
-const { ServiceService } = require("../../bottle");
+const {
+  cradle: { serviceService },
+} = require("../../container");
 const { ServiceModel } = require("../../models");
 const { HealthyService, InvalidMongoID } = require("../fixtures");
 const MockGen = require("../../mock/MockGen");
@@ -11,7 +13,7 @@ const MockGen = require("../../mock/MockGen");
 class ServiceServiceTest {
   constructor() {
     MockGen.startAPI();
-    this.serviceService = ServiceService;
+    this.serviceService = serviceService;
   }
   async start() {
     describe("ServiceService tests", () => {

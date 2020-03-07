@@ -1,10 +1,11 @@
 const express = require("express");
 
-const Bottle = require("../bottle");
+const {
+  cradle: { userManager },
+} = require("../container");
 const { HttpUtils } = require("../utils");
 
 const router = express.Router();
-const userManager = Bottle.UserManager;
 // TODO: secure this
 
 router.get("/:id", async (req, res) => {

@@ -1,10 +1,11 @@
 const Express = require("express");
 
-const Bottle = require("../bottle");
+const {
+  cradle: { categoryManager },
+} = require("../container");
 const { HttpUtils } = require("../utils");
 
 const router = Express.Router();
-const categoryManager = Bottle.CategoryManager;
 
 router.get("/home", async (req, res) => {
   HttpUtils.sendResponse(res, await categoryManager.getHomeCategories());
