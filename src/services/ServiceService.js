@@ -68,7 +68,7 @@ class ServiceService {
           populate: [
             {
               path: "services",
-              select: "title averageServiceRating inCall outCall remoteCall",
+              select: "title averageServiceRating inCall outCall remoteCall profilePictureUrl",
             },
           ],
         },
