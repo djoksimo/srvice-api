@@ -13,7 +13,7 @@
     "start": "nodemon",
     "lint": "npx eslint src/* --color --quiet",
     "postlint": "echo No lint errors! 🎉",
-    "gen": "node src/mock/CLIGen.js",
+    "gen": "node mock/CLIGen.js",
     "postgen": "echo Srvice Mockgen tool ran successfully 🎉",
     "prettier": "prettier --check \"./src/**/{*.js,*.json}\"",
     "postprettier": "echo No formatting errors! 🎉",

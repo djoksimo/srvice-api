@@ -1,0 +1,57 @@
+~~~RESULT #1~~~~:
+{
+  "req": {
+    "method": "post",
+    "url": "http://localhost:5000/service",
+    "data": {
+      "agent": "5cdf5367cbc99526685bd64f",
+      "category": "5d116f5d4c533b38dab4e0f0",
+      "title": "Mock Service",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit,  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+      "pictureUrls": [
+        "https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/baby_ja7a.svg",
+        "https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/baby_ja7a.svg",
+        "https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/baby_ja7a.svg"
+      ],
+      "phone": "4161234567",
+      "email": "mosss@gmail.com",
+      "inCall": false,
+      "outCall": true,
+      "remoteCall": false,
+      "address": "3530 Atwater Ave, Montreal, QC H3H 1Y5",
+      "latitude": 45.304922,
+      "longitude": -73.589814,
+      "radius": 3,
+      "averageServiceRating": 0,
+      "serviceRatings": [],
+      "offerings": []
+    },
+    "headers": {
+      "user-agent": "node-superagent/3.8.3",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1vc3NzQGdtYWlsLmNvbSIsImlhdCI6MTU2NDYyMTYyNH0.dAjG8fwnFFXmk6VEVvjcD5fquUrr0-pZQfRzghVFIhQ",
+      "agentid": "5cdf5367cbc99526685bd64f",
+      "email": "mosss@gmail.com",
+      "content-type": "application/json"
+    }
+  },
+  "header": {
+    "x-dns-prefetch-control": "off",
+    "x-frame-options": "SAMEORIGIN",
+    "strict-transport-security": "max-age=15552000; includeSubDomains",
+    "x-download-options": "noopen",
+    "x-content-type-options": "nosniff",
+    "x-xss-protection": "1; mode=block",
+    "vary": "Origin, Accept-Encoding",
+    "access-control-allow-origin": "*",
+    "access-control-allow-headers": "*",
+    "content-type": "application/json; charset=utf-8",
+    "content-length": "2",
+    "etag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\"",
+    "date": "Sat, 07 Mar 2020 07:48:35 GMT",
+    "connection": "close"
+  },
+  "status": 403,
+  "text": "{}"
+}
+response: {}
+~~~~~~~

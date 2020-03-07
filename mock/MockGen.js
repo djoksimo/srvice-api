@@ -2,15 +2,13 @@ const chai = require("chai");
 require("dotenv").config();
 
 const { PostServicePayload, MockAgentCredentials } = require("./fixtures");
-const { FileUtils, OutputUtils } = require("../utils");
-const { HTTPVerbs } = require("../enums");
+const { FileUtils, OutputUtils } = require("../src/utils");
+const { HTTPVerbs } = require("../src/enums");
 
 class MockGen {
   static startAPI(server) {
     if (server) {
       chai.request(server).get("/"); // initialize server
-    } else {
-      console.error("No server provided");
     }
   }
 
@@ -113,7 +111,7 @@ class MockGen {
       mockRequests.push(endRequestPromise);
     }
 
-    const fileName = `src/mock/srvice-mock-data-${new Date().getTime().toString()}.txt`;
+    const fileName = `mock/srvice-mock-data-${new Date().getTime().toString()}.txt`;
     const successMessage = `Logged results of calling POST ${host}${endpoint} ${callCount} times in ${fileName}`;
     MockGen.writeResultsToFile(mockRequests, fileName, successMessage);
   }

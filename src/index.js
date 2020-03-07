@@ -123,8 +123,9 @@ app.use((error, req, res, next) => {
   next();
 });
 
+const defaultPort = Environment.getGurrentPort();
+
 if (Environment.getCurrentNodeEnv() !== Environment.TEST) {
-  const defaultPort = Environment.getGurrentPort();
   app.set("port", defaultPort);
   createServer(app, defaultPort);
 }
