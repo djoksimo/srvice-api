@@ -16,7 +16,6 @@ class ServiceRatingManager {
     friendlinessRating,
     comment,
     date,
-    agentId,
   }) {
     const newServiceRating = new ServiceRatingModel({
       user,
