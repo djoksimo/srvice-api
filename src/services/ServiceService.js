@@ -88,6 +88,10 @@ class ServiceService {
     return ServiceModel.findByIdAndUpdate(service._id, service, { new: true }).exec();
   }
 
+  async updateServiceWithoutOwnership(partialServiceDocument) {
+    return ServiceModel.findByIdAndUpdate(partialServiceDocument._id, partialServiceDocument, { new: true }).exec();
+  }
+
   async removeService(serviceId, agentId) {
     const isOwner = await ServiceService.isOwner(serviceId, agentId);
     if (!isOwner) {
@@ -98,7 +102,7 @@ class ServiceService {
   }
 
   addServiceRatingToService(serviceId, serviceRatingId) {
-    return ServiceModel.findByIdAndUpdate(serviceId, { $push: { serviceRatings: serviceRatingId } }).exec();
+    return ServiceModel.findByIdAndUpdate(serviceId, { $push: { serviceRatings: serviceRatingId }, new: true }).exec();
   }
 
   async addOfferingToService(serviceId, offeringId, agentId) {
