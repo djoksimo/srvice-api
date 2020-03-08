@@ -64,11 +64,11 @@ class ServiceService {
         },
         {
           path: "agent",
-          select: "firstName lastName averageServiceRating pictureUrls",
+          select: "firstName lastName averageServiceRating pictureUrls profilePictureUrl",
           populate: [
             {
               path: "services",
-              select: "title averageServiceRating inCall outCall remoteCall profilePictureUrl",
+              select: "title averageServiceRating inCall outCall remoteCall",
             },
           ],
         },
