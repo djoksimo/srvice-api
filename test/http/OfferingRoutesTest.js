@@ -6,7 +6,7 @@ const { describe } = require("mocha");
 
 const { HealthyService, MockAgentCredentials, HealthyOffering } = require("../fixtures/");
 const { ServiceModel, OfferingModel } = require("../../src/models/");
-const MockGen = require("../../src/mock/MockGen");
+const MockGen = require("../../mock/MockGen");
 const { HTTPVerbs } = require("../../src/enums");
 
 chai.use(chaiHttp);
