@@ -72,6 +72,9 @@ class ServiceService {
             },
           ],
         },
+        {
+          path: "offerings",
+        },
       ])
       .exec();
   }
