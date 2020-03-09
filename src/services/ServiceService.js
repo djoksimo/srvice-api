@@ -58,7 +58,7 @@ class ServiceService {
 
   findServiceById(id) {
     return ServiceModel.findById(id)
-      .populate("serviceRatings")
+      .populate(["serviceRatings", "offerings"])
       .exec();
   }
 
@@ -79,7 +79,8 @@ class ServiceService {
     if (!isOwner) {
       throw new Error("NICE TRY");
     }
-    return ServiceModel.deleteOne({ _id: serviceId }).exec();
+
+    return ServiceModel.findByIdAndUpdate(serviceId, { isDeleted: true }, { new: true }).exec();
   }
 
   addServiceRatingToService(serviceId, serviceRatingId) {
