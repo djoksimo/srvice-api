@@ -24,12 +24,20 @@ class ServiceRatingService {
     return serviceRating.save();
   }
 
-  async updateServiceRating(serviceRating, userId) {
-    const isOwner = await ServiceRatingService.isOwner(serviceRating._id, userId);
+  async updateServiceRatingWithoutAuth(partialServiceRating) {
+    const isOwner = await ServiceRatingService.isOwner(partialServiceRating._id, userId);
     if (!isOwner) {
       throw new Error("NICE TRY");
     }
-    return ServiceRatingModel.updateOne({ _id: serviceRating._id }, { $set: serviceRating }).exec();
+    return ServiceRatingModel.updateOne({ _id: partialServiceRating._id }, { $set: partialServiceRating }).exec();
+  }
+
+  async updateServiceRating(partialServiceRating, userId) {
+    const isOwner = await ServiceRatingService.isOwner(partialServiceRating._id, userId);
+    if (!isOwner) {
+      throw new Error("NICE TRY");
+    }
+    return ServiceRatingModel.updateOne({ _id: partialServiceRating._id }, { $set: partialServiceRating }).exec();
   }
 }
 
