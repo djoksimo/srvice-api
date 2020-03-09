@@ -14,6 +14,7 @@ const serviceRatingSchema = Schema(
     friendlinessRating: { type: Number, required: false },
     comment: { type: String, required: true },
     date: { type: Date, required: true },
+    isDeleted: { type: Boolean, required: true, default: false },
   },
   { versionKey: false },
 );

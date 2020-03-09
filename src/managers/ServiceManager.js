@@ -12,9 +12,11 @@ class ServiceManager {
     return MAX_IN_CALL_DISTANCE;
   }
 
-  constructor(serviceService, agentService) {
+  constructor(serviceService, agentService, offeringService, serviceRatingService) {
     this.serviceService = serviceService;
     this.agentService = agentService;
+    this.offeringService = offeringService;
+    this.serviceRatingService = serviceRatingService;
     this.categoryToServiceMap = {};
   }
 
@@ -129,10 +131,28 @@ class ServiceManager {
 
   async deleteService(serviceId, authHeaders) {
     try {
+      const serviceDocument = await this.serviceService.findServiceById(serviceId);
+
+      if (serviceDocument && serviceDocument.isDeleted) {
+        return { status: 400, json: { message: "Service already deleted" } };
+      }
+
+      await Promise.all([
+        ...serviceDocument.offerings.map((offering) => {
+          offering.isDeleted = true;
+          return this.offeringService.updateOffering(offering, authHeaders.agentId);
+        }),
+        ...serviceDocument.serviceRatings.map((serviceRating) => {
+          serviceRating.isDeleted = true;
+          return this.serviceRatingService.updateServiceRatingWithoutAuth(serviceRating);
+        }),
+      ]);
+
       const result = await this.serviceService.removeService(serviceId, authHeaders.agentId);
-      // TODO remove offerings and all other sub-documents in service (offerings, ratings, etc)
+
       return { status: 200, json: result };
     } catch (error) {
+      console.log(error);
       return { status: 500, json: { error: error.toString() } };
     }
   }

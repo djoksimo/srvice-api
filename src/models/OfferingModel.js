@@ -11,6 +11,7 @@ const offeringSchema = Schema(
     price: { type: Number, required: true },
     description: { type: String, required: false },
     agent: { type: ObjectId, ref: "Agent", required: true },
+    isDeleted: { type: Boolean, required: true, default: false },
   },
   { versionKey: false },
 );
