@@ -1,5 +1,4 @@
 global.fetch = require("node-fetch");
-const http = require("http");
 const express = require("express");
 const morgan = require("morgan");
 const pino = require("express-pino-logger")();
@@ -28,6 +27,7 @@ const {
   ChatRoutes,
 } = require("./routes");
 const { Environment, Warning } = require("./values");
+const { createServer } = require("./utils");
 
 const env = Environment.getCurrentNodeEnv();
 
@@ -38,6 +38,7 @@ switch (env) {
       .connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", {
         useNewUrlParser: true,
         useFindAndModify: false,
+        useUnifiedTopology: true,
       })
       .catch((error) => console.log(error));
     break;
@@ -47,6 +48,7 @@ switch (env) {
       .connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", {
         useNewUrlParser: true,
         useFindAndModify: false,
+        useUnifiedTopology: true,
       })
       .catch((error) => console.log(error));
     break;
@@ -55,7 +57,7 @@ switch (env) {
     mongoose
       .connect(
         "mongodb+srv://danilo-admin:Password123@srvice-cluster-xxb6t.mongodb.net/test?retryWrites=true&w=majority",
-        { useNewUrlParser: true, useFindAndModify: false },
+        { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true },
       )
       .catch((error) => console.log(error));
     break;
@@ -123,11 +125,11 @@ app.use((error, req, res, next) => {
   next();
 });
 
-const port = Environment.getGurrentPort();
-app.set("port", port);
+const defaultPort = Environment.getGurrentPort();
 
-const server = http.createServer(app);
+if (Environment.getCurrentNodeEnv() !== Environment.TEST) {
+  app.set("port", defaultPort);
+  createServer(app, defaultPort);
+}
 
-server.listen(port, () => console.log(`Srvice REST API listening on port: ${port}`));
-
-module.exports = server;
+module.exports = (customPort = defaultPort) => createServer(app, customPort);

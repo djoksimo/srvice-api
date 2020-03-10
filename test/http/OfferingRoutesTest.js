@@ -4,19 +4,14 @@ const mongodb = require("mongodb");
 const chai = require("chai");
 const { describe } = require("mocha");
 
-const server = require("../../index");
 const { HealthyService, MockAgentCredentials, HealthyOffering } = require("../fixtures/");
-const { ServiceModel, OfferingModel } = require("../../models/");
+const { ServiceModel, OfferingModel } = require("../../src/models/");
 const MockGen = require("../../mock/MockGen");
-const { HTTPVerbs } = require("../../enums");
+const { HTTPVerbs } = require("../../src/enums");
 
 chai.use(chaiHttp);
 
 class OfferingRoutesTest {
-  constructor() {
-    chai.request(server).get("/");
-  }
-
   async start() {
     describe("/offering route tests", () => {
       this.testPostOffering();
@@ -38,7 +33,7 @@ class OfferingRoutesTest {
 
     describe("/POST offering", () => {
       it("it should POST an offering successfully", (done) => {
-        const host = "http://localhost:5000";
+        const host = "http://localhost:5001";
 
         // generate service and attach service ID
         MockGen.getChaiRequest("/service", HTTPVerbs.POST, host, MockAgentCredentials, HealthyService).end(
@@ -78,7 +73,7 @@ class OfferingRoutesTest {
 
     describe("/PATCH offering", () => {
       it("it should PATCH an offering successfully", (done) => {
-        const host = "http://localhost:5000";
+        const host = "http://localhost:5001";
 
         // generate service and attach service ID
         MockGen.getChaiRequest("/service", HTTPVerbs.POST, host, MockAgentCredentials, HealthyService).end(

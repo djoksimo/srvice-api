@@ -6,4 +6,5 @@ module.exports = {
   ArrayUtils: require("./ArrayUtils"),
   FileUtils: require("./FileUtils"),
   OutputUtils: require("./OutputUtils"),
+  createServer: require("./createServer"),
 };
