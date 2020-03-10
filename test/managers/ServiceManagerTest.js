@@ -6,18 +6,17 @@ const chai = require("chai");
 const { describe } = require("mocha");
 const mongodb = require("mongodb");
 
-const server = require("../../index");
 const {
   cradle: { serviceManager },
-} = require("../../container");
-const { ServiceModel } = require("../../models/");
-const { HealthyService } = require("../fixtures/");
+} = require("../../src/container");
+const { ServiceModel } = require("../../src/models");
+const { HealthyService } = require("../fixtures");
+const { createMockService } = require("../utilities");
 
 chai.use(chaiHttp);
 
 class ServiceManagerTest {
   constructor() {
-    chai.request(server).get("/");
     this.serviceManager = serviceManager;
   }
 
@@ -71,7 +70,9 @@ class ServiceManagerTest {
       });
 
       it("Should return service by id", async () => {
-        const res = await this.serviceManager.createService(HealthyService);
+        const mockService = createMockService();
+        const res = await this.serviceManager.createService(createMockService(mockService));
+
         const resGetService = await this.serviceManager.getServiceById({ id: res.json.serviceId });
 
         assert.strictEqual(resGetService.status, 200, "Fail: Status should be 200");
@@ -80,17 +81,11 @@ class ServiceManagerTest {
           res.json.serviceId.toString(),
           "Fail: Returned incorrect service",
         );
-        Object.keys(HealthyService).forEach((x) => {
-          if (x in resGetService.json) {
-            assert.strictEqual(
-              JSON.stringify(resGetService.json[x]),
-              JSON.stringify(HealthyService[x]),
-              "Fail: Returned wrong value for " + x,
-            );
-          } else {
-            assert.ok(false, "Fail: " + x + " should be in the body");
-          }
-        });
+
+        assert.strictEqual(resGetService.json.title, mockService.title, "Fail: service title is inaccurate");
+
+        const doesAgentHaveServices = resGetService.json.agent.services.length > 0;
+        assert.ok(doesAgentHaveServices, "Fail: services not populated correctly");
       });
 
       it("Should not return any service", async () => {

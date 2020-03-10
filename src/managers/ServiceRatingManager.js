@@ -16,7 +16,6 @@ class ServiceRatingManager {
     friendlinessRating,
     comment,
     date,
-    agentId,
   }) {
     const newServiceRating = new ServiceRatingModel({
       user,
@@ -37,7 +36,7 @@ class ServiceRatingManager {
       const overallRatings = serviceRatings.map((rating) => rating.overallRating);
       serviceDocument.averageServiceRating = CalculationUtils.average(overallRatings, 0);
 
-      await this.serviceService.updateService(serviceDocument, agentId);
+      await this.serviceService.updateServiceWithoutOwnership(serviceDocument);
       return { status: 201, json: {} };
     } catch (error) {
       console.log(error);

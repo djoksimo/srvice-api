@@ -3,15 +3,9 @@ const chaiHttp = require("chai-http");
 const chai = require("chai");
 const { describe } = require("mocha");
 
-const server = require("../../index");
-
 chai.use(chaiHttp);
 
 class AuthenticationRoutesTest {
-  constructor() {
-    chai.request(server).get("/");
-  }
-
   async start() {
     describe("/auth route tests", () => {
       this.testAdminConfirmAccount();
@@ -21,7 +15,7 @@ class AuthenticationRoutesTest {
   testAdminConfirmAccount() {
     describe("/POST auth/admin/confirm", () => {
       it("should fail to confirm an account due to invalid authentication", (done) => {
-        const host = "http://localhost:5000";
+        const host = "http://localhost:5001";
 
         const body = {
           email: "mock@email.com",

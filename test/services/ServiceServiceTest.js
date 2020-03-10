@@ -5,14 +5,12 @@ const { describe } = require("mocha");
 
 const {
   cradle: { serviceService },
-} = require("../../container");
-const { ServiceModel } = require("../../models");
+} = require("../../src/container");
+const { ServiceModel } = require("../../src/models");
 const { HealthyService, InvalidMongoID } = require("../fixtures");
-const MockGen = require("../../mock/MockGen");
 
 class ServiceServiceTest {
   constructor() {
-    MockGen.startAPI();
     this.serviceService = serviceService;
   }
   async start() {
