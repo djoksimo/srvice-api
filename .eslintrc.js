@@ -26,5 +26,6 @@ module.exports = {
     "generator-star-spacing": "off",
     "arrow-parens": "off",
     "wrap-iife": "off",
+    "no-mixed-operators": "warn",
   },
 };
