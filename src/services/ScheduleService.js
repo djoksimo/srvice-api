@@ -1,4 +1,9 @@
+const moment = require("moment");
+
 const { ScheduleModel } = require("../models");
+const { Weekdays } = require("../values");
+
+const SLOT_INTERVAL_IN_MIN = 5;
 
 class ScheduleService {
   static isOwner(scheduleId, agentId) {
@@ -44,6 +49,102 @@ class ScheduleService {
         },
       },
     ).exec();
+  }
+
+  findScheduleById(scheduleId) {
+    return ScheduleModel.findById(scheduleId).exec();
+  }
+
+  generateAvailabilityCandidates(offeringDurationInMin, startDateString, endDateString) {
+    if (offeringDurationInMin < SLOT_INTERVAL_IN_MIN && offeringDurationInMin > 24) {
+      throw new Error(`offeringDurationInMin does not satisfy ${SLOT_INTERVAL_IN_MIN} <=offeringDurationInMin <= 24 `);
+    }
+
+    const startDate = new Date(startDateString);
+    const endDate = new Date(endDateString);
+
+    const availableSlots = [];
+
+    for (
+      let startSecondsIndex = startDate.getTime();
+      startSecondsIndex < endDate.getTime();
+      startSecondsIndex += SLOT_INTERVAL_IN_MIN * 60 * 1000 // increment by 5 minutes
+    ) {
+      const endTime = startSecondsIndex + offeringDurationInMin * (60 * 1000);
+      availableSlots.push({
+        start: new Date(startSecondsIndex),
+        end: new Date(endTime),
+      });
+    }
+
+    return availableSlots;
+  }
+
+  filterOutUnviableSlot(availableSlots, scheduleDocument) {
+    return availableSlots.filter((slot) => {
+      const foundWorkDay = scheduleDocument.availability.find(
+        (workHourSlot) =>
+          Weekdays.getWeekdayStringFromDate(slot.start).toLowerCase() === workHourSlot.weekday.toLowerCase(),
+      );
+
+      // filter out otpions that do not align with the Agent's work hours
+      if (!foundWorkDay) {
+        return false;
+      }
+
+      if (slot.start.getHours() < foundWorkDay.start || slot.end.getHours() > foundWorkDay.end) {
+        return false;
+      }
+
+      // filter out options that overlap with existing bookings
+      if (
+        scheduleDocument.bookings.find(
+          (booking) =>
+            moment(slot.start).isBetween(moment(booking.start), moment(booking.end), "()") ||
+            moment(slot.end).isBetween(moment(booking.start), moment(booking.end), "()") ||
+            moment(booking.start).isBetween(moment(slot.start), moment(slot.end), "()") ||
+            moment(booking.end).isBetween(moment(slot.start), moment(slot.end), "()"),
+        )
+      ) {
+        return false;
+      }
+
+      return true;
+    });
+  }
+
+  getCategorizedSlotsByDate(availableSlots) {
+    if (!availableSlots.length) {
+      return {};
+    }
+
+    const datesAreOnSameDay = (first, second) =>
+      first.getUTCFullYear() === second.getUTCFullYear() &&
+      first.getUTCMonth() === second.getUTCMonth() &&
+      first.getUTCDate() === second.getUTCDate();
+
+    const getDateString = (date) => moment.utc(date).format("MMMM Do YYYY");
+
+    const datesObject = {};
+
+    let currentDateString = getDateString(availableSlots[0].start);
+    let currentDate = availableSlots[0].start;
+
+    availableSlots.forEach((slot) => {
+      if (datesAreOnSameDay(slot.start, currentDate)) {
+        if (datesObject[currentDateString]) {
+          datesObject[currentDateString].push(slot);
+        } else {
+          datesObject[currentDateString] = [slot];
+        }
+      } else {
+        currentDate = slot.start;
+        currentDateString = getDateString(slot.start);
+        datesObject[currentDateString] = [slot];
+      }
+    });
+
+    return datesObject;
   }
 }
 

@@ -17,6 +17,10 @@ const isAuthenticated = (req, res, callback) => {
     .catch(() => res.status(403).json({}));
 };
 
+router.get("/available-slots", async (req, res) => {
+  HttpUtils.sendResponse(res, await scheduleManager.getAvailableSlots(req.query));
+});
+
 router.post("/", (req, res) =>
   isAuthenticated(req, res, async () => {
     HttpUtils.sendResponse(res, await scheduleManager.createSchedule(req.body));

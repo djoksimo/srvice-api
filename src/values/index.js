@@ -6,4 +6,5 @@ module.exports = {
   Warning: require("./Warning"),
   AdminCredentials: require("./AdminCredentials"),
   AWSValues: require("./AWSValues"),
+  Weekdays: require("./Weekdays"),
 };
