@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const { ServiceManagerTest, OfferingManagerTest } = require("./managers");
-const { ServiceServiceTest } = require("./services");
+const { ServiceServiceTest, ScheduleServiceTest } = require("./services");
 const { ServiceRoutesTest, OfferingRoutesTest, AuthenticationRoutesTest } = require("./http");
 const { Environment } = require("../src/values");
 
@@ -29,6 +29,9 @@ const tests = [
 
   // Authentication Tests
   new AuthenticationRoutesTest(),
+
+  // Schedule Tests
+  new ScheduleServiceTest(),
 ];
 
 tests.forEach(async (test) => {
