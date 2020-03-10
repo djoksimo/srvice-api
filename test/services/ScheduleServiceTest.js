@@ -26,7 +26,7 @@ class ScheduleServiceTest {
         const availabilityCandidates = this.scheduleService.generateAvailabilityCandidates(
           5,
           new Date("June 11, 1999").toUTCString(),
-          new Date("June 12, 1999"),
+          new Date("June 12, 1999").toUTCString(),
         );
 
         it("Each slot is SLOT_INTERVAL_IN_MIN minutes apart", () => {
