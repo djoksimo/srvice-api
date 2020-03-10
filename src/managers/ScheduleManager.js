@@ -27,6 +27,27 @@ class ScheduleManager {
     }
   }
 
+  async getAvailableSlots({ scheduleId, offeringDurationInMin, startDateString, endDateString }) {
+    try {
+      const scheduleDocument = await this.scheduleService.findScheduleById(scheduleId);
+
+      let availableSlots = this.scheduleService.generateAvailabilityCandidates(
+        offeringDurationInMin,
+        startDateString,
+        endDateString,
+      );
+
+      availableSlots = this.scheduleService.filterOutUnviableSlot(availableSlots, scheduleDocument);
+
+      const categorizedSlotsByDate = this.scheduleService.getCategorizedSlotsByDate(availableSlots);
+
+      return { status: 200, json: categorizedSlotsByDate };
+    } catch (error) {
+      console.log(error);
+      return { status: 500, json: { error: error.toString() } };
+    }
+  }
+
   async patchSchedule(schedule, authHeaders) {
     try {
       const result = await this.scheduleService.updateSchedule(schedule, authHeaders.agentId);
