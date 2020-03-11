@@ -37,7 +37,11 @@ class ScheduleManager {
         endDateString,
       );
 
-      availableSlots = this.scheduleService.filterOutUnviableSlot(availableSlots, scheduleDocument);
+      availableSlots = this.scheduleService.filterOutUnviableSlot(
+        availableSlots,
+        scheduleDocument,
+        offeringDurationInMin,
+      );
 
       const categorizedSlotsByDate = this.scheduleService.getCategorizedSlotsByDate(availableSlots);
 
