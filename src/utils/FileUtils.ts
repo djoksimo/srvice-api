@@ -1,6 +1,6 @@
-const fs = require("fs");
+import fs from "fs";
 
-class FileUtils {
+export class FileUtils {
   static async asyncWriteToFileOnce(fileName, content) {
     return new Promise((resolve, reject) => {
       fs.writeFile(fileName, content, (err) => {
@@ -12,5 +12,3 @@ class FileUtils {
     });
   }
 }
-
-module.exports = FileUtils;

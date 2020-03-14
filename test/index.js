@@ -5,7 +5,7 @@ const { ServiceServiceTest, ScheduleServiceTest } = require("./services");
 const { ServiceRoutesTest, OfferingRoutesTest, AuthenticationRoutesTest } = require("./http");
 const { Environment } = require("../src/values");
 
-const server = require("../src/index");
+const index = require("../src");
 
 process.env.NODE_ENV = "TEST";
 
@@ -15,7 +15,7 @@ if (Environment.getCurrentNodeEnv() !== Environment.TEST) {
   process.exit(1);
 }
 
-server(5001);
+index(5001);
 
 const tests = [
   // Service Tests

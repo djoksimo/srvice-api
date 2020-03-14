@@ -1,5 +1,5 @@
 {
-  "env": {
-    "DOMAIN": "localhost:27017"
-  }
+  "watch": ["src"],
+  "ext": "ts",
+  "exec": "ts-node ./src/index.ts"
 }
