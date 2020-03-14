@@ -1,12 +1,13 @@
-import { AuthHeaders } from "../types";
+import { Request, Response } from "express";
+import { AuthHeaders, HttpResult } from "types";
 
 export class HttpUtils {
-  static sendResponse(response, result) {
+  static sendResponse(response: Response, result: HttpResult) {
     const { status, json } = result;
     response.status(status).json(json);
   }
 
-  static parseAuthHeaders(request) {
+  static parseAuthHeaders(request: Request) {
     const headers: AuthHeaders = {
       token: request.header("token"),
       email: request.header("email"),

@@ -1,7 +1,7 @@
-import uuidv4 from "uuid/v4";
+import { v4 } from "uuid";
 
 export class UuidUtils {
   static generateUUID() {
-    return `${uuidv4()}${uuidv4()}`;
+    return `${v4()}${v4()}`;
   }
 }

@@ -1,5 +1,9 @@
 export class ArrayUtils {
-  static *filterWithLimit(array, condition, maxSize) {
+  static *filterWithLimit(
+    array: any[],
+    filter: (element: Parameters<typeof ArrayUtils.filterWithLimit>[0][0]) => boolean,
+    maxSize: number,
+  ) {
     if (!maxSize || maxSize > array.length) {
       // eslint-disable-next-line no-param-reassign
       maxSize = array.length;
@@ -7,7 +11,7 @@ export class ArrayUtils {
     let count = 0;
     let i = 0;
     while (count < maxSize && i < array.length) {
-      if (condition(array[i])) {
+      if (filter(array[i])) {
         yield array[i];
         // eslint-disable-next-line no-plusplus
         count++;

@@ -1,5 +1,5 @@
 export class GoogleUtils {
-  static getPublicUrl(fileName) {
+  static getPublicUrl(fileName: string) {
     return `https://storage.googleapis.com/${fileName}`;
   }
 }

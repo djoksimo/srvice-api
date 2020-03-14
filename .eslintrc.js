@@ -3,9 +3,16 @@ module.exports = {
     es6: true,
     node: true,
   },
+  plugins: ["import"],
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: "module",
+    project: "./tsconfig.json",
+  },
+  settings: {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts"],
+    },
   },
   parser: "@typescript-eslint/parser",
   extends: [
@@ -45,5 +52,7 @@ module.exports = {
     "wrap-iife": "off",
     "no-mixed-operators": "warn",
     "no-plusplus": ["error", { allowForLoopAfterthoughts: true }],
+    "import/prefer-default-export": "off",
+    "import/no-unresolved": "warn",
   },
 };
