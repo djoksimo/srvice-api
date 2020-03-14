@@ -2,6 +2,7 @@ const moment = require("moment");
 
 const { ScheduleModel } = require("../models");
 const { Weekdays } = require("../values");
+const { TimeUtils } = require("../utils");
 
 const SLOT_INTERVAL_IN_MIN = 5;
 
@@ -68,7 +69,7 @@ class ScheduleService {
     for (
       let startSecondsIndex = startDate.getTime();
       startSecondsIndex < endDate.getTime();
-      startSecondsIndex += SLOT_INTERVAL_IN_MIN * 60 * 1000 // increment by 5 minutes
+      startSecondsIndex += TimeUtils.minutesToMilliseconds(SLOT_INTERVAL_IN_MIN) // increment by 5 minutes
     ) {
       const endTime = startSecondsIndex + offeringDurationInMin * (60 * 1000);
       availableSlots.push({
@@ -92,7 +93,17 @@ class ScheduleService {
         return false;
       }
 
-      if (slot.start.getHours() < foundWorkDay.start || slot.end.getHours() > foundWorkDay.end) {
+      const getHourFloat = (date) => date.getUTCHours() + TimeUtils.minutesToHours(date.getUTCMinutes());
+
+      const startHourFloat = getHourFloat(slot.start);
+      const endHourFloat = getHourFloat(slot.end);
+
+      if (
+        startHourFloat < foundWorkDay.start ||
+        endHourFloat > foundWorkDay.end ||
+        endHourFloat < foundWorkDay.start ||
+        startHourFloat > foundWorkDay.end
+      ) {
         return false;
       }
 
