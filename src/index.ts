@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 (global as any).fetch = fetch;
 
-import express, { Request, Response, NextFunction } from "express";
+import express, { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 import pino from "express-pino-logger";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
@@ -121,11 +121,9 @@ app.use((_req: Request, res: Response, next: NextFunction) => {
   next(error);
 });
 
-app.use((error, req, res, next) => {
-  res.status(error.status || 500);
-  res.json({
-    message: `Error: ${error.message}`,
-  });
+app.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
+  res.status(500);
+  res.render("error", { error: err });
   next();
 });
 
