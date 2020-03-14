@@ -1,11 +1,11 @@
 /* eslint-disable no-mixed-operators */
 export class CalculationUtils {
-  static calculateCrowDistance(lat1, lon1, lat2, lon2) {
+  static calculateCrowDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
     const R = 6371;
-    const dLat = this.degreesToRadians(lat2 - lat1);
-    const dLon = this.degreesToRadians(lon2 - lon1);
-    const lat1Deg = this.degreesToRadians(lat1);
-    const lat2Deg = this.degreesToRadians(lat2);
+    const dLat = CalculationUtils.degreesToRadians(lat2 - lat1);
+    const dLon = CalculationUtils.degreesToRadians(lon2 - lon1);
+    const lat1Deg = CalculationUtils.degreesToRadians(lat1);
+    const lat2Deg = CalculationUtils.degreesToRadians(lat2);
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1Deg) * Math.cos(lat2Deg);
@@ -13,11 +13,11 @@ export class CalculationUtils {
     return R * c; // in kilometers
   }
 
-  static degreesToRadians(degrees) {
+  static degreesToRadians(degrees: number) {
     return degrees * (Math.PI / 180);
   }
 
-  static average(numbers, numDecimalPlaces) {
+  static average(numbers: number[], numDecimalPlaces: number) {
     if (numbers.length !== 0) {
       let sum = 0;
       numbers.forEach((num) => (sum += num));

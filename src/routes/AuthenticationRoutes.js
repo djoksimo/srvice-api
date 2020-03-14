@@ -1,12 +1,12 @@
-const express = require("express");
+import { Router } from "express";
 
-const {
-  cradle: { authenticationManager },
-} = require("../container");
-const { HttpUtils } = require("../utils");
-const { AdminCredentials } = require("../values");
+import { cradle } from "../container";
+import { HttpUtils } from "../utils";
+import { AdminCredentials } from "../values";
 
-const router = express.Router();
+const { authenticationManager } = cradle;
+
+const router = Router();
 
 router.post("/agent/signup", async (req, res) => {
   HttpUtils.sendResponse(res, await authenticationManager.signupAgent(req.body));
@@ -54,4 +54,4 @@ router.post("/resend-confirmation", async (req, res) => {
   HttpUtils.sendResponse(res, await authenticationManager.resendConfirmation(req.body));
 });
 
-module.exports = router;
+export default router;

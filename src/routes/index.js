@@ -1,5 +1,5 @@
 module.exports = {
-  AuthenticationRoutes: require("./AuthenticationRoutes"),
+  AuthenticationRoutes: require("./AuthenticationRoutes").default,
   AgentRoutes: require("./AgentRoutes"),
   UserRoutes: require("./UserRoutes"),
   CategoryRoutes: require("./CategoryRoutes"),
