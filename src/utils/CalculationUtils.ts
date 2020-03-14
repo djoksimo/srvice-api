@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-operators */
-class CalculationUtils {
+export class CalculationUtils {
   static calculateCrowDistance(lat1, lon1, lat2, lon2) {
     const R = 6371;
     const dLat = this.degreesToRadians(lat2 - lat1);
@@ -27,5 +27,3 @@ class CalculationUtils {
     return 0;
   }
 }
-
-module.exports = CalculationUtils;

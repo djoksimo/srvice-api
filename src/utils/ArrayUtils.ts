@@ -1,4 +1,4 @@
-class ArrayUtils {
+export class ArrayUtils {
   static *filterWithLimit(array, condition, maxSize) {
     if (!maxSize || maxSize > array.length) {
       // eslint-disable-next-line no-param-reassign
@@ -17,4 +17,3 @@ class ArrayUtils {
     }
   }
 }
-module.exports = ArrayUtils;

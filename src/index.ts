@@ -1,16 +1,20 @@
-global.fetch = require("node-fetch");
-const express = require("express");
-const morgan = require("morgan");
-const pino = require("express-pino-logger")();
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const compression = require("compression");
-const helmet = require("helmet");
+import fetch from "node-fetch";
+(global as any).fetch = fetch;
 
-require("dotenv").config();
+import express, { Request, Response, NextFunction } from "express";
+import pino from "express-pino-logger";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import cors from "cors";
+import compression from "compression";
+import helmet from "helmet";
+import dotenv from "dotenv";
+import morgan from "morgan";
 
-const {
+dotenv.config();
+pino();
+
+import {
   AuthenticationRoutes,
   AgentRoutes,
   UserRoutes,
@@ -25,9 +29,9 @@ const {
   FileRoutes,
   ScheduleRoutes,
   ChatRoutes,
-} = require("./routes");
-const { Environment, Warning } = require("./values");
-const { createServer } = require("./utils");
+} from "./routes";
+import { Environment, Warning } from "./values";
+import { createServer } from "./utils";
 
 const env = Environment.getCurrentNodeEnv();
 
@@ -69,6 +73,7 @@ const app = express();
 
 app.use(helmet());
 app.use(compression());
+app.use(morgan("dev"));
 
 const allowedOrigins = ["http://localhost:4200", "http://192.168.0.116:4200", "https://srvice.ca"];
 
@@ -78,7 +83,6 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -111,9 +115,9 @@ app.use("/schedule", ScheduleRoutes);
 app.use("/file", FileRoutes);
 app.use("/chat", ChatRoutes);
 
-app.use((req, res, next) => {
+app.use((_req: Request, res: Response, next: NextFunction) => {
   const error = new Error("Route not found");
-  error.status = 404;
+  res.status(404);
   next(error);
 });
 
@@ -132,4 +136,4 @@ if (Environment.getCurrentNodeEnv() !== Environment.TEST) {
   createServer(app, defaultPort);
 }
 
-module.exports = (customPort = defaultPort) => createServer(app, customPort);
+export const index = (customPort = defaultPort) => createServer(app, customPort);

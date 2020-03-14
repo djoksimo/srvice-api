@@ -1,4 +1,4 @@
-class TimeUtils {
+export class TimeUtils {
   static minutesToHours(minutes) {
     return minutes / 60;
   }
@@ -7,5 +7,3 @@ class TimeUtils {
     return minutes * 60 * 1000;
   }
 }
-
-module.exports = TimeUtils;
