@@ -7,4 +7,5 @@ module.exports = {
   FileUtils: require("./FileUtils"),
   OutputUtils: require("./OutputUtils"),
   createServer: require("./createServer"),
+  TimeUtils: require("./TimeUtils"),
 };
