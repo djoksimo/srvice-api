@@ -13,6 +13,4 @@ container.loadModules(["built/services/*.js", "built/managers/*.js"], {
   },
 });
 
-console.log(container);
-
 export const { cradle } = container;

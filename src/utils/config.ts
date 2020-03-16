@@ -17,10 +17,17 @@ dotenv.config({ path });
 
 const { env } = process;
 
-export const Environment = {
+const nodeEnvironments = {
   PRODUCTION: "production",
   DEVELOPMENT: "development",
   TEST: "test",
+};
+
+export const Environment = {
+  ...nodeEnvironments,
+  runningInDev: env.NODE === nodeEnvironments.DEVELOPMENT,
+  runningInProd: env.NODE === nodeEnvironments.PRODUCTION,
+  runningInTest: env.NODE === nodeEnvironments.TEST,
   getCurrentNodeEnv: () => env.NODE_ENV,
   getGurrentPort: () => env.PORT || "5000",
 };
