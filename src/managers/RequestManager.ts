@@ -1,9 +1,40 @@
-const Mongoose = require("mongoose");
+import Mongoose from "mongoose";
 
-const { BookingModel, RequestModel } = require("../models");
+import BookingService from "services/BookingService";
+import ServiceService from "services/ServiceService";
+import AgentPrivateService from "services/AgentPrivateService";
+import RequestService from "services/RequestService";
+import UserPrivateService from "services/UserPrivateService";
+import { ObjectID } from "mongodb";
+import { BookingModel, RequestModel } from "../models";
 
-class RequestManager {
-  constructor(serviceService, bookingService, agentPrivateService, requestService, userPrivateService) {
+interface NewRequestPayload {
+  email: string;
+  userId: ObjectID;
+  description: string;
+  pictureUrls: string[];
+  serviceIds: ObjectID[];
+  booked: boolean;
+}
+
+export default class RequestManager {
+  serviceService: ServiceService;
+
+  bookingService: BookingService;
+
+  agentPrivateService: AgentPrivateService;
+
+  requestService: RequestService;
+
+  userPrivateService: UserPrivateService;
+
+  constructor(
+    serviceService: ServiceService,
+    bookingService: BookingService,
+    agentPrivateService: AgentPrivateService,
+    requestService: RequestService,
+    userPrivateService: UserPrivateService,
+  ) {
     this.serviceService = serviceService;
     this.bookingService = bookingService;
     this.agentPrivateService = agentPrivateService;
@@ -11,12 +42,12 @@ class RequestManager {
     this.userPrivateService = userPrivateService;
   }
 
-  async createRequest({ email, userId: user, description, pictureUrls, serviceIds, booked }) {
+  async createRequest({ email, userId: user, description, pictureUrls, serviceIds, booked }: NewRequestPayload) {
     try {
       const requestId = Mongoose.Types.ObjectId();
       const bookings = await Promise.all(
         serviceIds.map(async (service) => {
-          const serviceDocument = await this.serviceService.findSemiPopulatedAgentServiceById(service);
+          const serviceDocument: any = await this.serviceService.findSemiPopulatedAgentServiceById(service);
           const { agent } = serviceDocument;
           const newBooking = new BookingModel({
             request: requestId,
@@ -42,5 +73,3 @@ class RequestManager {
     }
   }
 }
-
-module.exports = RequestManager;

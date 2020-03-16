@@ -1,11 +1,12 @@
-const Express = require("express");
+import { Router } from "express";
 
-const {
-  cradle: { agentManager, authenticationManager },
-} = require("../container");
-const { HttpUtils } = require("../utils");
+import { cradle } from "../container";
+import { HttpUtils } from "../utils";
 
-const router = Express.Router();
+console.log(cradle.agentManager);
+const { agentManager, authenticationManager } = cradle;
+
+const router = Router();
 
 const isAuthenticated = (req, res, callback) => {
   const authHeaders = HttpUtils.parseAuthHeaders(req);
@@ -31,4 +32,4 @@ router.patch("/", (req, res) =>
   }),
 );
 
-module.exports = router;
+export default router;

@@ -1,13 +1,35 @@
-const { OfferingModel } = require("../models");
+import OfferingService from "services/OfferingService";
+import ServiceService from "services/ServiceService";
+import { ObjectID } from "mongodb";
+import { AuthHeaders, Offering } from "types";
+import { OfferingModel } from "../models";
 
-class OfferingManager {
-  constructor(offeringService, serviceService) {
+interface NewOfferingPayload {
+  serviceId: ObjectID;
+  title: string;
+  duration: number;
+  price: number;
+  description: string;
+  agent: ObjectID;
+}
+
+interface DeleteOfferingPayload {
+  offeringId: ObjectID;
+  serviceId: ObjectID;
+}
+
+export default class OfferingManager {
+  offeringService: OfferingService;
+
+  serviceService: ServiceService;
+
+  constructor(offeringService: OfferingService, serviceService: ServiceService) {
     this.offeringService = offeringService;
     this.serviceService = serviceService;
   }
 
   // TODO switch so that this creates a list of offerings - DANILO
-  async createOffering(payload, authHeaders) {
+  async createOffering(payload: NewOfferingPayload, authHeaders: AuthHeaders) {
     const { serviceId, title, duration, price, description, agent } = payload;
 
     const newOffering = new OfferingModel({
@@ -30,16 +52,16 @@ class OfferingManager {
     }
   }
 
-  async patchOffering(offering, authHeaders) {
+  async patchOffering(partialOfferingData: Partial<Offering>, authHeaders: AuthHeaders) {
     try {
-      const result = await this.offeringService.updateOffering(offering, authHeaders.agentId);
+      const result = await this.offeringService.updateOffering(partialOfferingData, authHeaders.agentId);
       return { status: 200, json: result };
     } catch (error) {
       return { status: 500, json: error };
     }
   }
 
-  async deleteOffering({ offeringId, serviceId }, authHeaders) {
+  async deleteOffering({ offeringId, serviceId }: DeleteOfferingPayload, authHeaders: AuthHeaders) {
     try {
       const offeringResult = await this.offeringService.removeOffering(offeringId, authHeaders.agentId);
       const serviceResult = await this.serviceService.removeOfferingFromService(
@@ -54,5 +76,3 @@ class OfferingManager {
     }
   }
 }
-
-module.exports = OfferingManager;

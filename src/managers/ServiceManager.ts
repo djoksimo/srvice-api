@@ -1,18 +1,81 @@
-const { ServiceModel } = require("../models");
-const { CalculationUtils, ArrayUtils } = require("../utils");
+import ServiceService from "services/ServiceService";
+import OfferingService from "services/OfferingService";
+import AgentService from "services/AgentService";
+import ServiceRatingService from "services/ServiceRatingService";
+import { ObjectID } from "mongodb";
+import { Service, AuthHeaders, Offering, ServiceRating } from "types";
+import { ServiceModel } from "../models";
+import { CalculationUtils, ArrayUtils } from "../utils";
 
 const MAX_CATEGORY_ENTRY_AGE = 600000;
 const MAX_IN_CALL_DISTANCE = 50; // in kilometers
 
+interface NewServicePayload {
+  agent: ObjectID;
+  category: ObjectID;
+  title: Service["title"];
+  description: Service["description"];
+  pictureUrls: Service["pictureUrls"];
+  phone: Service["phone"];
+  email: Service["email"];
+  inCall: Service["inCall"];
+  outCall: Service["outCall"];
+  remoteCall: Service["remoteCall"];
+  address: Service["address"];
+  latitude: Service["latitude"];
+  longitude: Service["longitude"];
+  radius: Service["longitude"];
+  averageServiceRating: Service["averageServiceRating"];
+  serviceRatings: Service["serviceRatings"];
+  offerings: Service["offerings"];
+  viewCount: Service["viewCount"];
+}
+
+interface NearbyServiceParams {
+  categoryId: ObjectID;
+  lat: number;
+  lng: number;
+}
+
+interface CategoryEntry {
+  updatedAt: number;
+  services: Service[] | any;
+}
+
+interface CategoryMap {
+  [categoryID: string]: CategoryEntry;
+}
+
+interface ServiceFilterItem extends Service {
+  inCallDistance: number;
+  outCallAvailable: boolean;
+}
+
 class ServiceManager {
+  serviceService: ServiceService;
+
+  agentService: AgentService;
+
+  offeringService: OfferingService;
+
+  serviceRatingService: ServiceRatingService;
+
+  categoryToServiceMap: CategoryMap;
+
   static get MAX_CATEGORY_ENTRY_AGE() {
     return MAX_CATEGORY_ENTRY_AGE;
   }
+
   static get MAX_IN_CALL_DISTANCE() {
     return MAX_IN_CALL_DISTANCE;
   }
 
-  constructor(serviceService, agentService, offeringService, serviceRatingService) {
+  constructor(
+    serviceService: ServiceService,
+    agentService: AgentService,
+    offeringService: OfferingService,
+    serviceRatingService: ServiceRatingService,
+  ) {
     this.serviceService = serviceService;
     this.agentService = agentService;
     this.offeringService = offeringService;
@@ -20,7 +83,7 @@ class ServiceManager {
     this.categoryToServiceMap = {};
   }
 
-  async createService(payload) {
+  async createService(payload: NewServicePayload) {
     const {
       agent,
       category,
@@ -72,14 +135,16 @@ class ServiceManager {
     }
   }
 
-  async getNearbyServicesByCategoryId({ categoryId, lat, lng }) {
-    const categoryEntry = this.categoryToServiceMap[categoryId];
+  async getNearbyServicesByCategoryId({ categoryId, lat, lng }: NearbyServiceParams) {
+    const categoryIdString = String(categoryId);
+
+    const categoryEntry = this.categoryToServiceMap[categoryIdString];
     if (!categoryEntry || Date.now() - categoryEntry.updatedAt >= ServiceManager.MAX_CATEGORY_ENTRY_AGE) {
       const serviceDocuments = await this.serviceService.findServicesByCategoryId(categoryId);
-      this.categoryToServiceMap[categoryId] = { services: serviceDocuments, updatedAt: Date.now() };
+      this.categoryToServiceMap[categoryIdString] = { services: serviceDocuments, updatedAt: Date.now() };
     }
-    const parsedServices = JSON.parse(JSON.stringify(this.categoryToServiceMap[categoryId].services));
-    const isValidService = (service) => {
+    const parsedServices = JSON.parse(JSON.stringify(this.categoryToServiceMap[categoryIdString].services));
+    const isValidService = (service: ServiceFilterItem) => {
       const { remoteCall, inCall, outCall, latitude, longitude, radius } = service;
       const distance = CalculationUtils.calculateCrowDistance(lat, lng, latitude, longitude);
       let possible = false;
@@ -104,7 +169,7 @@ class ServiceManager {
     return { status: 200, json: { services: filteredServices } };
   }
 
-  async getServiceById({ id }) {
+  async getServiceById({ id }: { id: ObjectID }) {
     try {
       const result = await this.serviceService.findServiceById(id);
       if (!result) {
@@ -116,33 +181,33 @@ class ServiceManager {
     }
   }
 
-  async updateViewCountById(serviceId) {
+  async updateViewCountById(serviceId: ObjectID) {
     this.serviceService.updateViewCount(serviceId);
   }
 
-  async patchService(service, authHeaders) {
+  async patchService(newPartialServiceData: Partial<Service>, authHeaders: AuthHeaders) {
     try {
-      const result = await this.serviceService.updateService(service, authHeaders.agentId);
+      const result = await this.serviceService.updateService(newPartialServiceData, authHeaders.agentId);
       return { status: 200, json: result };
     } catch (error) {
       return { status: 500, json: { error: error.toString() } };
     }
   }
 
-  async deleteService(serviceId, authHeaders) {
+  async deleteService(serviceId: ObjectID, authHeaders: AuthHeaders) {
     try {
-      const serviceDocument = await this.serviceService.findServiceById(serviceId);
+      const serviceDocument: any = await this.serviceService.findServiceById(serviceId);
 
       if (serviceDocument && serviceDocument.isDeleted) {
         return { status: 400, json: { message: "Service already deleted" } };
       }
 
       await Promise.all([
-        ...serviceDocument.offerings.map((offering) => {
+        ...serviceDocument.offerings.map((offering: Offering) => {
           offering.isDeleted = true;
           return this.offeringService.updateOffering(offering, authHeaders.agentId);
         }),
-        ...serviceDocument.serviceRatings.map((serviceRating) => {
+        ...serviceDocument.serviceRatings.map((serviceRating: ServiceRating) => {
           serviceRating.isDeleted = true;
           return this.serviceRatingService.updateServiceRatingWithoutAuth(serviceRating);
         }),
@@ -158,4 +223,4 @@ class ServiceManager {
   }
 }
 
-module.exports = ServiceManager;
+export default ServiceManager;

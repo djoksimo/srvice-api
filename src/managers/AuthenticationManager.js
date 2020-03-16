@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
 const AWS = require("aws-sdk");
 
-const { AgentModel, AgentPrivateModel, UserModel, UserPrivateModel } = require("../models/");
-const { AWSValues } = require("../values/");
+const { AgentModel, AgentPrivateModel, UserModel, UserPrivateModel } = require("../models");
+const { AWSValues } = require("../values");
 
 AWS.config = new AWS.Config(AWSValues.config);
 
@@ -90,7 +91,7 @@ class AuthenticationManager {
       await this.cognitoService.confirmAccount(email, code);
       const agentDocument = await this.agentService.getAgentByEmail(email);
       const agentPrivateDocument = await this.agentPrivateService.getAgentPrivateByEmail(email);
-      const agent = Object.assign({}, agentPrivateDocument.toObject(), agentDocument.toObject());
+      const agent = { ...agentPrivateDocument.toObject(), ...agentDocument.toObject() };
       const token = await this.jwtService.createTokenFromEmail(email);
       return { status: 200, json: { agent, token } };
     } catch (error) {
@@ -106,7 +107,7 @@ class AuthenticationManager {
         return { status: 404, json: { code: "AccountExistsNotAgent" } };
       }
       const agentPrivateDocument = await this.agentPrivateService.getAgentPrivateByEmail(email);
-      const agent = Object.assign({}, agentPrivateDocument.toObject(), agentDocument.toObject());
+      const agent = { ...agentPrivateDocument.toObject(), ...agentDocument.toObject() };
       const token = await this.jwtService.createTokenFromEmail(email);
       return { status: 200, json: { agent, token } };
     } catch (error) {
@@ -123,7 +124,7 @@ class AuthenticationManager {
       }
       const agentDocument = await this.agentService.getAgentByEmail(email);
       const agentPrivateDocument = await this.agentPrivateService.getAgentPrivateByEmail(email);
-      const agent = Object.assign({}, agentPrivateDocument.toObject(), agentDocument.toObject());
+      const agent = { ...agentPrivateDocument.toObject(), ...agentDocument.toObject() };
       return { status: 200, json: agent };
     } catch (error) {
       return { status: 403, json: error };
@@ -177,7 +178,7 @@ class AuthenticationManager {
       await this.cognitoService.confirmAccount(email, code);
       const userDocument = await this.userService.findUserByEmail(email);
       const userPrivateDocument = await this.userPrivateService.getUserPrivateByEmail(email);
-      const user = Object.assign({}, userPrivateDocument.toObject(), userDocument.toObject());
+      const user = { ...userPrivateDocument.toObject(), ...userDocument.toObject() };
       const token = await this.jwtService.createTokenFromEmail(email);
       return { status: 200, json: { user, token } };
     } catch (error) {
@@ -190,7 +191,7 @@ class AuthenticationManager {
       await this.cognitoService.loginAccount(email, password);
       const userDocument = await this.userService.findUserByEmail(email);
       const userPrivateDocument = await this.userPrivateService.getUserPrivateByEmail(email);
-      const user = Object.assign({}, userPrivateDocument.toObject(), userDocument.toObject());
+      const user = { ...userPrivateDocument.toObject(), ...userDocument.toObject() };
       const token = await this.jwtService.createTokenFromEmail(email);
       return { status: 200, json: { user, token } };
     } catch (error) {
@@ -207,7 +208,7 @@ class AuthenticationManager {
       }
       const userDocument = await this.userService.findUserByEmail(email);
       const userPrivateDocument = await this.userPrivateService.getUserPrivateByEmail(email);
-      const user = Object.assign({}, userPrivateDocument.toObject(), userDocument.toObject());
+      const user = { ...userPrivateDocument.toObject(), ...userDocument.toObject() };
       return { status: 200, json: user };
     } catch (error) {
       return { status: 403, json: error };
@@ -264,4 +265,4 @@ class AuthenticationManager {
   }
 }
 
-module.exports = AuthenticationManager;
+module.default.exports = AuthenticationManager;

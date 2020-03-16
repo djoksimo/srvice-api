@@ -69,3 +69,5 @@ yarn.lock
 
 # mock data response logs
 mock/srvice-mock-data-*
+
+built/

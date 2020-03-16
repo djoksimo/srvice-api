@@ -1,9 +1,11 @@
-const Express = require("express");
+import { Router } from "express";
 
-const { HttpUtils } = require("../utils");
-const { cradle: categoryManager } = require("../container");
+import { HttpUtils } from "../utils";
+import { cradle } from "../container";
 
-const router = Express.Router();
+const { categoryManager } = cradle;
+
+const router = Router();
 const ADMIN_PASSWORD = "iakd8k98qogbb8eku1nwzmxdhyhyogxbpn22rub473499rkbpu0hvux4ne6ifjxqqxgvabsxukf0f88904lqxtlf9";
 
 router.use((req, res, next) => {
@@ -30,4 +32,4 @@ router.patch("/category", async (req, res) => {
   HttpUtils.sendResponse(res, await categoryManager.patchCategory(req.body));
 });
 
-module.exports = router;
+export default router;

@@ -1,12 +1,38 @@
-const { ScheduleModel } = require("../models");
+import ScheduleService from "services/ScheduleService";
+import AgentService from "services/AgentService";
+import { Availability, Booking } from "types/schedule";
+import { ObjectID } from "mongodb";
+import { Minutes, AuthHeaders, Schedule } from "types";
+import { ScheduleModel } from "../models";
 
-class ScheduleManager {
-  constructor(scheduleService, agentService) {
+interface NewSchedulePayload {
+  availability: Availability[];
+  agentId: ObjectID;
+}
+
+interface AvailabilitySlotsParams {
+  scheduleId: ObjectID;
+  offeringDurationInMin: Minutes;
+  startDateString: string;
+  endDateString: string;
+}
+
+interface AddBookingPayload {
+  scheduleId: ObjectID;
+  booking: Booking;
+}
+
+export default class ScheduleManager {
+  scheduleService: ScheduleService;
+
+  agentService: AgentService;
+
+  constructor(scheduleService: ScheduleService, agentService: AgentService) {
     this.scheduleService = scheduleService;
     this.agentService = agentService;
   }
 
-  async createSchedule({ availability, agentId }) {
+  async createSchedule({ availability, agentId }: NewSchedulePayload) {
     const newSchedule = new ScheduleModel({
       availability,
       bookings: [],
@@ -14,7 +40,7 @@ class ScheduleManager {
     });
 
     try {
-      const agentDocument = await this.agentService.getNonPopulatedAgentById(agentId);
+      const agentDocument: any = await this.agentService.getNonPopulatedAgentById(agentId);
       if (agentDocument && agentDocument.schedule) {
         throw new Error("Agent already has schedule");
       }
@@ -27,7 +53,12 @@ class ScheduleManager {
     }
   }
 
-  async getAvailableSlots({ scheduleId, offeringDurationInMin, startDateString, endDateString }) {
+  async getAvailableSlots({
+    scheduleId,
+    offeringDurationInMin,
+    startDateString,
+    endDateString,
+  }: AvailabilitySlotsParams) {
     try {
       const scheduleDocument = await this.scheduleService.findScheduleById(scheduleId);
 
@@ -37,11 +68,7 @@ class ScheduleManager {
         endDateString,
       );
 
-      availableSlots = this.scheduleService.filterOutUnviableSlot(
-        availableSlots,
-        scheduleDocument,
-        offeringDurationInMin,
-      );
+      availableSlots = this.scheduleService.filterOutUnviableSlot(availableSlots, scheduleDocument);
 
       const categorizedSlotsByDate = this.scheduleService.getCategorizedSlotsByDate(availableSlots);
 
@@ -52,9 +79,9 @@ class ScheduleManager {
     }
   }
 
-  async patchSchedule(schedule, authHeaders) {
+  async patchSchedule(newPartialScheduleData: Partial<Schedule>, authHeaders: AuthHeaders) {
     try {
-      const result = await this.scheduleService.updateSchedule(schedule, authHeaders.agentId);
+      const result = await this.scheduleService.updateSchedule(newPartialScheduleData, authHeaders.agentId);
       return { status: 200, json: result };
     } catch (error) {
       console.log(error);
@@ -62,7 +89,7 @@ class ScheduleManager {
     }
   }
 
-  async addBookingToSchedule({ scheduleId, booking }) {
+  async addBookingToSchedule({ scheduleId, booking }: AddBookingPayload) {
     try {
       const result = await this.scheduleService.addBookingAndSort(scheduleId, booking);
       return { status: 200, json: result };
@@ -71,5 +98,3 @@ class ScheduleManager {
     }
   }
 }
-
-module.exports = ScheduleManager;

@@ -1,11 +1,28 @@
-const { CategoryModel } = require("../models");
+import CategoryService from "services/CategoryService";
+import { Category } from "types";
+import { ObjectID } from "mongodb";
+import { CategoryModel } from "../models";
 
-class CategoryManager {
-  constructor(categoryService) {
+interface NewCategoryPayload {
+  name: string;
+  iconUrl: string;
+  placeholderInputServiceTitle: string;
+  placeholderInputServiceDescription: string;
+}
+
+export default class CategoryManager {
+  categoryService: CategoryService;
+
+  constructor(categoryService: CategoryService) {
     this.categoryService = categoryService;
   }
 
-  async createCategory({ name, iconUrl, placeholderInputServiceTitle, placeholderInputServiceDescription }) {
+  async createCategory({
+    name,
+    iconUrl,
+    placeholderInputServiceTitle,
+    placeholderInputServiceDescription,
+  }: NewCategoryPayload) {
     const newCategory = new CategoryModel({
       placeholderInputServiceTitle,
       placeholderInputServiceDescription,
@@ -25,7 +42,7 @@ class CategoryManager {
     return { status: 200, json: result };
   }
 
-  async deleteCategory({ id }) {
+  async deleteCategory({ id }: { id: ObjectID }) {
     try {
       const result = await this.categoryService.deleteCategory(id);
       return { status: 200, json: result };
@@ -56,7 +73,7 @@ class CategoryManager {
     }
   }
 
-  async patchCategory(newPartialCategoryData) {
+  async patchCategory(newPartialCategoryData: Partial<Category>) {
     try {
       const result = await this.categoryService.updateCategory(newPartialCategoryData);
       return { status: 200, json: result };
@@ -65,5 +82,3 @@ class CategoryManager {
     }
   }
 }
-
-module.exports = CategoryManager;

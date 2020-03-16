@@ -13,5 +13,5 @@ module.exports = {
   OfferingService: require("./OfferingService"),
   FileService: require("./FileService"),
   ScheduleService: require("./ScheduleService"),
-  ChatService: require("./ChatService"),
+  ChatService: require("./ChatService").default.default,
 };
