@@ -74,7 +74,16 @@ app.use(helmet());
 app.use(compression());
 app.use(morgan("dev"));
 
-const allowedOrigins = ["http://localhost:4200", "http://192.168.0.116:4200", "https://srvice.ca"];
+const allowedOrigins = [
+  "https://srvice.ca",
+  "https://app.srvice.ca",
+  "https://api.srvice.ca",
+  "https://demo.srvice.ca",
+];
+
+if (Environment.runningInDev) {
+  allowedOrigins.push("http://localhost:3000");
+}
 
 const corsOptions = {
   origin: allowedOrigins,
