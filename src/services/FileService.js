@@ -1,9 +1,9 @@
-const { Storage } = require("@google-cloud/storage");
+import { Storage } from "@google-cloud/storage";
 
-const { GoogleValues } = require("../values");
-const { UuidUtils, GoogleUtils } = require("../utils");
+import { GoogleValues } from "../values";
+import { UuidUtils, GoogleUtils } from "../utils";
 
-class FileService {
+export default class FileService {
   constructor() {
     this.gcsStorage = new Storage({
       projectId: GoogleValues.GCP_PROJECT_ID,
@@ -41,5 +41,3 @@ class FileService {
     }
   }
 }
-
-module.exports = FileService;

@@ -1,4 +1,4 @@
-const Mongoose = require("mongoose");
+import Mongoose, { model } from "mongoose";
 
 const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
@@ -17,6 +17,6 @@ const bookingSchema = Schema(
   { versionKey: false },
 );
 
-const bookingModel = Mongoose.model("Booking", bookingSchema);
+const bookingModel = model("Booking", bookingSchema);
 
-module.exports = bookingModel;
+export default bookingModel;

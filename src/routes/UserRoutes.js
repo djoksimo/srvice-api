@@ -1,11 +1,11 @@
-const express = require("express");
+import { Router } from "express";
 
-const {
-  cradle: { userManager },
-} = require("../container");
-const { HttpUtils } = require("../utils");
+import { cradle } from "../container";
+import { HttpUtils } from "../utils";
 
-const router = express.Router();
+const { userManager } = cradle;
+
+const router = Router();
 // TODO: secure this
 
 router.get("/:id", async (req, res) => {
@@ -16,4 +16,4 @@ router.patch("/", async (req, res) => {
   HttpUtils.sendResponse(res, await userManager.patchUser(req.body));
 });
 
-module.exports = router;
+export default router;

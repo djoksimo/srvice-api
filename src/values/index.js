@@ -1,9 +1,8 @@
-module.exports = {
-  GoogleValues: require("./GoogleValues"),
-  FileValues: require("./FileValues"),
-  PusherValues: require("./PusherValues"),
-  Warning: require("./Warning"),
-  AdminCredentials: require("./AdminCredentials"),
-  AWSValues: require("./AWSValues"),
-  Weekdays: require("./Weekdays"),
-};
+export { GoogleValues } from "./GoogleValues";
+export { FileValues } from "./FileValues";
+export { PusherValues } from "./PusherValues";
+export { Warning } from "./Warning";
+export { AdminCredentials } from "./AdminCredentials";
+export { AWSValues } from "./AWSValues";
+export { Weekdays } from "./Weekdays";
+export { Secrets } from "./Secrets";

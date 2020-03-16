@@ -7,7 +7,7 @@ weekdays[4] = "Thursday";
 weekdays[5] = "Friday";
 weekdays[6] = "Saturday";
 
-module.exports = {
+export const Weekdays = {
   weekdays,
   getWeekdayStringFromDate: (date) => weekdays[date.getDay()],
 };

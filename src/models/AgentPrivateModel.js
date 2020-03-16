@@ -1,4 +1,4 @@
-const Mongoose = require("mongoose");
+import Mongoose, { model } from "mongoose";
 
 const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
@@ -17,6 +17,6 @@ const agentPrivateSchema = Schema(
   { versionKey: false },
 );
 
-const agentModel = Mongoose.model("AgentPrivate", agentPrivateSchema);
+const agentModel = model("AgentPrivate", agentPrivateSchema);
 
-module.exports = agentModel;
+export default agentModel;

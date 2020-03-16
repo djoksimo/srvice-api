@@ -1,6 +1,6 @@
-const { CategoryModel } = require("../models/");
+import { CategoryModel } from "../models";
 
-class CategoryService {
+export default class CategoryService {
   createCategory(newCategory) {
     return newCategory.save();
   }
@@ -29,5 +29,3 @@ class CategoryService {
     return CategoryModel.findByIdAndUpdate(partialCategory._id, partialCategory, { new: true }).exec();
   }
 }
-
-module.exports = CategoryService;

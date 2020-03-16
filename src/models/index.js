@@ -1,14 +1,12 @@
-module.exports = {
-  AgentModel: require("./AgentModel"),
-  AgentPrivateModel: require("./AgentPrivateModel"),
-  BookingModel: require("./BookingModel"),
-  CategoryModel: require("./CategoryModel"),
-  RequestModel: require("./RequestModel"),
-  ServiceModel: require("./ServiceModel"),
-  ServiceRatingModel: require("./ServiceRatingModel"),
-  UserModel: require("./UserModel"),
-  UserPrivateModel: require("./UserPrivateModel"),
-  UserRatingModel: require("./UserRatingModel"),
-  OfferingModel: require("./OfferingModel"),
-  ScheduleModel: require("./ScheduleModel"),
-};
+export { default as AgentModel } from "./AgentModel";
+export { default as AgentPrivateModel } from "./AgentPrivateModel";
+export { default as BookingModel } from "./BookingModel";
+export { default as CategoryModel } from "./CategoryModel";
+export { default as RequestModel } from "./RequestModel";
+export { default as ServiceModel } from "./ServiceModel";
+export { default as ServiceRatingModel } from "./ServiceRatingModel";
+export { default as UserModel } from "./UserModel";
+export { default as UserPrivateModel } from "./UserPrivateModel";
+export { default as UserRatingModel } from "./UserRatingModel";
+export { default as OfferingModel } from "./OfferingModel";
+export { default as ScheduleModel } from "./ScheduleModel";

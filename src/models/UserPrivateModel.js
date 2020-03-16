@@ -1,4 +1,4 @@
-const Mongoose = require("mongoose");
+import Mongoose, { model } from "mongoose";
 
 const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
@@ -16,6 +16,6 @@ const userPrivateSchema = Schema(
   { versionKey: false },
 );
 
-const userPrivateModel = Mongoose.model("UserPrivate", userPrivateSchema);
+const userPrivateModel = model("UserPrivate", userPrivateSchema);
 
-module.exports = userPrivateModel;
+export default userPrivateModel;

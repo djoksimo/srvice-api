@@ -1,6 +1,6 @@
 import { createContainer, asClass, InjectionMode, Lifetime } from "awilix";
 
-export const container = createContainer({
+const container = createContainer({
   injectionMode: InjectionMode.CLASSIC,
 });
 

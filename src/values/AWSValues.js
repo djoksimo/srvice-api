@@ -1,4 +1,4 @@
-module.exports = {
+export const AWSValues = {
   config: {
     region: "us-east-1",
     accessKeyId: "AKIAJX7UB3Q56ZXUKHRQ",

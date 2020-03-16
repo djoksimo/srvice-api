@@ -20,7 +20,6 @@ import {
   BookingRoutes,
   ServiceRatingRoutes,
   AdminRoutes,
-  SendRoutes,
   OfferingRoutes,
   FileRoutes,
   ScheduleRoutes,
@@ -106,7 +105,6 @@ app.use("/agent", AgentRoutes);
 app.use("/user", UserRoutes);
 app.use("/category", CategoryRoutes);
 app.use("/service", ServiceRoutes);
-app.use("/send", SendRoutes);
 app.use("/admin", AdminRoutes);
 app.use("/service-rating", ServiceRatingRoutes);
 app.use("/request", RequestRoutes);

@@ -1,4 +1,4 @@
-const Mongoose = require("mongoose");
+import Mongoose, { model } from "mongoose";
 
 const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
@@ -16,6 +16,6 @@ const offeringSchema = Schema(
   { versionKey: false },
 );
 
-const offeringModel = Mongoose.model("Offering", offeringSchema);
+const offeringModel = model("Offering", offeringSchema);
 
-module.exports = offeringModel;
+export default offeringModel;

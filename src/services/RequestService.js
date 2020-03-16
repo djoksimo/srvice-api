@@ -1,6 +1,6 @@
-const { RequestModel } = require("../models");
+import { RequestModel } from "../models";
 
-class RequestService {
+export default class RequestService {
   constructor() {
     this.categoryPath = {
       path: "category",
@@ -37,5 +37,3 @@ class RequestService {
       .exec();
   }
 }
-
-module.exports = RequestService;

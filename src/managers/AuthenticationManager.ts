@@ -1,16 +1,34 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
-const AWS = require("aws-sdk");
+import AWS from "aws-sdk";
 
-const { AgentModel, AgentPrivateModel, UserModel, UserPrivateModel } = require("../models");
-const { AWSValues } = require("../values");
+import AmazonCognitoIdentity from "amazon-cognito-identity-js";
+import { AgentModel, AgentPrivateModel, UserModel, UserPrivateModel } from "../models";
+import { AWSValues } from "../values";
 
 AWS.config = new AWS.Config(AWSValues.config);
 
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(AWSValues.cognito.sandbox);
 
-class AuthenticationManager {
-  constructor(cognitoService, agentService, agentPrivateService, userService, userPrivateService, jwtService) {
+export default class AuthenticationManager {
+  cognitoService: any;
+
+  agentService: any;
+
+  agentPrivateService: any;
+
+  userService: any;
+
+  userPrivateService: any;
+
+  jwtService: any;
+
+  constructor(
+    cognitoService: any,
+    agentService: any,
+    agentPrivateService: any,
+    userService: any,
+    userPrivateService: any,
+    jwtService: any,
+  ) {
     this.cognitoService = cognitoService;
     this.agentService = agentService;
     this.agentPrivateService = agentPrivateService;
@@ -19,7 +37,7 @@ class AuthenticationManager {
     this.jwtService = jwtService;
   }
 
-  async signupAgent(agent) {
+  async signupAgent(agent: any) {
     const {
       email,
       firstName,
@@ -86,7 +104,7 @@ class AuthenticationManager {
     }
   }
 
-  async confirmAgent({ email, code }) {
+  async confirmAgent({ email, code }: any) {
     try {
       await this.cognitoService.confirmAccount(email, code);
       const agentDocument = await this.agentService.getAgentByEmail(email);
@@ -99,7 +117,7 @@ class AuthenticationManager {
     }
   }
 
-  async loginAgent({ email, password }) {
+  async loginAgent({ email, password }: any) {
     try {
       await this.cognitoService.loginAccount(email, password);
       const agentDocument = await this.agentService.getAgentByEmail(email);
@@ -115,7 +133,7 @@ class AuthenticationManager {
     }
   }
 
-  async verifyAgentToken({ token }) {
+  async verifyAgentToken({ token }: any) {
     try {
       const result = await this.jwtService.getEmailFromToken(token);
       const { email } = result;
@@ -143,7 +161,7 @@ class AuthenticationManager {
     givenRatings,
     requests,
     bookings,
-  }) {
+  }: any) {
     try {
       await this.cognitoService.createAccount(firstName, lastName, email, password);
       const newUser = new UserModel({ email, firstName, lastName, dateJoined, profilePictureUrl });
@@ -156,7 +174,7 @@ class AuthenticationManager {
     }
   }
 
-  async adminConfirmUser({ email }) {
+  async adminConfirmUser({ email }: any) {
     try {
       const adminConfirmationResult = await this.cognitoService.adminConfirmAccount(email);
       const successMessage = "Confirmed account successfully";
@@ -173,7 +191,7 @@ class AuthenticationManager {
     }
   }
 
-  async confirmUser({ email, code }) {
+  async confirmUser({ email, code }: any) {
     try {
       await this.cognitoService.confirmAccount(email, code);
       const userDocument = await this.userService.findUserByEmail(email);
@@ -186,7 +204,7 @@ class AuthenticationManager {
     }
   }
 
-  async loginUser({ email, password }) {
+  async loginUser({ email, password }: any) {
     try {
       await this.cognitoService.loginAccount(email, password);
       const userDocument = await this.userService.findUserByEmail(email);
@@ -199,7 +217,7 @@ class AuthenticationManager {
     }
   }
 
-  async verifyUserToken({ token }) {
+  async verifyUserToken({ token }: any) {
     try {
       const result = await this.jwtService.getEmailFromToken(token);
       const { email } = result;
@@ -215,7 +233,7 @@ class AuthenticationManager {
     }
   }
 
-  async authenticateIdEmailToken({ userId, agentId, email, token }) {
+  async authenticateIdEmailToken({ userId, agentId, email, token }: any) {
     if (userId) {
       const userDocument = await this.userService.findNonPopulatedUserById(userId);
       if (userDocument && userDocument.email === email) {
@@ -230,14 +248,14 @@ class AuthenticationManager {
     throw new Error();
   }
 
-  async authenticateEmailToken(email, token) {
+  async authenticateEmailToken(email: any, token: any) {
     const jwtResult = await this.jwtService.getEmailFromToken(token);
     if (jwtResult.email !== email) {
       throw new Error();
     }
   }
 
-  async resendConfirmation(payload) {
+  async resendConfirmation(payload: any) {
     const { email } = payload;
     const userData = {
       Username: email,
@@ -264,5 +282,3 @@ class AuthenticationManager {
     }
   }
 }
-
-module.default.exports = AuthenticationManager;

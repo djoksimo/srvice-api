@@ -1,6 +1,6 @@
-const { ServiceRatingModel } = require("../models");
+import { ServiceRatingModel } from "../models";
 
-class ServiceRatingService {
+export default class ServiceRatingService {
   static isOwner(serviceRatingId, userId) {
     return new Promise((resolve, reject) => {
       ServiceRatingModel.findById(serviceRatingId, (err, serviceRating) => {
@@ -40,5 +40,3 @@ class ServiceRatingService {
     return ServiceRatingModel.updateOne({ _id: partialServiceRating._id }, { $set: partialServiceRating }).exec();
   }
 }
-
-module.exports = ServiceRatingService;

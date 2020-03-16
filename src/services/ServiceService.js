@@ -1,6 +1,6 @@
-const { ServiceModel } = require("../models");
+import { ServiceModel } from "../models";
 
-class ServiceService {
+export default class ServiceService {
   static isOwner(serviceId, agentId) {
     return new Promise((resolve, reject) => {
       ServiceModel.findById(serviceId, (err, service) => {
@@ -124,5 +124,3 @@ class ServiceService {
     return ServiceModel.findByIdAndUpdate(serviceId, { $pull: { offerings: offeringId } }).exec();
   }
 }
-
-module.exports = ServiceService;

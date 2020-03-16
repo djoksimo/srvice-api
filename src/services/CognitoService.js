@@ -1,9 +1,9 @@
-const AWS = require("aws-sdk");
-const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
+import AWS from "aws-sdk";
 
-const { AWSValues } = require("../values");
+import AmazonCognitoIdentity from "amazon-cognito-identity-js";
+import { AWSValues } from "../values";
 
-class CognitoService {
+export default class CognitoService {
   constructor() {
     AWS.config = new AWS.Config(AWSValues.config);
     this.userPool = new AmazonCognitoIdentity.CognitoUserPool(AWSValues.cognito.sandbox);
@@ -75,5 +75,3 @@ class CognitoService {
     });
   }
 }
-
-module.exports = CognitoService;
