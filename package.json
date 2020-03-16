@@ -12,15 +12,15 @@
     "start": "npm run dev",
     "dev": "npm run build && ts-node-dev --respawn --transpileOnly ./src/index.ts",
     "prod": "tsc -p tsconfig.json && node --experimental-modules ./built/index.js",
-    "debug": "tsc && node --inspect ./built/src/index.js",
-    "lint": "npx eslint src/* --color --quiet",
+    "debug": "tsc && node --inspect ./built/index.js",
+    "lint": "eslint src/**/*.ts --color --quiet",
     "postlint": "echo No lint errors! 🎉",
     "gen": "node mock/CLIGen.js",
     "postgen": "echo Srvice Mockgen tool ran successfully 🎉",
-    "prettier": "prettier --check \"./src/**/{*.js,*.json}\"",
+    "prettier": "prettier --check \"./src/**/{*.ts,*.json}\"",
     "postprettier": "echo No formatting errors! 🎉",
-    "check-prettier": "prettier ./src/**/*.js --config .prettierrc --check",
-    "autofix": "prettier ./src/**/*.js --config .prettierrc --write ; eslint ./src/**/*.js --color --quiet --fix"
+    "check-prettier": "prettier ./src/**/*.ts --config .prettierrc --check",
+    "autofix": "prettier ./src/**/*.ts --config .prettierrc --write ; eslint ./src/**/*.ts --color --quiet --fix"
   },
   "nyc": {
     "all": true,
