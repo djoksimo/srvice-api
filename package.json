@@ -12,7 +12,7 @@
     "postbuild": "echo Ran Srvice API with PM2 successfully",
     "start": "npm run dev",
     "dev": "ts-node-dev --respawn --transpileOnly ./src/index.ts",
-    "prod": "tsc && node ./built/src/index.js",
+    "prod": "tsc && node ./built/index.js",
     "debug": "tsc && node --inspect ./built/src/index.js",
     "lint": "npx eslint src/* --color --quiet",
     "postlint": "echo No lint errors! 🎉",
@@ -23,7 +23,6 @@
     "check-prettier": "prettier ./src/**/*.js --config .prettierrc --check",
     "autofix": "prettier ./src/**/*.js --config .prettierrc --write ; eslint ./src/**/*.js --color --quiet --fix"
   },
-  "type": "module",
   "nyc": {
     "all": true,
     "include": [
@@ -61,7 +60,7 @@
     "mongoose": "^5.6.4",
     "morgan": "^1.9.1",
     "multer": "^1.4.1",
-    "node-fetch": "^2.1.2",
+    "node-fetch": "^2.6.0",
     "node-ses": "^2.1.0",
     "nodemailer": "^4.6.8",
     "nodemon": "^1.17.4",
@@ -71,6 +70,7 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
     "@types/compression": "^1.7.0",
     "@types/cors": "^2.8.6",
     "@types/dotenv": "^8.2.0",
