@@ -1,11 +1,19 @@
-class FileManager {
-  constructor(fileService) {
+import FileService from "services/FileService";
+
+interface UploadResponse {
+  publicPictureUrls: string[];
+}
+
+export default class FileManager {
+  fileService: FileService;
+
+  constructor(fileService: FileService) {
     this.fileService = fileService;
   }
 
-  async uploadPictures(files) {
+  async uploadPictures(files: Express.Multer.File[]) {
     try {
-      const resp = {
+      const resp: UploadResponse = {
         publicPictureUrls: [],
       };
       resp.publicPictureUrls = await Promise.all(

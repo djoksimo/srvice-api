@@ -1,5 +1,4 @@
 import fetch from "node-fetch";
-(global as any).fetch = fetch;
 
 import express, { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 import pino from "express-pino-logger";
@@ -8,11 +7,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import compression from "compression";
 import helmet from "helmet";
-import dotenv from "dotenv";
-import morgan from "morgan";
 
-dotenv.config();
-pino();
+import morgan from "morgan";
 
 import {
   AuthenticationRoutes,
@@ -30,13 +26,18 @@ import {
   ScheduleRoutes,
   ChatRoutes,
 } from "./routes";
-import { Environment, Warning } from "./values";
-import { createServer } from "./utils";
+import { Environment, createServer } from "./utils";
+import { Warning } from "./values";
+
+(global as any).fetch = fetch;
+
+pino();
 
 const env = Environment.getCurrentNodeEnv();
+console.log(env);
 
 switch (env) {
-  case Environment.SANDBOX_01:
+  case Environment.DEVELOPMENT:
     Warning.print().currentDB();
     mongoose
       .connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", {

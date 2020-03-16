@@ -6,17 +6,17 @@
     "resolveJsonModule": false,
     "noImplicitAny": true,
     "moduleResolution": "node",
-    "lib": ["es6"],
-    "module": "CommonJS",
-    "target": "ES6",
+    "lib": ["ES6", "DOM"],
+    "module": "ES6",
+    "target": "ES2018",
     "paths": {
       "*": ["node_modules/*", "src/*"],
-      "types": ["src/types"]
+      "types": ["src/types", "src/types/schedule"]
     },
     "baseUrl": ".",
-    "typeRoots": ["./src/types"],
+    "typeRoots": ["./src/types", "./src/types/schedule"],
     "outDir": "./built"
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "./mock/**/*", "./test/**/*"],
   "exclude": ["node_modules"]
 }

@@ -1,12 +1,12 @@
-const Chatkit = require("@pusher/chatkit-server");
+import Chatkit from "@pusher/chatkit-server";
 
-const { PusherValues } = require("../values");
-const { UuidUtils } = require("../utils");
+import { PusherValues } from "../values";
+import { UuidUtils } from "../utils";
 
 class ChatService {
   constructor() {
     // eslint-disable-next-line new-cap
-    this.chatkit = new Chatkit.default({
+    this.chatkit = new Chatkit({
       instanceLocator: PusherValues.CHATKIT_INSTANCE_LOCATOR,
       key: PusherValues.CHATKIT_SECRET_KEY,
     });
@@ -44,4 +44,4 @@ class ChatService {
   }
 }
 
-module.exports = ChatService;
+export default ChatService;

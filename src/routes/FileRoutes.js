@@ -1,15 +1,15 @@
-const Express = require("express");
-const Multer = require("multer");
-const path = require("path");
+import { Router } from "express";
+import Multer from "multer";
+import { extname } from "path";
 
-const {
-  cradle: { fileManager, authenticationManager },
-} = require("../container");
+import { cradle } from "../container";
 
-const { FileValues } = require("../values");
-const { HttpUtils } = require("../utils");
+import { FileValues } from "../values";
+import { HttpUtils } from "../utils";
 
-const router = Express.Router();
+const { fileManager, authenticationManager } = cradle;
+
+const router = Router();
 
 const isAuthenticated = (req, res, callback) => {
   const authHeaders = HttpUtils.parseAuthHeaders(req);
@@ -25,10 +25,10 @@ const multer = Multer({
   limits: {
     fileSize: 10 * 1024 * 1024, // no larger than 10MB
   },
-  fileFilter: (req, file, cb) => {
+  fileFilter: (_req, file, cb) => {
     const fileTypes = /jpeg|jpg|png|bmp|gif|webp|psd/;
     const mimeType = fileTypes.test(file.mimetype);
-    const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
+    const extName = fileTypes.test(extname(file.originalname).toLowerCase());
 
     if (mimeType && extName) {
       return cb(null, true);
@@ -43,4 +43,4 @@ router.post("/upload/pictures/", multer.array("pictures", FileValues.MAX_PICTURE
   }),
 );
 
-module.exports = router;
+export default router;
