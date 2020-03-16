@@ -1,6 +1,6 @@
-const { UserPrivateModel } = require("../models");
+import { UserPrivateModel } from "../models";
 
-class UserPrivateService {
+export default class UserPrivateService {
   constructor() {
     this.categoryPath = { path: "category", select: "_id name iconUrl" };
     this.ratingsPath = {
@@ -62,5 +62,3 @@ class UserPrivateService {
     return UserPrivateModel.findOneAndUpdate({ email }, { $push: { bookings: bookingId } });
   }
 }
-
-module.exports = UserPrivateService;

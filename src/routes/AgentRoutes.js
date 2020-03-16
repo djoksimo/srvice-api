@@ -3,7 +3,6 @@ import { Router } from "express";
 import { cradle } from "../container";
 import { HttpUtils } from "../utils";
 
-console.log(cradle.agentManager);
 const { agentManager, authenticationManager } = cradle;
 
 const router = Router();

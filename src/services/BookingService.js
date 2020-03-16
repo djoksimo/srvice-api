@@ -1,6 +1,6 @@
-const { BookingModel } = require("../models");
+import { BookingModel } from "../models";
 
-class BookingService {
+export default class BookingService {
   static isOwner(bookingId, agentId) {
     return new Promise((resolve, reject) => {
       BookingModel.findById(bookingId, (err, booking) => {
@@ -64,5 +64,3 @@ class BookingService {
       .exec();
   }
 }
-
-module.exports = BookingService;

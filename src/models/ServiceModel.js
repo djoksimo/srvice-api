@@ -1,4 +1,4 @@
-const Mongoose = require("mongoose");
+import Mongoose, { model } from "mongoose";
 
 const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
@@ -28,6 +28,6 @@ const serviceSchema = Schema(
   { versionKey: false, timestamps: true },
 );
 
-const serviceModel = Mongoose.model("Service", serviceSchema);
+const serviceModel = model("Service", serviceSchema);
 
-module.exports = serviceModel;
+export default serviceModel;

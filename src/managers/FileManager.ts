@@ -25,5 +25,3 @@ export default class FileManager {
     }
   }
 }
-
-module.exports = FileManager;

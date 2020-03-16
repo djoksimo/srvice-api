@@ -1,17 +1,15 @@
-module.exports = {
-  CognitoService: require("./CognitoService"),
-  AgentService: require("./AgentService"),
-  AgentPrivateService: require("./AgentPrivateService"),
-  UserService: require("./UserService"),
-  UserPrivateService: require("./UserPrivateService"),
-  JwtService: require("./JwtService"),
-  CategoryService: require("./CategoryService"),
-  ServiceService: require("./ServiceService"),
-  BookingService: require("./BookingService"),
-  RequestService: require("./RequestService"),
-  ServiceRatingService: require("./ServiceRatingService"),
-  OfferingService: require("./OfferingService"),
-  FileService: require("./FileService"),
-  ScheduleService: require("./ScheduleService"),
-  ChatService: require("./ChatService").default.default,
-};
+export { default as CognitoService } from "./CognitoService";
+export { default as AgentService } from "./AgentService";
+export { default as AgentPrivateService } from "./AgentPrivateService";
+export { default as UserService } from "./UserService";
+export { default as UserPrivateService } from "./UserPrivateService";
+export { default as JwtService } from "./JwtService";
+export { default as CategoryService } from "./CategoryService";
+export { default as ServiceService } from "./ServiceService";
+export { default as BookingService } from "./BookingService";
+export { default as RequestService } from "./RequestService";
+export { default as ServiceRatingService } from "./ServiceRatingService";
+export { default as OfferingService } from "./OfferingService";
+export { default as FileService } from "./FileService";
+export { default as ScheduleService } from "./ScheduleService";
+export { default as ChatService } from "./ChatService";

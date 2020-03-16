@@ -1,6 +1,6 @@
-const { AgentPrivateModel } = require("../models");
+import { AgentPrivateModel } from "../models";
 
-class AgentPrivateService {
+export default class AgentPrivateService {
   createAgentPrivate(newAgentPrivate) {
     return newAgentPrivate.save();
   }
@@ -40,5 +40,3 @@ class AgentPrivateService {
     return AgentPrivateModel.findOneAndUpdate({ email }, { $push: { bookings: bookingId } });
   }
 }
-
-module.exports = AgentPrivateService;

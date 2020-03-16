@@ -1,6 +1,6 @@
-const { AgentModel } = require("../models");
+import { AgentModel } from "../models";
 
-class AgentService {
+export default class AgentService {
   createAgent(newAgent) {
     return newAgent.save();
   }
@@ -89,5 +89,3 @@ class AgentService {
     return AgentModel.findByIdAndUpdate(agentId, { schedule: scheduleId }).exec();
   }
 }
-
-module.exports = AgentService;

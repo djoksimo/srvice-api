@@ -1,4 +1,4 @@
-const Mongoose = require("mongoose");
+import Mongoose, { model } from "mongoose";
 
 const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
@@ -29,6 +29,6 @@ const scheduleSchema = Schema(
   { versionKey: false, timestamps: true },
 );
 
-const scheduleModel = Mongoose.model("Schedule", scheduleSchema);
+const scheduleModel = model("Schedule", scheduleSchema);
 
-module.exports = scheduleModel;
+export default scheduleModel;

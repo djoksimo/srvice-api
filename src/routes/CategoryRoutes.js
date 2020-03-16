@@ -1,11 +1,11 @@
-const Express = require("express");
+import { Router } from "express";
 
-const {
-  cradle: { categoryManager },
-} = require("../container");
-const { HttpUtils } = require("../utils");
+import { cradle } from "../container";
+import { HttpUtils } from "../utils";
 
-const router = Express.Router();
+const { categoryManager } = cradle;
+
+const router = Router();
 
 router.get("/home", async (req, res) => {
   HttpUtils.sendResponse(res, await categoryManager.getHomeCategories());
@@ -17,4 +17,4 @@ router.get("/:id", async (req, res) => {
   res.status(status).json(json);
 });
 
-module.exports = router;
+export default router;

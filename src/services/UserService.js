@@ -1,6 +1,6 @@
-const { UserModel } = require("../models");
+import { UserModel } from "../models";
 
-class UserService {
+export default class UserService {
   createUser(newUser) {
     return newUser.save();
   }
@@ -21,5 +21,3 @@ class UserService {
     return UserModel.update({ _id: user._id }, { $set: user }).exec();
   }
 }
-
-module.exports = UserService;

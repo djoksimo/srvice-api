@@ -3,7 +3,7 @@ import Chatkit from "@pusher/chatkit-server";
 import { PusherValues } from "../values";
 import { UuidUtils } from "../utils";
 
-class ChatService {
+export default class ChatService {
   constructor() {
     // eslint-disable-next-line new-cap
     this.chatkit = new Chatkit({
@@ -43,5 +43,3 @@ class ChatService {
     });
   }
 }
-
-export default ChatService;

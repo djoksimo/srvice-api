@@ -1,12 +1,12 @@
-const moment = require("moment");
+import moment, { utc } from "moment";
 
-const { ScheduleModel } = require("../models");
-const { Weekdays } = require("../values");
-const { TimeUtils } = require("../utils");
+import { ScheduleModel } from "../models";
+import { Weekdays } from "../values";
+import { TimeUtils } from "../utils";
 
 const SLOT_INTERVAL_IN_MIN = 5;
 
-class ScheduleService {
+export default class ScheduleService {
   static isOwner(scheduleId, agentId) {
     return new Promise((resolve, reject) => {
       ScheduleModel.findById(scheduleId, (err, schedule) => {
@@ -134,7 +134,7 @@ class ScheduleService {
       first.getUTCMonth() === second.getUTCMonth() &&
       first.getUTCDate() === second.getUTCDate();
 
-    const getDateString = (date) => moment.utc(date).format("MMMM Do YYYY");
+    const getDateString = (date) => utc(date).format("MMMM Do YYYY");
 
     const datesObject = {};
 
@@ -158,5 +158,3 @@ class ScheduleService {
     return datesObject;
   }
 }
-
-module.exports = ScheduleService;

@@ -1,6 +1,6 @@
-const { OfferingModel } = require("../models");
+import { OfferingModel } from "../models";
 
-class OfferingService {
+export default class OfferingService {
   static isOwner(offeringId, agentId) {
     return new Promise((resolve, reject) => {
       OfferingModel.findById(offeringId, (err, offering) => {
@@ -40,5 +40,3 @@ class OfferingService {
     return OfferingModel.deleteOne({ _id: offeringId }).exec();
   }
 }
-
-module.exports = OfferingService;
