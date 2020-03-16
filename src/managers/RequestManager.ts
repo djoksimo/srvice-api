@@ -1,12 +1,9 @@
 import Mongoose from "mongoose";
 
-import BookingService from "services/BookingService";
-import ServiceService from "services/ServiceService";
-import AgentPrivateService from "services/AgentPrivateService";
-import RequestService from "services/RequestService";
-import UserPrivateService from "services/UserPrivateService";
 import { ObjectID } from "mongodb";
 import { BookingModel, RequestModel } from "../models";
+
+import { BookingService, ServiceService, AgentPrivateService, RequestService, UserPrivateService } from "../services";
 
 interface NewRequestPayload {
   email: string;

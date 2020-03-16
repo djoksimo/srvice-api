@@ -1,8 +1,8 @@
+import { ObjectID } from "mongodb";
 import { Availability } from "./schedule/Availability";
-import { Booking } from "./schedule/Booking";
 
 export interface Offering {
-  _id?: string;
+  _id?: ObjectID;
   title: string;
   duration: number;
   price: number;
@@ -11,13 +11,13 @@ export interface Offering {
 }
 
 export interface Category {
-  _id: string;
+  _id: ObjectID;
   name: string;
   iconUrl: string;
 }
 
 export interface Agent {
-  _id?: string;
+  _id?: ObjectID;
   email: string;
   firstName: string;
   lastName: string;
@@ -35,11 +35,11 @@ export interface Agent {
   skills: Array<string>;
   selfieUrl: string;
   givenRatings: ServiceRating[];
-  schedule: string;
+  schedule: ObjectID;
 }
 
 export interface Service {
-  _id?: string;
+  _id?: ObjectID;
   agent: Agent;
   category: Category;
   title: string;
@@ -85,12 +85,24 @@ export interface ServiceRating {
 }
 
 export interface Schedule {
-  _id?: string;
+  _id?: ObjectID;
   availability: Availability[];
   bookings: Booking[];
   agent: Agent;
 }
 
+export interface Booking {
+  _id?: string;
+  request: string;
+  agent: Agent;
+  service: Service;
+  priceEstimate: number;
+  agentAccepted: boolean;
+  userAccepted: boolean;
+}
+
 export { AuthHeaders } from "./AuthHeaders";
 export { Minutes } from "./Time";
 export { HttpResult } from "./HttpResult";
+
+export { AvailabilitySlot, Availability, AvailabilityRequestPayload } from "./schedule";

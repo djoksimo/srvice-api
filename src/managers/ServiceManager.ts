@@ -1,11 +1,9 @@
-import ServiceService from "services/ServiceService";
-import OfferingService from "services/OfferingService";
-import AgentService from "services/AgentService";
-import ServiceRatingService from "services/ServiceRatingService";
 import { ObjectID } from "mongodb";
-import { Service, AuthHeaders, Offering, ServiceRating } from "types";
+
+import { Service, AuthHeaders, Offering, ServiceRating } from "../types";
 import { ServiceModel } from "../models";
 import { CalculationUtils, ArrayUtils } from "../utils";
+import { ServiceService, OfferingService, AgentService, ServiceRatingService } from "../services";
 
 const MAX_CATEGORY_ENTRY_AGE = 600000;
 const MAX_IN_CALL_DISTANCE = 50; // in kilometers

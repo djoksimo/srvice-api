@@ -1,8 +1,8 @@
-import OfferingService from "services/OfferingService";
-import ServiceService from "services/ServiceService";
 import { ObjectID } from "mongodb";
-import { AuthHeaders, Offering } from "types";
+
+import { AuthHeaders, Offering } from "../types";
 import { OfferingModel } from "../models";
+import { OfferingService, ServiceService } from "../services";
 
 interface NewOfferingPayload {
   serviceId: ObjectID;

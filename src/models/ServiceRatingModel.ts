@@ -3,7 +3,7 @@ import Mongoose, { model } from "mongoose";
 const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
 
-const serviceRatingSchema = Schema(
+const serviceRatingSchema = new Schema(
   {
     _id: { type: ObjectId, auto: true, required: true },
     user: { type: ObjectId, ref: "User", required: true },

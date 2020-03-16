@@ -1,9 +1,9 @@
-import ServiceRatingService from "services/ServiceRatingService";
-import ServiceService from "services/ServiceService";
-import { ServiceRating, AuthHeaders } from "types";
 import { ObjectID } from "mongodb";
+
+import { ServiceRating, AuthHeaders } from "../types";
 import { ServiceRatingModel } from "../models";
 import { CalculationUtils } from "../utils";
+import { ServiceRatingService, ServiceService } from "../services";
 
 interface NewServiceRating {
   userId: ObjectID;

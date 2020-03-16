@@ -3,7 +3,7 @@ import Mongoose, { model } from "mongoose";
 const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
 
-const offeringSchema = Schema(
+const offeringSchema = new Schema(
   {
     _id: { type: ObjectId, auto: true, required: true },
     title: { type: String, required: true },

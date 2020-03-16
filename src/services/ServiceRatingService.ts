@@ -25,10 +25,6 @@ export default class ServiceRatingService {
   }
 
   async updateServiceRatingWithoutAuth(partialServiceRating) {
-    const isOwner = await ServiceRatingService.isOwner(partialServiceRating._id, userId);
-    if (!isOwner) {
-      throw new Error("NICE TRY");
-    }
     return ServiceRatingModel.updateOne({ _id: partialServiceRating._id }, { $set: partialServiceRating }).exec();
   }
 

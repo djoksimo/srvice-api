@@ -1,6 +1,7 @@
-import UserService from "services/UserService";
 import { ObjectID } from "mongodb";
-import { User } from "types";
+
+import { User } from "../types";
+import { UserService } from "../services";
 
 export default class UserManager {
   userService: UserService;

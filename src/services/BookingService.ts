@@ -1,6 +1,14 @@
 import { BookingModel } from "../models";
 
 export default class BookingService {
+  categoryPath: { path: string; select: string };
+
+  ratingsPath: { path: string; populate: { path: string } };
+
+  agentPath: { path: string; populate: { path: string; populate: any[] } };
+
+  servicePath: { path: string; populate: any[] };
+
   static isOwner(bookingId, agentId) {
     return new Promise((resolve, reject) => {
       BookingModel.findById(bookingId, (err, booking) => {

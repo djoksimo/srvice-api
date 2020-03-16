@@ -9,3 +9,4 @@ export { default as OfferingManager } from "./OfferingManager";
 export { default as FileManager } from "./FileManager";
 export { default as ScheduleManager } from "./ScheduleManager";
 export { default as ChatManager } from "./ChatManager";
+export { default as AuthenticationManager } from "./AuthenticationManager";

@@ -33,7 +33,6 @@ import { Warning } from "./values";
 pino();
 
 const env = Environment.getCurrentNodeEnv();
-console.log(env);
 
 switch (env) {
   case Environment.DEVELOPMENT:
