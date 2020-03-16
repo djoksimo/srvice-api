@@ -4,6 +4,8 @@ import { PusherValues } from "../values";
 import { UuidUtils } from "../utils";
 
 export default class ChatService {
+  chatkit: Chatkit;
+
   constructor() {
     // eslint-disable-next-line new-cap
     this.chatkit = new Chatkit({
@@ -12,7 +14,7 @@ export default class ChatService {
     });
   }
 
-  createPusherUser(srviceUserId, firstName, lastName, profilePictureUrl) {
+  createPusherUser(srviceUserId: any, firstName: any, lastName: any, profilePictureUrl: any) {
     return this.chatkit.createUser({
       id: srviceUserId,
       name: `${firstName} ${lastName}`,
@@ -20,7 +22,7 @@ export default class ChatService {
     });
   }
 
-  createPusherPrivateRoom(senderId, recipientId, recipientFirstName, senderFirstName) {
+  createPusherPrivateRoom(senderId: string, recipientId: string, recipientFirstName: any, senderFirstName: any) {
     return this.chatkit.createRoom({
       id: UuidUtils.generateUUID(),
       creatorId: senderId,

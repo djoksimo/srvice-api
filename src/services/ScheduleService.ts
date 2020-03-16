@@ -111,10 +111,10 @@ export default class ScheduleService {
       if (
         scheduleDocument.bookings.find(
           (booking) =>
-            moment(slot.start).isBetween(moment(booking.start), moment(booking.end), "()") ||
-            moment(slot.end).isBetween(moment(booking.start), moment(booking.end), "()") ||
-            moment(booking.start).isBetween(moment(slot.start), moment(slot.end), "()") ||
-            moment(booking.end).isBetween(moment(slot.start), moment(slot.end), "()"),
+            moment(slot.start).isBetween(moment(booking.start), moment(booking.end), null, "()") ||
+            moment(slot.end).isBetween(moment(booking.start), moment(booking.end), null, "()") ||
+            moment(booking.start).isBetween(moment(slot.start), moment(slot.end), null, "()") ||
+            moment(booking.end).isBetween(moment(slot.start), moment(slot.end), null, "()"),
         )
       ) {
         return false;

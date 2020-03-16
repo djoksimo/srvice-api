@@ -1,7 +1,7 @@
-import BookingService from "services/BookingService";
-import UserPrivateService from "services/UserPrivateService";
-import { AuthHeaders, Minutes } from "types";
 import { ObjectID } from "mongodb";
+
+import { AuthHeaders, Minutes } from "../types";
+import { BookingService, UserPrivateService } from "../services";
 
 interface BookingAgentPayload {
   bookingId: ObjectID;

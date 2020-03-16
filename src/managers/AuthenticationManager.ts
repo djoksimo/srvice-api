@@ -1,15 +1,16 @@
 import AWS from "aws-sdk";
 
-import AmazonCognitoIdentity from "amazon-cognito-identity-js";
+import { CognitoUserPool, CognitoUser } from "amazon-cognito-identity-js";
 import { AgentModel, AgentPrivateModel, UserModel, UserPrivateModel } from "../models";
 import { AWSValues } from "../values";
+import { CognitoService } from "../services";
 
 AWS.config = new AWS.Config(AWSValues.config);
 
-const userPool = new AmazonCognitoIdentity.CognitoUserPool(AWSValues.cognito.sandbox);
+const userPool = new CognitoUserPool(AWSValues.cognito.sandbox);
 
 export default class AuthenticationManager {
-  cognitoService: any;
+  cognitoService: CognitoService;
 
   agentService: any;
 
@@ -261,7 +262,7 @@ export default class AuthenticationManager {
       Username: email,
       Pool: userPool,
     };
-    const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+    const cognitoUser = new CognitoUser(userData);
     try {
       const result = await new Promise((resolve, reject) => {
         cognitoUser.resendConfirmationCode((error, res) => {

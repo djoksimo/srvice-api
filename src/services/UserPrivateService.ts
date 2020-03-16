@@ -1,6 +1,16 @@
 import { UserPrivateModel } from "../models";
 
 export default class UserPrivateService {
+  categoryPath: { path: string; select: string };
+
+  ratingsPath: { path: string; populate: { path: string } };
+
+  agentPath: { path: string; populate: { path: string; populate: any[] } };
+
+  servicePopulate: any[];
+
+  bookingsPath: { path: string; populate: any[] };
+
   constructor() {
     this.categoryPath = { path: "category", select: "_id name iconUrl" };
     this.ratingsPath = {

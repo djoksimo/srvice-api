@@ -4,6 +4,8 @@ import { GoogleValues } from "../values";
 import { UuidUtils, GoogleUtils } from "../utils";
 
 export default class FileService {
+  gcsStorage: Storage;
+
   constructor() {
     this.gcsStorage = new Storage({
       projectId: GoogleValues.GCP_PROJECT_ID,

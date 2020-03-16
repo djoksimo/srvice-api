@@ -1,13 +1,19 @@
-import CategoryService from "services/CategoryService";
-import { Category } from "types";
 import { ObjectID } from "mongodb";
+
+import { Category } from "../types";
 import { CategoryModel } from "../models";
+
+import { CategoryService } from "../services";
 
 interface NewCategoryPayload {
   name: string;
   iconUrl: string;
   placeholderInputServiceTitle: string;
   placeholderInputServiceDescription: string;
+}
+
+interface NewPartialCategoryData extends Partial<Category> {
+  _id: ObjectID;
 }
 
 export default class CategoryManager {
@@ -73,7 +79,7 @@ export default class CategoryManager {
     }
   }
 
-  async patchCategory(newPartialCategoryData: Partial<Category>) {
+  async patchCategory(newPartialCategoryData: NewPartialCategoryData) {
     try {
       const result = await this.categoryService.updateCategory(newPartialCategoryData);
       return { status: 200, json: result };

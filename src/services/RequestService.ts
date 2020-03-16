@@ -1,6 +1,16 @@
 import { RequestModel } from "../models";
 
 export default class RequestService {
+  categoryPath: { path: string; select: string };
+
+  ratingsPath: { path: string; populate: { path: string } };
+
+  agentPath: { path: string; populate: { path: string; populate: any[] } };
+
+  servicePath: { path: string; populate: any[] };
+
+  bookingsPath: { path: string; populate: any[] };
+
   constructor() {
     this.categoryPath = {
       path: "category",

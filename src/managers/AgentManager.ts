@@ -1,6 +1,7 @@
-import AgentService from "services/AgentService";
-import { Agent } from "types";
 import { ObjectID } from "mongodb";
+
+import { Agent } from "../types";
+import AgentService from "../services/AgentService";
 
 export default class AgentManager {
   agentService: AgentService;

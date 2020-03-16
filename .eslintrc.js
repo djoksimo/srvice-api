@@ -5,13 +5,13 @@ module.exports = {
   },
   plugins: ["import"],
   parserOptions: {
-    ecmaVersion: 2015,
+    ecmaVersion: 2018,
     sourceType: "module",
     project: "./tsconfig.json",
   },
   settings: {
     "import/parsers": {
-      "@typescript-eslint/parser": [".ts"],
+      "@typescript-eslint/parser": [".ts", ".d.ts"],
     },
   },
   parser: "@typescript-eslint/parser",

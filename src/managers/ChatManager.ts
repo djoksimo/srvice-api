@@ -1,6 +1,7 @@
-import ChatService from "services/ChatService";
 import { CreateUserOptions, CreateRoomOptions, UpdateUserOptions } from "@pusher/chatkit-server/target/src/chatkit";
 import { ObjectID } from "mongodb";
+
+import { ChatService } from "../services";
 
 interface NewPusherUserPayload extends Partial<CreateUserOptions> {
   userId: ObjectID;

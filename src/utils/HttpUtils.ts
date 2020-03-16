@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { AuthHeaders, HttpResult } from "types";
+import { AuthHeaders, HttpResult } from "../types";
 
 export class HttpUtils {
   static sendResponse(response: Response, result: HttpResult) {

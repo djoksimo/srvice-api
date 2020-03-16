@@ -1,6 +1,16 @@
 import { ServiceModel } from "../models";
 
 export default class ServiceService {
+  categoryPath: { path: string; select: string };
+
+  ratingsPath: { path: string; populate: { path: string } };
+
+  offeringsPath: { path: string };
+
+  agentPath: { path: string; populate: { path: string; populate: { path: string }[] }[] };
+
+  servicePopulate: any[];
+
   static isOwner(serviceId, agentId) {
     return new Promise((resolve, reject) => {
       ServiceModel.findById(serviceId, (err, service) => {

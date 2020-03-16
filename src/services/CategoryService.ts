@@ -1,7 +1,7 @@
 import { CategoryModel } from "../models";
 
 export default class CategoryService {
-  createCategory(newCategory) {
+  createCategory(newCategory: { save: () => any }) {
     return newCategory.save();
   }
 
@@ -11,21 +11,21 @@ export default class CategoryService {
       .exec();
   }
 
-  getCategoryByIdWithoutServices(id) {
+  getCategoryByIdWithoutServices(id: any) {
     return CategoryModel.findById(id)
       .select("-services")
       .exec();
   }
 
-  deleteCategory(id) {
+  deleteCategory(id: any) {
     return CategoryModel.remove({ _id: id }).exec();
   }
 
-  async find(id) {
+  async find(id: any) {
     return CategoryModel.findById(id).exec();
   }
 
-  async updateCategory(partialCategory) {
+  async updateCategory(partialCategory: { _id: any }) {
     return CategoryModel.findByIdAndUpdate(partialCategory._id, partialCategory, { new: true }).exec();
   }
 }

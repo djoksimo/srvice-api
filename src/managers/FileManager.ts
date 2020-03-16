@@ -1,4 +1,4 @@
-import FileService from "services/FileService";
+import { FileService } from "../services";
 
 interface UploadResponse {
   publicPictureUrls: string[];

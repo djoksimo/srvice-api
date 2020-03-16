@@ -4,7 +4,7 @@ const container = createContainer({
   injectionMode: InjectionMode.CLASSIC,
 });
 
-container.loadModules(["src/managers/*.js", "src/managers/*.ts", "src/managers/*.ts", "src/services/*.js"], {
+container.loadModules(["built/services/*.js", "built/managers/*.js"], {
   formatName: "camelCase",
   resolverOptions: {
     lifetime: Lifetime.SINGLETON,
@@ -12,5 +12,7 @@ container.loadModules(["src/managers/*.js", "src/managers/*.ts", "src/managers/*
     injectionMode: InjectionMode.CLASSIC,
   },
 });
+
+console.log(container);
 
 export const { cradle } = container;

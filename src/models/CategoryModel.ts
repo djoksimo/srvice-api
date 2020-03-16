@@ -5,7 +5,7 @@ const { ObjectId } = Schema.Types;
 
 const getDefaultInputFieldTitle = (field) => `Descriptive and short ${field}`;
 
-const categorySchema = Schema(
+const categorySchema = new Schema(
   {
     _id: { type: ObjectId, auto: true, required: true },
     placeholderInputServiceTitle: {

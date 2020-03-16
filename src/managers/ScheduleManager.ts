@@ -1,9 +1,8 @@
-import ScheduleService from "services/ScheduleService";
-import AgentService from "services/AgentService";
-import { Availability, Booking } from "types/schedule";
 import { ObjectID } from "mongodb";
-import { Minutes, AuthHeaders, Schedule } from "types";
+
+import { Minutes, AuthHeaders, Schedule, Booking, Availability } from "../types";
 import { ScheduleModel } from "../models";
+import { ScheduleService, AgentService } from "../services";
 
 interface NewSchedulePayload {
   availability: Availability[];

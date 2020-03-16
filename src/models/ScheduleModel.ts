@@ -3,7 +3,7 @@ import Mongoose, { model } from "mongoose";
 const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
 
-const scheduleSchema = Schema(
+const scheduleSchema = new Schema(
   {
     _id: { type: ObjectId, auto: true, required: true },
     availability: {
