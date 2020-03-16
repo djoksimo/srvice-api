@@ -1,3 +1,5 @@
+import { File } from "@google-cloud/storage";
+
 import { FileService } from "../services";
 
 interface UploadResponse {
@@ -11,7 +13,7 @@ export default class FileManager {
     this.fileService = fileService;
   }
 
-  async uploadPictures(files: Express.Multer.File[]) {
+  async uploadPictures(files: File[]) {
     try {
       const resp: UploadResponse = {
         publicPictureUrls: [],
