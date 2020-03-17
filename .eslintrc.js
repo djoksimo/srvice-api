@@ -7,11 +7,11 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: "module",
-    project: "./tsconfig.json",
+    project: ["./tsconfig.json", "./tsconfig.test.json"],
   },
   settings: {
     "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".d.ts"],
+      "@typescript-eslint/parser": [".ts", ".d.ts", ".test.ts"],
     },
   },
   parser: "@typescript-eslint/parser",

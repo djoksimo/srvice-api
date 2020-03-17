@@ -23,11 +23,13 @@ const nodeEnvironments = {
   TEST: "test",
 };
 
+const getCurrentNodeEnv = () => env.NODE_ENV;
+
 export const Environment = {
   ...nodeEnvironments,
-  runningInDev: env.NODE === nodeEnvironments.DEVELOPMENT,
-  runningInProd: env.NODE === nodeEnvironments.PRODUCTION,
-  runningInTest: env.NODE === nodeEnvironments.TEST,
-  getCurrentNodeEnv: () => env.NODE_ENV,
-  getGurrentPort: () => env.PORT || "5000",
+  runningInDev: getCurrentNodeEnv() === nodeEnvironments.DEVELOPMENT,
+  runningInProd: getCurrentNodeEnv() === nodeEnvironments.PRODUCTION,
+  runningInTest: getCurrentNodeEnv() === nodeEnvironments.TEST,
+  getCurrentNodeEnv,
+  getGurrentPort: () => env.PORT ?? "5000",
 };

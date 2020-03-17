@@ -2,15 +2,15 @@ import { ObjectID } from "mongodb";
 
 import { Service, AuthHeaders, Offering, ServiceRating } from "../types";
 import { ServiceModel } from "../models";
-import { CalculationUtils, ArrayUtils } from "../utils";
+import { CalculationUtils, filterWithLimit } from "../utils";
 import { ServiceService, OfferingService, AgentService, ServiceRatingService } from "../services";
 
 const MAX_CATEGORY_ENTRY_AGE = 600000;
 const MAX_IN_CALL_DISTANCE = 50; // in kilometers
 
 interface NewServicePayload {
-  agent: ObjectID;
-  category: ObjectID;
+  agent: Service["agent"];
+  category: Service["category"];
   title: Service["title"];
   description: Service["description"];
   pictureUrls: Service["pictureUrls"];
@@ -22,7 +22,7 @@ interface NewServicePayload {
   address: Service["address"];
   latitude: Service["latitude"];
   longitude: Service["longitude"];
-  radius: Service["longitude"];
+  radius: Service["radius"];
   averageServiceRating: Service["averageServiceRating"];
   serviceRatings: Service["serviceRatings"];
   offerings: Service["offerings"];
@@ -30,7 +30,7 @@ interface NewServicePayload {
 }
 
 interface NearbyServiceParams {
-  categoryId: ObjectID;
+  categoryId: ObjectID | string;
   lat: number;
   lng: number;
 }
@@ -162,7 +162,7 @@ class ServiceManager {
       }
       return possible;
     };
-    const filteredServices = Array.from(ArrayUtils.filterWithLimit(parsedServices, isValidService, 500));
+    const filteredServices = Array.from(filterWithLimit(parsedServices, isValidService, 500));
     filteredServices.sort((a, b) => b.averageServiceRating - a.averageServiceRating);
     return { status: 200, json: { services: filteredServices } };
   }
