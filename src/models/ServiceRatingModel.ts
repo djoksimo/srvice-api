@@ -1,4 +1,5 @@
-import Mongoose, { model } from "mongoose";
+import Mongoose from "mongoose";
+import { createModel } from "./createModel";
 
 const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
@@ -19,6 +20,6 @@ const serviceRatingSchema = new Schema(
   { versionKey: false },
 );
 
-const serviceRatingModel = model("ServiceRating", serviceRatingSchema);
+const serviceRatingModel = createModel("ServiceRating", serviceRatingSchema);
 
 export default serviceRatingModel;

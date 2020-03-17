@@ -1,4 +1,5 @@
-import Mongoose, { model } from "mongoose";
+import Mongoose from "mongoose";
+import { createModel } from "./createModel";
 
 const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
@@ -15,6 +16,6 @@ const requestSchema = new Schema(
   { versionKey: false, timestamps: true },
 );
 
-const requestModel = model("Request", requestSchema);
+const requestModel = createModel("Request", requestSchema);
 
 export default requestModel;

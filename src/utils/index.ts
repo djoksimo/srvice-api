@@ -2,7 +2,7 @@ export { HttpUtils } from "./HttpUtils";
 export { CalculationUtils } from "./CalculationUtils";
 export { UuidUtils } from "./UuidUtils";
 export { GoogleUtils } from "./GoogleUtils";
-export { ArrayUtils } from "./ArrayUtils";
+export { filterWithLimit } from "./filterWithLimit";
 export { FileUtils } from "./FileUtils";
 export { OutputUtils } from "./OutputUtils";
 export { createServer } from "./createServer";

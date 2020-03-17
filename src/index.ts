@@ -34,6 +34,7 @@ pino();
 
 const env = Environment.getCurrentNodeEnv();
 
+// TODO clean this up - move to other file
 switch (env) {
   case Environment.DEVELOPMENT:
     Warning.print().currentDB();
@@ -57,12 +58,6 @@ switch (env) {
     break;
   case Environment.TEST:
     Warning.print().currentDB();
-    mongoose
-      .connect(
-        "mongodb+srv://danilo-admin:Password123@srvice-cluster-xxb6t.mongodb.net/test?retryWrites=true&w=majority",
-        { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true },
-      )
-      .catch((error) => console.log(error));
     break;
   default:
     Warning.print().unspecifiedDB();
@@ -134,11 +129,13 @@ app.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFuncti
   next();
 });
 
-const defaultPort = Environment.getGurrentPort();
+if (!Environment.runningInTest) {
+  const defaultPort = Environment.getGurrentPort();
 
-if (Environment.getCurrentNodeEnv() !== Environment.TEST) {
   app.set("port", defaultPort);
-  createServer(app, defaultPort);
+  const server = createServer(app);
+
+  server.listen(defaultPort, () => console.log(`Srvice REST API listening on port: ${defaultPort}`));
 }
 
-export const index = (customPort = defaultPort) => createServer(app, customPort);
+export const server = () => createServer(app);

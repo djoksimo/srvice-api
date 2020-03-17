@@ -1,21 +1,13 @@
 import { ObjectID } from "mongodb";
 
+import { NewOfferingPayload } from "types/payloads";
 import { AuthHeaders, Offering } from "../types";
 import { OfferingModel } from "../models";
 import { OfferingService, ServiceService } from "../services";
 
-interface NewOfferingPayload {
-  serviceId: ObjectID;
-  title: string;
-  duration: number;
-  price: number;
-  description: string;
-  agent: ObjectID;
-}
-
 interface DeleteOfferingPayload {
-  offeringId: ObjectID;
-  serviceId: ObjectID;
+  offeringId: ObjectID | string;
+  serviceId: ObjectID | string;
 }
 
 export default class OfferingManager {
@@ -57,6 +49,7 @@ export default class OfferingManager {
       const result = await this.offeringService.updateOffering(partialOfferingData, authHeaders.agentId);
       return { status: 200, json: result };
     } catch (error) {
+      console.log(error);
       return { status: 500, json: error };
     }
   }

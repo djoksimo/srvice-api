@@ -1,4 +1,5 @@
-import Mongoose, { model } from "mongoose";
+import Mongoose from "mongoose";
+import { createModel } from "./createModel";
 
 const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
@@ -24,6 +25,6 @@ const categorySchema = new Schema(
   { versionKey: false },
 );
 
-const categoryModel = model("Category", categorySchema);
+const categoryModel = createModel("Category", categorySchema);
 
 export default categoryModel;

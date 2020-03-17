@@ -8,6 +8,7 @@ export interface Offering {
   price: number;
   description: string;
   isDeleted: boolean;
+  agent: string | ObjectID | Agent;
 }
 
 export interface Category {
@@ -39,9 +40,9 @@ export interface Agent {
 }
 
 export interface Service {
-  _id?: ObjectID;
-  agent: Agent;
-  category: Category;
+  _id?: string | ObjectID;
+  agent: string | ObjectID | Agent;
+  category: string | ObjectID | Category;
   title: string;
   description: string;
   pictureUrls: string[];

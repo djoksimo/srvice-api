@@ -1,4 +1,5 @@
-import Mongoose, { model } from "mongoose";
+import Mongoose from "mongoose";
+import { createModel } from "./createModel";
 
 const { Schema } = Mongoose;
 const { ObjectId } = Schema.Types;
@@ -16,6 +17,6 @@ const offeringSchema = new Schema(
   { versionKey: false },
 );
 
-const offeringModel = model("Offering", offeringSchema);
+const offeringModel = createModel("Offering", offeringSchema);
 
 export default offeringModel;

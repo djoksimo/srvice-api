@@ -29,7 +29,7 @@ export default class OfferingService {
     if (!isOwner) {
       throw new Error("NICE TRY");
     }
-    return OfferingModel.updateOne({ _id: offering._id }, { $set: offering }).exec();
+    return OfferingModel.findByIdAndUpdate(offering._id, { $set: offering }).exec();
   }
 
   async removeOffering(offeringId, agentId) {
