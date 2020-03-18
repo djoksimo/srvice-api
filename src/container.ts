@@ -1,10 +1,15 @@
 import { createContainer, asClass, InjectionMode, Lifetime } from "awilix";
+import { Environment } from "./utils";
 
 const container = createContainer({
   injectionMode: InjectionMode.CLASSIC,
 });
 
-container.loadModules(["built/services/*.js", "built/managers/*.js"], {
+const modulePaths = Environment.runningInProd
+  ? ["built/services/*.js", "built/managers/*.js"]
+  : ["src/services/*.ts", "src/managers/*.ts"];
+
+container.loadModules(modulePaths, {
   formatName: "camelCase",
   resolverOptions: {
     lifetime: Lifetime.SINGLETON,
