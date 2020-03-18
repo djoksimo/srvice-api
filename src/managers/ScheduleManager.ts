@@ -1,6 +1,7 @@
 import { ObjectID } from "mongodb";
 
-import { Minutes, AuthHeaders, Schedule, Booking, Availability } from "../types";
+import { Minutes, AuthHeaders, Availability } from "../types";
+import { Schedule, ScheduleBooking } from "../types/schedule";
 import { ScheduleModel } from "../models";
 import { ScheduleService, AgentService } from "../services";
 
@@ -18,7 +19,7 @@ interface AvailabilitySlotsParams {
 
 interface AddBookingPayload {
   scheduleId: ObjectID;
-  booking: Booking;
+  booking: ScheduleBooking;
 }
 
 export default class ScheduleManager {

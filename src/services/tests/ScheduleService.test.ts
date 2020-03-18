@@ -1,12 +1,8 @@
 import faker from "faker";
 
 import { createMockSchedule } from "../../test/mock";
-import { getDependency, apiHelper } from "../../test/helpers/apiHelper";
+import { getDependency } from "../../test/helpers/apiHelper";
 import ScheduleService from "../ScheduleService";
-
-beforeAll(async () => {
-  await apiHelper();
-});
 
 describe("ScheduleService", () => {
   const scheduleService: ScheduleService = getDependency("scheduleService");

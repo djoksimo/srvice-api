@@ -1,5 +1,4 @@
 import { ObjectID } from "mongodb";
-import { Availability } from "./schedule/Availability";
 
 export interface Offering {
   _id?: ObjectID;

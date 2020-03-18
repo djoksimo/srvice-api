@@ -1,5 +1,5 @@
 import { Schedule } from "../../types/schedule";
-import { mockAgentCredentials } from "./MockAgentCredentials";
+import { mockAgentCredentials } from "./mockAgentCredentials";
 
 const HealthySchedule = {
   agentId: mockAgentCredentials.agentId,
