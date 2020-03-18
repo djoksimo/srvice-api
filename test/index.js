@@ -1,13 +1,11 @@
-require("dotenv").config();
+import { ServiceManagerTest, OfferingManagerTest } from "./managers";
+import { ServiceServiceTest, ScheduleServiceTest } from "./services";
+import { ServiceRoutesTest, OfferingRoutesTest, AuthenticationRoutesTest } from "./http";
+import { Environment } from "../src/utils";
 
-const { ServiceManagerTest, OfferingManagerTest } = require("./managers");
-const { ServiceServiceTest, ScheduleServiceTest } = require("./services");
-const { ServiceRoutesTest, OfferingRoutesTest, AuthenticationRoutesTest } = require("./http");
-const { Environment } = require("../src/values");
+import index from "../src";
 
-const server = require("../src/index");
-
-process.env.NODE_ENV = "TEST";
+process.env.NODE_ENV = Environment.TEST;
 
 if (Environment.getCurrentNodeEnv() !== Environment.TEST) {
   console.log("YOU TRIED TO USE THE WRONG DB, SHAME ON YOU");
@@ -15,7 +13,7 @@ if (Environment.getCurrentNodeEnv() !== Environment.TEST) {
   process.exit(1);
 }
 
-server(5001);
+index(5001);
 
 const tests = [
   // Service Tests

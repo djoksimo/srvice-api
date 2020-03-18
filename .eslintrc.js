@@ -1,6 +1,30 @@
 module.exports = {
-  parser: "babel-eslint",
-  extends: "airbnb-base",
+  env: {
+    es6: true,
+    node: true,
+  },
+  plugins: ["import"],
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: "module",
+    project: ["./tsconfig.json", "./tsconfig.test.json"],
+  },
+  settings: {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".d.ts", ".test.ts"],
+    },
+  },
+  parser: "@typescript-eslint/parser",
+  extends: [
+    "airbnb-typescript/base",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended",
+  ],
+  globals: {
+    Atomics: "readonly",
+    SharedArrayBuffer: "readonly",
+  },
   rules: {
     "no-undef": "off",
     quotes: [2, "double"],
@@ -27,5 +51,8 @@ module.exports = {
     "arrow-parens": "off",
     "wrap-iife": "off",
     "no-mixed-operators": "warn",
+    "no-plusplus": ["error", { allowForLoopAfterthoughts: true }],
+    "import/prefer-default-export": "off",
+    "import/no-unresolved": "warn",
   },
 };
