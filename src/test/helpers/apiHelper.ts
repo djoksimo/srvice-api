@@ -20,7 +20,6 @@ const getServer = () => {
   return new Promise((resolve) => {
     const port = 5002;
     server.listen(port, () => {
-      console.log(`Srvice Test API listening on port: ${port}`);
       resolve(server);
     });
   });
@@ -39,7 +38,6 @@ afterAll(async () => {
 });
 
 afterEach(() => {
-  console.log("CLEAR");
   return clearDatabase();
 });
 
