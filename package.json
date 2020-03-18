@@ -7,9 +7,9 @@
   "scripts": {
     "test": "jest",
     "posttest": "echo Srvice API passed all tests 🎉",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.json",
     "start": "ts-node-dev --transpileOnly src/index.ts",
-    "prod": "tsc -p tsconfig.json && node --experimental-modules ./built/index.js",
+    "prod": "tsc -p tsconfig.json && node ./built/index.js",
     "debug": "tsc && node --inspect ./built/index.js",
     "lint": "eslint src/**/*.ts --color --quiet",
     "postlint": "echo No lint errors! 🎉",
