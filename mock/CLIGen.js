@@ -1,26 +1,27 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const inquirer = require("inquirer");
-const chaiHttp = require("chai-http");
-const chai = require("chai");
-const chalk = require("chalk");
+import { prompt } from "inquirer";
+import chaiHttp from "chai-http";
+import { use } from "chai";
+import { white } from "chalk";
+
+import { Environment } from "../src/values";
+import { PostServicePayload } from "./fixtures";
+import { startAPI, callEndpoint } from "./MockGen";
+import index from "../src";
+
 require("dotenv").config();
 
-const { Environment } = require("../src/values");
-const { PostServicePayload } = require("./fixtures");
-const MockGen = require("./MockGen");
-const server = require("../src/index");
-
-chai.use(chaiHttp);
+use(chaiHttp);
 
 (async function startCLIGen() {
   try {
-    console.log(chalk.white.bgBlue.bold("Starting Srvice mock data generation !!!"));
-    let inputResponses = await inquirer.prompt([
+    console.log(white.bgBlue.bold("Starting Srvice mock data generation !!!"));
+    let inputResponses = await prompt([
       {
         name: "environment",
         message: "Which Srvice API environment would you like to use? ",
         default: process.env.NODE_ENV,
-        choices: ["TEST", "SANDBOX_01"],
+        choices: ["TEST", "DEVELOPMENT"],
         type: "list",
       },
       {
@@ -36,7 +37,7 @@ chai.use(chaiHttp);
 
     inputResponses = Object.assign(
       inputResponses,
-      await inquirer.prompt({
+      await prompt({
         name: "count",
         message: `How many times would you like to call POST \
 localhost:${Environment.getGurrentPort()}${endpoint} in ENV: ${environment}?`,
@@ -46,8 +47,8 @@ localhost:${Environment.getGurrentPort()}${endpoint} in ENV: ${environment}?`,
 
     const { count } = inputResponses;
 
-    MockGen.startAPI(server(5002));
-    MockGen.callEndpoint(count, endpoint, PostServicePayload);
+    startAPI(index(5002));
+    callEndpoint(count, endpoint, PostServicePayload);
   } catch (err) {
     console.log(err);
   }

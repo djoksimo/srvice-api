@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "lib": ["es6"],
+    "module": "commonjs",
+    "target": "es6",
+    "paths": {
+      "*": ["node_modules/*", "src/*"]
+    },
+    "baseUrl": ".",
+    "outDir": "./built",
+    "rootDir": "src",
+    "types": ["node"],
+    "typeRoots": ["./src/types/index.ts", "./src/types/schedule/index.ts"]
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "./**/tests", "./src/test"]
+}

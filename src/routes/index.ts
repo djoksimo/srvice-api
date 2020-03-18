@@ -1,0 +1,13 @@
+export { default as AuthenticationRoutes } from "./AuthenticationRoutes";
+export { default as AgentRoutes } from "./AgentRoutes";
+export { default as UserRoutes } from "./UserRoutes";
+export { default as CategoryRoutes } from "./CategoryRoutes";
+export { default as ServiceRoutes } from "./ServiceRoutes";
+export { default as RequestRoutes } from "./RequestRoutes";
+export { default as BookingRoutes } from "./BookingRoutes";
+export { default as ServiceRatingRoutes } from "./ServiceRatingRoutes";
+export { default as AdminRoutes } from "./AdminRoutes";
+export { default as OfferingRoutes } from "./OfferingRoutes";
+export { default as FileRoutes } from "./FileRoutes";
+export { default as ScheduleRoutes } from "./ScheduleRoutes";
+export { default as ChatRoutes } from "./ChatRoutes";
