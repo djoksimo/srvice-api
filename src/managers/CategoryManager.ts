@@ -60,7 +60,11 @@ export default class CategoryManager {
   }
 
   async getHomeCategories() {
+<<<<<<< HEAD:src/managers/CategoryManager.ts
     const categoryIds = CategoryValues.categoryIds;
+=======
+    const { categoryIds } = BetaCategoryValues;
+>>>>>>> prettier:src/managers/CategoryManager.js
     try {
       const categoryDocumentsPromise = categoryIds.map(
         async (id) => await this.categoryService.getCategoryByIdWithoutServices(id),
