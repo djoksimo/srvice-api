@@ -25,23 +25,7 @@ const getServer = () => {
   });
 };
 
-afterAll(async () => {
-  server = await getServer();
-
-  return new Promise((resolve) => {
-    if (server) {
-      server.close(() => {
-        resolve(Promise.all([container.dispose(), closeDatabase(inMemoryDB)]));
-      });
-    }
-  });
-});
-
-afterEach(() => {
-  return clearDatabase();
-});
-
-export async function apiHelper() {
+async function apiHelper() {
   if (!inMemoryDB) {
     inMemoryDB = createTestDatabase();
   } else {
@@ -67,6 +51,26 @@ export async function apiHelper() {
     })
     .catch((error) => console.log(error));
 }
+
+beforeAll(async () => {
+  await apiHelper();
+});
+
+afterAll(async () => {
+  server = await getServer();
+
+  return new Promise((resolve) => {
+    if (server) {
+      server.close(() => {
+        resolve(Promise.all([container.dispose(), closeDatabase(inMemoryDB)]));
+      });
+    }
+  });
+});
+
+afterEach(() => {
+  return clearDatabase();
+});
 
 export function getDependency(dependencyName: string) {
   return container.cradle[dependencyName];

@@ -2,14 +2,10 @@ import mongodb from "mongodb";
 
 import { NewOfferingPayload } from "../../types/payloads";
 import { ServiceManager, OfferingManager } from "..";
-import { apiHelper, getDependency } from "../../test/helpers/apiHelper";
+import { getDependency } from "../../test/helpers/apiHelper";
 import { createMockOffering, createMockService, mockAgentCredentials } from "../../test/mock";
 import { AuthHeaders } from "../../types";
 import { OfferingModel } from "../../models";
-
-beforeAll(async () => {
-  await apiHelper();
-});
 
 const getOfferingRequestBody = async (
   serviceManager: ServiceManager,

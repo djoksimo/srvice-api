@@ -1,6 +1,6 @@
 import faker from "faker";
 
-import { Service } from "types";
+import { Service } from "../../types";
 import { mockAgentCredentials } from "./MockAgentCredentials";
 
 const HealthyService = {
