@@ -87,53 +87,25 @@ describe("OfferingManager", () => {
     });
   });
 
-  // describe("#OfferingManager.deleteOffering()", () => {
-  //   beforeEach((done) => {
-  //     ServiceModel.deleteMany({}, (err) => {
-  //       assert.ifError(err);
-  //     });
+  describe("deleteOffering()", () => {
+    it("Should delete an offering successfully", async () => {
+      const mockOffering = createMockOffering();
 
-  //     OfferingModel.deleteMany({}, (err) => {
-  //       assert.ifError(err);
-  //       done();
-  //     });
-  //   });
+      const reqBody = await getOfferingRequestBody(serviceManager, mockOffering);
 
-  //   afterEach((done) => {
-  //     ServiceModel.deleteMany({}, (err) => {
-  //       assert.ifError(err);
-  //     });
+      const createOfferingRes = await offeringManager.createOffering(reqBody, mockAgentCredentials);
 
-  //     OfferingModel.deleteMany({}, (err) => {
-  //       assert.ifError(err);
-  //       done();
-  //     });
-  //   });
+      const { offeringId } = createOfferingRes.json;
+      const { serviceId } = reqBody;
 
-  //   it("Should delete an offering successfully", async () => {
-  //     // TODO: make this test more independent of ServiceManager
-  //     const serviceRes = await this.serviceManager.createService(HealthyService);
-  //     const { serviceId } = serviceRes.json;
-
-  //     // attach serviceId to offering
-  //     const offeringBody = HealthyOffering;
-  //     offeringBody.serviceId = serviceId;
-
-  //     const createRes = await offeringManager.createOffering(offeringBody, MockAgentCredentials);
-
-  //     const { offeringId } = createRes.json;
-
-  //     const deleteRes = await offeringManager.deleteOffering(
-  //       {
-  //         offeringId,
-  //         serviceId,
-  //       },
-  //       MockAgentCredentials,
-  //     );
-
-  //     assert.strictEqual(deleteRes.status, 200, "Fail: Status code should be 200");
-  //     // TODO: add search for offering in service
-  //     // and check if offering is accessible
-  //   });
-  // });
+      const deleteRes = await offeringManager.deleteOffering(
+        {
+          offeringId,
+          serviceId,
+        },
+        mockAgentCredentials,
+      );
+      expect(deleteRes.status).toStrictEqual(200);
+    });
+  });
 });

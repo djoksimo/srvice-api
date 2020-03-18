@@ -85,13 +85,6 @@ export interface ServiceRating {
   isDeleted: boolean;
 }
 
-export interface Schedule {
-  _id?: ObjectID;
-  availability: Availability[];
-  bookings: Booking[];
-  agent: Agent;
-}
-
 export interface Booking {
   _id?: string;
   request: string;
