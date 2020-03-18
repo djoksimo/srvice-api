@@ -1,6 +1,6 @@
 import faker from "faker";
 import { Offering } from "../../types";
-import { mockAgentCredentials } from "./MockAgentCredentials";
+import { mockAgentCredentials } from "./mockAgentCredentials";
 
 export const HealthyOffering = {
   title: faker.lorem.words(3),
