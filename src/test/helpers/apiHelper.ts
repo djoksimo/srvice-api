@@ -44,9 +44,11 @@ afterEach(() => {
 export async function apiHelper() {
   if (!inMemoryDB) {
     inMemoryDB = createTestDatabase();
+  } else {
+    return null;
   }
 
-  connectToDatabase(inMemoryDB)
+  return connectToDatabase(inMemoryDB)
     .then(async () => {
       const testServer = await getServer();
 

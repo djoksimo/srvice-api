@@ -1,4 +1,4 @@
-import { Schedule } from "types";
+import { Schedule } from "../../types/schedule";
 import { mockAgentCredentials } from "./MockAgentCredentials";
 
 const HealthySchedule = {
