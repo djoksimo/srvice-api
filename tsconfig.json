@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "outDir": "./built",
     "rootDir": "src",
-    "types": ["jest", "node"],
+    "types": ["node"],
     "typeRoots": ["./src/types/index.ts", "./src/types/schedule/index.ts"]
   },
   "include": ["./src/**/*"],
