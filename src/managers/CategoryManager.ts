@@ -60,7 +60,7 @@ export default class CategoryManager {
   }
 
   async getHomeCategories() {
-    const categoryIds = CategoryValues.categoryIds;
+    const { categoryIds } = CategoryValues;
     try {
       const categoryDocumentsPromise = categoryIds.map(
         async (id) => await this.categoryService.getCategoryByIdWithoutServices(id),
