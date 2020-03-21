@@ -62,9 +62,7 @@ export default class CategoryManager {
   async getHomeCategories() {
     const { categoryIds } = CategoryValues;
     try {
-      const categoryDocumentsPromise = categoryIds.map(
-        async (id) => await this.categoryService.getCategoryByIdWithoutServices(id),
-      );
+      const categoryDocumentsPromise = categoryIds.map((id) => this.categoryService.getCategoryByIdWithoutServices(id));
       const categoryDocuments = await Promise.all(categoryDocumentsPromise);
       return { status: 200, json: categoryDocuments };
     } catch (error) {
