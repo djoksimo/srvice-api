@@ -5,7 +5,6 @@
     "prettier.prettier-vscode",
     "eamodio.gitlens",
     "eg2.vscode-npm-script",
-    "waderyan.nodejs-extension-pack",
-    "orta.vscode-jest"
+    "waderyan.nodejs-extension-pack"
   ]
 }
