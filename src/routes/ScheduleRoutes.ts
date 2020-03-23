@@ -34,7 +34,6 @@ router.patch("/", (req, res) =>
   }),
 );
 
-console.log("MOSS");
 router.use(checkJwt);
 
 router.patch("/booking", async (req, res) => {
