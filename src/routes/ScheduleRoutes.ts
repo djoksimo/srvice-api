@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import { cradle } from "../container";
-import { HttpUtils } from "../utils";
+import { HttpUtils, checkJwt } from "../utils";
 
 const { scheduleManager, authenticationManager } = cradle;
 
@@ -34,10 +34,12 @@ router.patch("/", (req, res) =>
   }),
 );
 
-router.patch("/booking", (req, res) =>
-  isAuthenticated(req, res, async () => {
-    HttpUtils.sendResponse(res, await scheduleManager.addBookingToSchedule(req.body));
-  }),
-);
+console.log("MOSS");
+router.use(checkJwt);
+
+router.patch("/booking", async (req, res) => {
+  console.log(req);
+  HttpUtils.sendResponse(res, await scheduleManager.addBookingToSchedule(req.body));
+});
 
 export default router;
