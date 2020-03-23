@@ -19,7 +19,10 @@
     "**/.project": true,
     "**/.DS_Store": true,
     "**/.settings": true,
-    "**/.factorypath": true
+    "**/.factorypath": true,
+    "node_modules": true,
+    ".idea": true,
+    "audit.log": true
   },
   "editor.tabSize": 2,
   "editor.minimap.enabled": false,
