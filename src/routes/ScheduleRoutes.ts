@@ -37,7 +37,6 @@ router.patch("/", (req, res) =>
 router.use(checkJwt);
 
 router.patch("/booking", async (req, res) => {
-  console.log(req);
   HttpUtils.sendResponse(res, await scheduleManager.addBookingToSchedule(req.body));
 });
 
