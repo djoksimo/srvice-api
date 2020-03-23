@@ -63,6 +63,7 @@ const app = express();
 
 app.use(helmet());
 app.use(compression());
+app.set("view engine", "jade");
 
 if (Environment.runningInDev) {
   app.use(morgan("dev"));
