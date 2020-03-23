@@ -103,6 +103,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.set("view engine", "jade");
+
 app.use("/auth", AuthenticationRoutes);
 app.use("/agent", AgentRoutes);
 app.use("/user", UserRoutes);
