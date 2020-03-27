@@ -6,3 +6,4 @@ export { AdminCredentials } from "./AdminCredentials";
 export { AWSValues } from "./AWSValues";
 export { Weekdays } from "./Weekdays";
 export { Secrets } from "./Secrets";
+export { CategoryValues } from "./BetaCategoryValues";

@@ -1,4 +1,4 @@
-import { AddressInfo } from "net";
+import { AddressInfo, Server } from "net";
 import chai from "chai";
 import chaiHttp from "chai-http";
 import { configureContainer } from "../../container";
@@ -9,16 +9,19 @@ chai.use(chaiHttp);
 
 const container = configureContainer();
 
-let server = null;
+let server: Server | null = null;
 let inMemoryDB = null;
 
-const getServer = () => {
-  if (server) return server;
+const getServer = (): Promise<Server> | Server => {
+  if (server) {
+    return server;
+  }
 
   server = createrServer();
 
   return new Promise((resolve) => {
     const port = 5002;
+
     server.listen(port, () => {
       resolve(server);
     });
@@ -57,8 +60,6 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  server = await getServer();
-
   return new Promise((resolve) => {
     if (server) {
       server.close(() => {
