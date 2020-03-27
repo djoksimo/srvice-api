@@ -17,3 +17,11 @@
 node_modules/
 
 test/**
+./**/tests/**
+src/
+mock/
+coverage/
+README.md
+.vscode
+.github
+.nyc_output

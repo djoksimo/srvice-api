@@ -8,28 +8,22 @@
     "test": "jest",
     "posttest": "echo Srvice API passed all tests 🎉",
     "build": "tsc -p tsconfig.json",
-    "start": "ts-node-dev --transpileOnly src/index.ts",
+    "dev": "ts-node-dev --transpileOnly src/index.ts",
+    "start": "node ./built/index.js",
     "prod": "tsc -p tsconfig.json && node ./built/index.js",
     "debug": "tsc && node --inspect ./built/index.js",
     "lint": "eslint src/**/*.ts --color --quiet",
     "postlint": "echo No lint errors! 🎉",
     "gen": "node mock/CLIGen.js",
     "postgen": "echo Srvice Mockgen tool ran successfully 🎉",
-    "prettier": "prettier --check \"./src/**/{*.ts,*.json}\"",
+    "prettier": "prettier --config \"./.prettierrc\" --check \"./src/**/*.{ts,json}\"",
     "postprettier": "echo No formatting errors! 🎉",
-    "check-prettier": "prettier ./src/**/*.ts --config .prettierrc --check",
-    "autofix": "prettier ./src/**/*.ts --config .prettierrc --write ; eslint ./src/**/*.ts --color --quiet --fix"
+    "autofix": "prettier --config \"./.prettierrc\" \"./src/**/*.{ts,json}\" --write ; eslint ./src/**/*.ts --color --quiet --fix"
   },
   "nyc": {
     "all": true,
-    "include": [
-      "src/*"
-    ],
-    "exclude": [
-      "src/models/*",
-      "src/routes/*",
-      "src/values/*"
-    ]
+    "include": ["src/*"],
+    "exclude": ["src/models/*", "src/routes/*", "src/values/*"]
   },
   "author": "",
   "license": "ISC",
@@ -46,11 +40,14 @@
     "cors": "^2.8.4",
     "dotenv": "^8.2.0",
     "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
     "express-pino-logger": "^4.0.0",
     "faker": "^4.1.0",
     "fs": "0.0.1-security",
     "helmet": "^3.21.2",
+    "jade": "^1.11.0",
     "jsonwebtoken": "^8.3.0",
+    "jwks-rsa": "^1.7.0",
     "moment": "^2.24.0",
     "mongodb": "^3.3.2",
     "mongodb-memory-server": "^6.4.1",
@@ -111,6 +108,14 @@
     "bracketSpacing": true,
     "trailingComma": "all",
     "printWidth": 120,
-    "jsxBracketSameLine": false
+    "jsxBracketSameLine": false,
+    "overrides": [
+      {
+        "files": "*.json",
+        "options": {
+          "parser": "json"
+        }
+      }
+    ]
   }
 }
