@@ -20,5 +20,5 @@
     "typeRoots": ["./src/types/index.ts", "./src/types/schedule/index.ts"]
   },
   "include": ["./src/**/*"],
-  "exclude": ["node_modules", "./**/tests", "./src/test"]
+  "exclude": ["node_modules", "./**/tests", "./src/test", "./test", "./mock"]
 }

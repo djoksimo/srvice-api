@@ -5,5 +5,13 @@
   "trailingComma": "all",
   "printWidth": 120,
   "jsxBracketSameLine": false,
-  "parser": "typescript"
+  "parser": "typescript",
+  "overrides": [
+    {
+      "files": "*.json",
+      "options": {
+        "parser": "json"
+      }
+    }
+  ]
 }

@@ -1,10 +1,8 @@
 import fetch from "node-fetch";
 
 import express, { Request, Response, NextFunction, ErrorRequestHandler } from "express";
-import pino from "express-pino-logger";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import cors from "cors";
 import compression from "compression";
 import helmet from "helmet";
 
@@ -29,8 +27,6 @@ import { Environment, createServer } from "./utils";
 import { Warning } from "./values";
 
 (global as any).fetch = fetch;
-
-pino();
 
 const env = Environment.getCurrentNodeEnv();
 
@@ -67,31 +63,16 @@ const app = express();
 
 app.use(helmet());
 app.use(compression());
-app.use(morgan("dev"));
-
-const allowedOrigins = [
-  "https://srvice.ca",
-  "https://app.srvice.ca",
-  "https://api.srvice.ca",
-  "https://demo.srvice.ca",
-];
+app.set("view engine", "jade");
 
 if (Environment.runningInDev) {
-  allowedOrigins.push("http://localhost:3000");
+  app.use(morgan("dev"));
+} else if (Environment.runningInProd) {
+  app.use(morgan("combined"));
 }
-
-const corsOptions = {
-  origin: allowedOrigins,
-  optionsSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-if (env === Environment.PRODUCTION) {
-  app.use(pino);
-}
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");

@@ -10,7 +10,7 @@ The Srvice Node/Express.js Back-End API
 
 1. Make sure you have Node.JS v12+ installed
 2. `$ npm install` in api folder
-3. `$ npm start`
+3. `$ npm run dev`
 
 ## Testing:
 
@@ -29,7 +29,7 @@ The Srvice Node/Express.js Back-End API
     nodemon
 ```
 
-e.g `$ npm start`
+e.g `$ npm run dev`
 
 #### Available via `npm run <script-name>`:
 
@@ -43,7 +43,9 @@ e.g `$ npm start`
   gen
     node src/mock/CLIGen.js
   prettier
-    prettier --check "./src/**/{*.js,*.json}"
+    prettier --config \"./.prettierrc\" --check \"./src/**/*.{ts,json}\"
+  autofix  <-- use this to avoid CI errors!!!
+    prettier --config "./.prettierrc" "./src/**/*.{ts,json}" --write ; eslint ./src/**/*.ts --color --quiet --fix
 ```
 
 e.g `$ npm run gen`

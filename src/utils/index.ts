@@ -8,3 +8,4 @@ export { OutputUtils } from "./OutputUtils";
 export { createServer } from "./createServer";
 export { TimeUtils } from "./TimeUtils";
 export { Environment } from "./config";
+export { checkJwt } from "./checkJwt";
