@@ -34,13 +34,13 @@ const env = Environment.getCurrentNodeEnv();
 switch (env) {
   case Environment.DEVELOPMENT:
     Warning.print().currentDB();
-    mongoose
-      .connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", {
-        useNewUrlParser: true,
-        useFindAndModify: false,
-        useUnifiedTopology: true,
-      })
-      .catch((error) => console.log(error));
+    // mongoose
+    //   .connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", {
+    //     useNewUrlParser: true,
+    //     useFindAndModify: false,
+    //     useUnifiedTopology: true,
+    //   })
+    //   .catch((error) => console.log(error));
     break;
   case Environment.PRODUCTION:
     Warning.print().currentDB();
@@ -110,13 +110,13 @@ app.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFuncti
   next();
 });
 
-if (!Environment.runningInTest) {
-  const defaultPort = Environment.getGurrentPort();
+// if (!Environment.runningInTest) {
+//   const defaultPort = Environment.getGurrentPort();
 
-  app.set("port", defaultPort);
-  const server = createServer(app);
+//   app.set("port", defaultPort);
+//   const server = createServer(app);
 
-  server.listen(defaultPort, () => console.log(`Srvice REST API listening on port: ${defaultPort}`));
-}
+//   server.listen(defaultPort, () => console.log(`Srvice REST API listening on port: ${defaultPort}`));
+// }
 
 export const server = () => createServer(app);

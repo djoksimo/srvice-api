@@ -18,9 +18,7 @@ const isAuthenticated = (req, res, callback) => {
 };
 
 router.post("/", (req, res) =>
-  isAuthenticated(req, res, async () => {
     HttpUtils.sendResponse(res, await serviceManager.createService(req.body));
-  }),
 );
 
 router.get("/nearby", async (req, res) => {

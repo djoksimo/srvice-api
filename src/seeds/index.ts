@@ -1,7 +1,11 @@
 import { httpUtils } from "./utilities";
+import { apiHelper, getServer } from "../utils/apiUtils";
 
 async function moss() {
-  const res = await httpUtils.get("http://localhost:5000", "category/home");
+  // TODO - better name
+  await apiHelper();
+
+  const res = await httpUtils.get("http://localhost:5002", "category/home");
 
   console.log(res);
 }

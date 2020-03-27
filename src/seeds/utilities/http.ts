@@ -17,36 +17,20 @@ class HttpUtils {
     return response.json();
   }
 
-  static async postProtected(endpoint: string, payload: Record<string, any>, authHeader: AuthHeaders) {
-    let body: any = {};
-    let contentType = "application/json";
-    // TODO - payload as formdata
-    if (payload as any) {
-      body = payload;
-      contentType = "multipart/form-data";
-    } else {
-      body = JSON.stringify(payload);
-    }
+  static async post(endpoint: string, payload: Record<string, any>, authHeaders?: AuthHeaders) {
     let headers: Record<string, any> = {
       Accept: "application/json",
       "Content-Type": contentType,
+      token: authHeaders,
     };
-    headers = Object.assign(headers, authHeader);
+
+    if (authHeaders) {
+      headers = { ...headers, ...authHeaders };
+    }
+
     const response = await fetch(endpoint, {
       method: "POST",
       headers,
-      body,
-    });
-    return response.json();
-  }
-
-  static async post(endpoint: string, payload: Record<string, any>) {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(payload),
     });
     return response.json();

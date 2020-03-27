@@ -17,6 +17,7 @@
     "gen": "node mock/CLIGen.js",
     "postgen": "echo Srvice Mockgen tool ran successfully 🎉",
     "prettier": "prettier --config \"./.prettierrc\" --check \"./src/**/*.{ts,json}\"",
+    "seed": "ts-node src/seeds/index.ts",
     "postprettier": "echo No formatting errors! 🎉",
     "autofix": "prettier --config \"./.prettierrc\" \"./src/**/*.{ts,json}\" --write ; eslint ./src/**/*.ts --color --quiet --fix"
   },
