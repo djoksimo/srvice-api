@@ -2,7 +2,7 @@ import { ObjectID } from "mongodb";
 
 import { Service, AuthHeaders, Offering, ServiceRating } from "../types";
 import { ServiceModel } from "../models";
-import { CalculationUtils, filterWithLimit } from "../utils";
+import { CalculationUtils, filterWithLimit } from "../utilities";
 import { ServiceService, OfferingService, AgentService, ServiceRatingService } from "../services";
 
 const MAX_CATEGORY_ENTRY_AGE = 600000;
