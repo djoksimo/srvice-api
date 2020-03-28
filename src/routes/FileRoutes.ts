@@ -5,7 +5,7 @@ import { extname } from "path";
 import { cradle } from "../container";
 
 import { FileValues } from "../values";
-import { HttpUtils } from "../utils";
+import { HttpUtils } from "../utilities";
 
 const { fileManager, authenticationManager } = cradle;
 

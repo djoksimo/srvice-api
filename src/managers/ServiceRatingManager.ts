@@ -2,7 +2,7 @@ import { ObjectID } from "mongodb";
 
 import { ServiceRating, AuthHeaders } from "../types";
 import { ServiceRatingModel } from "../models";
-import { CalculationUtils } from "../utils";
+import { CalculationUtils } from "../utilities";
 import { ServiceRatingService, ServiceService } from "../services";
 
 interface NewServiceRating {

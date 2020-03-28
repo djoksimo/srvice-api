@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { HttpUtils } from "../utils";
+import { HttpUtils } from "../utilities";
 import { cradle } from "../container";
 
 const { categoryManager } = cradle;

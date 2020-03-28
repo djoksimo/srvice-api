@@ -1,8 +1,12 @@
 import faker from "faker";
 
 import { createMockSchedule } from "../../test/mock";
-import { getDependency } from "../../test/helpers/apiHelper";
+import { getDependency, MongoUtils } from "../../utilities/serverUtils";
 import ScheduleService from "../ScheduleService";
+
+afterEach(() => {
+  return MongoUtils.clearDatabase();
+});
 
 describe("ScheduleService", () => {
   const scheduleService: ScheduleService = getDependency("scheduleService");
