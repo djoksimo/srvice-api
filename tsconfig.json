@@ -16,8 +16,8 @@
     "baseUrl": ".",
     "outDir": "./built",
     "rootDir": "src",
-    "types": ["node", "express", "multer", "mongoose"],
-    "typeRoots": ["./src/types/index.ts", "./node_modules/@types", "./src/types/schedule/index.ts"]
+    "types": ["node"],
+    "typeRoots": ["./src/types/index.ts", "node_modules/@types", "./src/types/schedule/index.ts"]
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules", "./**/tests", "./src/test", "./test", "./mock"]
