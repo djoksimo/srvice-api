@@ -1,4 +1,4 @@
-import { Router, Request } from "express";
+import { Router, Express, Request } from "express";
 import Multer from "multer";
 import { extname } from "path";
 
