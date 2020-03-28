@@ -41,10 +41,10 @@ interface FileRequest extends Request {
   files: Express.Multer.File[];
 }
 
-router.post("/upload/pictures/", multer.array("pictures", FileValues.MAX_PICTURE_COUNT), (req: FileRequest, res) => {
+router.post("/upload/pictures/", multer.array("pictures", FileValues.MAX_PICTURE_COUNT), (req: FileRequest, res) =>
   isAuthenticated(req, res, async () => {
     HttpUtils.sendResponse(res, await fileManager.uploadPictures(req.files));
   }),
-});
+);
 
 export default router;
