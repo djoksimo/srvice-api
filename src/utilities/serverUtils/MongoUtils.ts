@@ -16,9 +16,13 @@ class MongoUtils {
     MongoUtils.instance = this;
   }
 
-  public createInMemoryDb = () => {
+  public createInMemoryDb = (name: string) => {
     if (!this.db) {
-      this.db = new MongoMemoryServer();
+      this.db = new MongoMemoryServer({
+        instance: {
+          dbName: name,
+        },
+      });
     }
     return this.db;
   };

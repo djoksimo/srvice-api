@@ -64,9 +64,9 @@ class ServerUtils {
     });
   };
 
-  public startServerWithLocalDb = async (port = 5002) => {
+  public startServerWithLocalDb = async (port = 5002, dbName: string) => {
     const mongo = new MongoUtils();
-    mongo.createInMemoryDb();
+    mongo.createInMemoryDb(dbName);
 
     try {
       await mongo.connectToDatabase();
