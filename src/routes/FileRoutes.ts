@@ -1,4 +1,4 @@
-import { Router, Express, Request } from "express";
+import { Router, Request } from "express";
 import Multer from "multer";
 import { extname } from "path";
 
@@ -38,7 +38,7 @@ const multer = Multer({
 });
 
 interface FileRequest extends Request {
-  files: Express.Multer.File[];
+  files: Express.Multer.File[] | any;
 }
 
 router.post("/upload/pictures/", multer.array("pictures", FileValues.MAX_PICTURE_COUNT), (req: FileRequest, res) =>
