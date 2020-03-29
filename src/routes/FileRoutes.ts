@@ -1,4 +1,4 @@
-import { Router, Request, Express } from "express";
+import { Router, Request } from "express";
 import Multer from "multer";
 import { extname } from "path";
 
@@ -37,7 +37,7 @@ const multer = Multer({
   },
 });
 
-interface FileRequest extends Request {
+declare interface FileRequest extends Request {
   files: Express.Multer.File[] | any;
 }
 

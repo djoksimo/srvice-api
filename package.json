@@ -22,14 +22,21 @@
   },
   "nyc": {
     "all": true,
-    "include": ["src/*"],
-    "exclude": ["src/models/*", "src/routes/*", "src/values/*"]
+    "include": [
+      "src/*"
+    ],
+    "exclude": [
+      "src/models/*",
+      "src/routes/*",
+      "src/values/*"
+    ]
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@google-cloud/storage": "^3.0.2",
     "@pusher/chatkit-server": "^2.1.0",
+    "@types/multer": "^1.4.2",
     "amazon-cognito-identity-js": "^2.0.6",
     "awilix": "^4.2.5",
     "aws-sdk": "^2.344.0",
@@ -74,7 +81,6 @@
     "@types/mongodb-memory-server": "^2.3.0",
     "@types/mongoose": "^5.7.6",
     "@types/morgan": "^1.9.0",
-    "@types/multer": "^1.4.2",
     "@types/node": "^13.9.1",
     "@types/node-fetch": "^2.5.5",
     "@types/uuid": "^7.0.0",

@@ -18,5 +18,5 @@
     "rootDir": "src"
   },
   "include": ["./src/**/*"],
-  "exclude": ["./node_modules/**/*", "./**/tests", "./src/test", "./test", "./mock"]
+  "exclude": ["./node_modules/**/*", "!node_modules/@types", "./**/tests", "./src/test", "./test", "./mock"]
 }
