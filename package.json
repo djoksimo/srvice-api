@@ -22,8 +22,14 @@
   },
   "nyc": {
     "all": true,
-    "include": ["src/*"],
-    "exclude": ["src/models/*", "src/routes/*", "src/values/*"]
+    "include": [
+      "src/*"
+    ],
+    "exclude": [
+      "src/models/*",
+      "src/routes/*",
+      "src/values/*"
+    ]
   },
   "author": "",
   "license": "ISC",
