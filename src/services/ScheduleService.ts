@@ -2,7 +2,7 @@ import moment, { utc } from "moment";
 
 import { ScheduleModel } from "../models";
 import { Weekdays } from "../values";
-import { TimeUtils } from "../utils";
+import { TimeUtils } from "../utilities";
 
 const SLOT_INTERVAL_IN_MIN = 5;
 

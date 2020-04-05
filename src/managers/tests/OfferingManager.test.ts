@@ -1,11 +1,11 @@
 import mongodb from "mongodb";
-
 import { NewOfferingPayload } from "../../types/payloads";
 import { ServiceManager, OfferingManager } from "..";
-import { getDependency } from "../../test/helpers/apiHelper";
+import { getDependency, MongoUtils } from "../../utilities/serverUtils";
 import { createMockOffering, createMockService, mockAgentCredentials } from "../../test/mock";
 import { AuthHeaders } from "../../types";
 import { OfferingModel } from "../../models";
+import { preTests, postTests } from "../../test/helpers";
 
 const getOfferingRequestBody = async (
   serviceManager: ServiceManager,
@@ -19,6 +19,18 @@ const getOfferingRequestBody = async (
     ...mockOffering,
   };
 };
+
+beforeAll(() => {
+  preTests();
+});
+
+afterAll(() => {
+  postTests();
+});
+
+afterEach(() => {
+  MongoUtils.clearDatabase();
+});
 
 describe("OfferingManager", () => {
   const offeringManager: OfferingManager = getDependency("offeringManager");

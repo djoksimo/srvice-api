@@ -1,7 +1,7 @@
 import { Storage } from "@google-cloud/storage";
 
 import { GoogleValues } from "../values";
-import { UuidUtils, GoogleUtils } from "../utils";
+import { UuidUtils, GoogleUtils } from "../utilities";
 
 export default class FileService {
   gcsStorage: Storage;

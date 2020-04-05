@@ -1,17 +1,17 @@
-import { Router } from "express";
+import { Router, Request } from "express";
 import Multer from "multer";
 import { extname } from "path";
 
 import { cradle } from "../container";
 
 import { FileValues } from "../values";
-import { HttpUtils } from "../utils";
+import { HttpUtils } from "../utilities";
 
 const { fileManager, authenticationManager } = cradle;
 
 const router = Router();
 
-const isAuthenticated = (req, res, callback) => {
+const isAuthenticated = (req: Request, res, callback) => {
   const authHeaders = HttpUtils.parseAuthHeaders(req);
   authenticationManager
     .authenticateIdEmailToken(authHeaders)
@@ -37,7 +37,11 @@ const multer = Multer({
   },
 });
 
-router.post("/upload/pictures/", multer.array("pictures", FileValues.MAX_PICTURE_COUNT), (req, res) =>
+declare interface FileRequest extends Request {
+  files: Express.Multer.File[] | any;
+}
+
+router.post("/upload/pictures/", multer.array("pictures", FileValues.MAX_PICTURE_COUNT), (req: FileRequest, res) =>
   isAuthenticated(req, res, async () => {
     HttpUtils.sendResponse(res, await fileManager.uploadPictures(req.files));
   }),

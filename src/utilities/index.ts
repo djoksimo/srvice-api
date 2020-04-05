@@ -5,7 +5,6 @@ export { GoogleUtils } from "./GoogleUtils";
 export { filterWithLimit } from "./filterWithLimit";
 export { FileUtils } from "./FileUtils";
 export { OutputUtils } from "./OutputUtils";
-export { createServer } from "./createServer";
 export { TimeUtils } from "./TimeUtils";
 export { Environment } from "./config";
 export { checkJwt } from "./checkJwt";

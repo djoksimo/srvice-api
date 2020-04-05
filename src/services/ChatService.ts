@@ -1,7 +1,7 @@
 import Chatkit from "@pusher/chatkit-server";
 
 import { PusherValues } from "../values";
-import { UuidUtils } from "../utils";
+import { UuidUtils } from "../utilities";
 
 export default class ChatService {
   chatkit: Chatkit;

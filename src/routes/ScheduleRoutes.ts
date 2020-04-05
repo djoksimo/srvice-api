@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import { cradle } from "../container";
-import { HttpUtils, checkJwt } from "../utils";
+import { HttpUtils, checkJwt } from "../utilities";
 
 const { scheduleManager, authenticationManager } = cradle;
 

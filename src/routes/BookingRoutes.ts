@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import { cradle } from "../container";
-import { HttpUtils } from "../utils";
+import { HttpUtils } from "../utilities";
 
 const { bookingManager, authenticationManager } = cradle;
 
