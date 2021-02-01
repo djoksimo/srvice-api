@@ -36,7 +36,7 @@ switch (env) {
   case Environment.DEVELOPMENT:
     Warning.print().currentDB();
     mongoose
-      .connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", {
+      .connect("mongodb://localhost:27017/DevDB", {
         useNewUrlParser: true,
         useFindAndModify: false,
         useUnifiedTopology: true,
@@ -46,7 +46,7 @@ switch (env) {
   case Environment.PRODUCTION:
     Warning.print().currentDB();
     mongoose
-      .connect("mongodb://sandbox01:sandbox01@ds157735.mlab.com:57735/srvice-sandbox01", {
+      .connect("mongodb://localhost:27017/DevDB", {
         useNewUrlParser: true,
         useFindAndModify: false,
         useUnifiedTopology: true,
