@@ -1,6 +1,6 @@
-# Srvice RESTful API
+# Srvice HTTP API (archived)
 
-The Srvice Node/Express.js Back-End API
+The Srvice Node/Express.js API
 
 ## [Engineering Docs](https://srivce.slite.com/)
 
