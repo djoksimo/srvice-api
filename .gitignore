@@ -71,3 +71,5 @@ yarn.lock
 mock/srvice-mock-data-*
 
 built/
+
+src/values
